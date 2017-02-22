@@ -1,0 +1,21 @@
+Package: INWTUtils
+Title: Utility functions used by INWT
+Version: 0.0.0.9000
+Authors@R: c(person("Mira Celine", "Klein",
+    email = "mira-klein@inwt-statistics.de", role = "cre"))
+Maintainer: 'Mira Celine Klein' <mira-klein@inwt-statistics.de>
+Description: This package provides several useful functions for the work with
+    R projects and packages as well as an example script. INWT Statistics uses
+    these functions to ensure a clean working environment, a consistent file
+    structure and code style.
+Depends:
+    R (>= 3.3.2)
+Imports:
+    devtools,
+    dplyr,
+    lintr
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
+Suggests: testthat
