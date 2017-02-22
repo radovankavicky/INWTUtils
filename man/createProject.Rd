@@ -7,8 +7,8 @@
 createProject(dir = "./", pkg, pkgOnToplevel = TRUE)
 }
 \arguments{
-\item{dir}{character: Directory where the R project is created, ending with
-\code{/}; current working directory by default}
+\item{dir}{character: Directory where the R project is created; current
+working directory by default}
 
 \item{pkg}{logical: Does the project contain a package?}
 
@@ -25,7 +25,7 @@ Internally used by \code{\link{projectSkeleton}}.
 \dontrun{
 createProject(dir = "./", pkg = FALSE)
 dir.create("tmp")
-createProject(dir = "tmp/", pkg = TRUE, pkgOnToplevel = FALSE)
+createProject(dir = "tmp", pkg = TRUE, pkgOnToplevel = FALSE)
 }
 
 }

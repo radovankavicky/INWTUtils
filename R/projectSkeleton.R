@@ -30,7 +30,7 @@ projectSkeleton <- function(dir = ".",
     message(paste0("Creating '", dir, "/'"))
     dir.create(dir)
   }
-  dir <- paste0(dir, "/")
+  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
 
   folders <- c("data", "libLinux", "libWin", "reports", "rScripts")
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
@@ -81,13 +81,13 @@ writeGitignore <- function(dir) {
 #' R project has to be created separately.
 #' Internally used by \code{\link{projectSkeleton}}.
 #'
-#' @param dir character: Directory, ending with "/"
+#' @param dir character: Directory
 #' @param pkgName character: Package name
 #' @param pkgOnToplevel logical: Should the package live in the main
 #' directory or in a subfolder called package?
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}}
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' createPackage(dir = "./", pkgName = "aTestPackage", pkgOnToplevel = FALSE)
@@ -99,6 +99,7 @@ writeGitignore <- function(dir) {
 #'
 createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 
+  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
   packageDir <- if (pkgOnToplevel) dir else paste0(dir, "package/")
 
   do.call(if (pkgOnToplevel) setup else create,
@@ -126,8 +127,8 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' after the folder which contains it.
 #' Internally used by \code{\link{projectSkeleton}}.
 #'
-#' @param dir character: Directory where the R project is created, ending with
-#' \code{/}; current working directory by default
+#' @param dir character: Directory where the R project is created; current
+#' working directory by default
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory
 #' (default) or a subfolder "package"?
@@ -136,7 +137,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' \dontrun{
 #' createProject(dir = "./", pkg = FALSE)
 #' dir.create("tmp")
-#' createProject(dir = "tmp/", pkg = TRUE, pkgOnToplevel = FALSE)
+#' createProject(dir = "tmp", pkg = TRUE, pkgOnToplevel = FALSE)
 #' }
 #'
 #' @export
@@ -162,6 +163,8 @@ createProject <- function(dir = "./", pkg, pkgOnToplevel = TRUE) {
                       if (!pkgOnToplevel) "PackagePath: package",
                       "PackageInstallArgs: --no-multiarch --with-keep.source",
                       "PackageRoxygenize: rd,collate,namespace,vignette")
+
+  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
   projName <- (if (dir == "./") getwd() else  dir) %>%
     strsplit("/") %>% unlist %>% `[`(length(.))
 

@@ -7,7 +7,7 @@
 createPackage(dir, pkgName, pkgOnToplevel, ...)
 }
 \arguments{
-\item{dir}{character: Directory, ending with "/"}
+\item{dir}{character: Directory}
 
 \item{pkgName}{character: Package name}
 
