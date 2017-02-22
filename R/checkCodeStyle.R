@@ -8,13 +8,26 @@
 #'
 #' @param file character: File to check
 #' @param type character: Type of the file (script or pkgFuns)
+#' 
+#' @examples \dontrun{
+#' # Write example file:
+#' writeLines(c(
+#'   "# This is an example document violating style conventions",
+#'   "foo <- function() {",
+#'   "library(INWTUtils)",
+#'   "c(1+1 ,1)  ",
+#'   paste("print('A very long text which is nevertheless written into a",
+#'   "single line such that the line exceeds 100 character by far'))}"
+#' ),
+#' con = "example.R")
+#' 
+#' # Check file:
+#' checkStyle(file = "example.R", type = "pkgFuns")
+#' }
 #'
 #' @export
 #'
 checkStyle <- function(file, type = c("script", "pkgFuns")) {
-
-  lint(file,
-       linters = linterList())
 
   customTests <- lapply(if (all(type == "script")) {
     forbiddenTextScript()
@@ -24,7 +37,10 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
     NULL
   },
   function(text) checkText(file, text))
-
+  
+  lint(file,
+       linters = linterList())
+  
 }
 
 
@@ -47,7 +63,8 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
 #' \code{\link[lintr]{trailing_whitespace_linter}}
 #'
 #' @examples # Code that lists all tested linters:
-#' cat(paste0("\\code{\\link[lintr]{", sort(names(linterList())), "}}", collapse = ",\n#' "))
+#' cat(paste0("\\code{\\link[lintr]{", sort(names(linterList())), "}}",
+#'   collapse = ",\n#' "))
 #'
 #' @export
 #'
@@ -56,7 +73,7 @@ linterList <- function() {
        closed_curly_linter = closed_curly_linter,
        commas_linter = commas_linter,
        infix_spaces_linter = infix_spaces_linter,
-       line_length_linter = line_length_linter,
+       line_length_linter = line_length_linter(100),
        multiple_dots_linter = multiple_dots_linter,
        no_tab_linter = no_tab_linter,
        object_usage_linter = object_usage_linter,
@@ -71,27 +88,40 @@ linterList <- function() {
 
 #' Check text file for a patterm
 #'
-#' Checks a text file for a specific pattern. Only uncommented lines (i.e.,
-#' lines which do not start with \code{#}) are examined.
+#' Checks a text file for a specific pattern. Regular expressions are allowed.
+#' Only uncommented lines (i.e., lines which do not start with \code{#}) are
+#' examined.
 #'
 #' @param file character: Path to a file
 #' @param pattern character: Pattern to look for
 #'
 #' @return If the text contains the pattern, a warning is returned, if not,
 #' nothing is returned.
+#' 
+#' @examples \dontrun{
+#' # Write example file:
+#' writeLines(c(
+#'   "# This is an example document to demonstrate the function checkTest",
+#'   "x <- 1:3",
+#'   "cat(INWTUtils:::forbiddenTextScript())"),
+#'   con = "example.R")
+#'   
+#' # Check file:
+#' checkText("example.R", ":::")
+#' }
 #'
 #' @export
 #'
 checkText <- function(file, pattern) {
   fileContent <- readLines(file)
   if (length(grep(pattern, fileContent[!startsWith(fileContent, "#")])) > 0)
-    warning(paste0("Text '", pattern, "' appears in ", file, ".\n"))
+    warning(paste0("Pattern '", pattern, "' appears in ", file, ".\n"))
 }
 
 
 # Patterns that are not allowed in scripts
-forbiddenTextScript <- function() c(":::")
+forbiddenTextScript <- function() c("INWT\\w*:::")
 
 
 # Patterns that are not allowed in the function code in R packages
-forbiddenTextPkgFuns <- function() c("setwd", "library", "source", "@import ")
+forbiddenTextPkgFuns <- function() c("setwd", "library", "source")

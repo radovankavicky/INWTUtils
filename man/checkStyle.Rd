@@ -18,4 +18,22 @@ about the tested linters see \code{\link{linterList}}. Further checks are
 conducted if the type of the file is specified ("script" or "pkgFuns"). Those
 checks are applied only to uncommented lines.
 }
+\examples{
+\dontrun{
+# Write example file:
+writeLines(c(
+  "# This is an example document violating style conventions",
+  "foo <- function() {",
+  "library(INWTUtils)",
+  "c(1+1 ,1)  ",
+  paste("print('A very long text which is nevertheless written into a",
+  "single line such that the line exceeds 100 character by far'))}"
+),
+con = "example.R")
+
+# Check file:
+checkStyle(file = "example.R", type = "pkgFuns")
+}
+
+}
 

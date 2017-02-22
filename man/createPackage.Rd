@@ -4,22 +4,31 @@
 \alias{createPackage}
 \title{Create package}
 \usage{
-createPackage(pkgName, pkgOnToplevel, dir, ...)
+createPackage(dir, pkgName, pkgOnToplevel, ...)
 }
 \arguments{
+\item{dir}{character: Directory, ending with "/"}
+
 \item{pkgName}{character: Package name}
 
 \item{pkgOnToplevel}{logical: Should the package live in the main
 directory or in a subfolder called package?}
-
-\item{dir}{character: Directory}
 
 \item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
 \code{\link[devtools]{setup}}}
 }
 \description{
 Creates a package, either directly in the passed directory or
-in a subfolder called package. Also creates infrastructure for testthat.
+in a subfolder called package. Also creates infrastructure for testthat. An
+R project has to be created separately.
 Internally used by \code{\link{projectSkeleton}}.
+}
+\examples{
+\dontrun{
+createPackage(dir = "./", pkgName = "aTestPackage", pkgOnToplevel = FALSE)
+dir.create("tmp")
+createPackage(dir = "tmp/", pkgName = "aTestPackage", pkgOnToplevel = TRUE)
+}
+
 }
 

@@ -16,7 +16,22 @@ If the text contains the pattern, a warning is returned, if not,
 nothing is returned.
 }
 \description{
-Checks a text file for a specific pattern. Only uncommented lines (i.e.,
-lines which do not start with \code{#}) are examined.
+Checks a text file for a specific pattern. Regular expressions are allowed.
+Only uncommented lines (i.e., lines which do not start with \code{#}) are
+examined.
+}
+\examples{
+\dontrun{
+# Write example file:
+writeLines(c(
+  "# This is an example document to demonstrate the function checkTest",
+  "x <- 1:3",
+  "cat(INWTUtils:::forbiddenTextScript())"),
+  con = "example.R")
+  
+# Check file:
+checkText("example.R", ":::")
+}
+
 }
 

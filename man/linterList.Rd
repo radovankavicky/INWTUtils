@@ -25,7 +25,8 @@ Used in \code{\link{checkStyle}}. Included linters are:
 }
 \examples{
 # Code that lists all tested linters:
-cat(paste0("\\\\code{\\\\link[lintr]{", sort(names(linterList())), "}}", collapse = ",\\n#' "))
+cat(paste0("\\\\code{\\\\link[lintr]{", sort(names(linterList())), "}}",
+  collapse = ",\\n#' "))
 
 }
 

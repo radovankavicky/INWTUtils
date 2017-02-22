@@ -55,7 +55,7 @@ projectSkeleton <- function(dir = ".",
              con = paste0(dir, ".Rprofile"))
 
   if (!is.null(pkgName)) {
-    createPackage(pkgName, pkgOnToplevel, dir, ...)
+    createPackage(dir, pkgName, pkgOnToplevel, ...)
   }
 
   if(rProject) {
@@ -77,19 +77,27 @@ writeGitignore <- function(dir) {
 #' Create package
 #'
 #' @description Creates a package, either directly in the passed directory or
-#' in a subfolder called package. Also creates infrastructure for testthat.
+#' in a subfolder called package. Also creates infrastructure for testthat. An
+#' R project has to be created separately.
 #' Internally used by \code{\link{projectSkeleton}}.
 #'
+#' @param dir character: Directory, ending with "/"
 #' @param pkgName character: Package name
 #' @param pkgOnToplevel logical: Should the package live in the main
 #' directory or in a subfolder called package?
-#' @param dir character: Directory
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}}
+#' 
+#' @examples
+#' \dontrun{
+#' createPackage(dir = "./", pkgName = "aTestPackage", pkgOnToplevel = FALSE)
+#' dir.create("tmp")
+#' createPackage(dir = "tmp/", pkgName = "aTestPackage", pkgOnToplevel = TRUE)
+#' }
 #'
 #' @export
 #'
-createPackage <- function(pkgName, pkgOnToplevel, dir, ...) {
+createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 
   packageDir <- if (pkgOnToplevel) dir else paste0(dir, "package/")
 
@@ -114,17 +122,26 @@ createPackage <- function(pkgName, pkgOnToplevel, dir, ...) {
 #' Create R project
 #'
 #' @description Creates an R project with useful configuration. If the project
-#' contains a package, the respective options are set. Internally used by
-#' \code{\link{projectSkeleton}}.
+#' contains a package, the respective options are set. The project is named
+#' after the folder which contains it.
+#' Internally used by \code{\link{projectSkeleton}}.
 #'
-#' @param dir character: Directory where the R project is created
+#' @param dir character: Directory where the R project is created, ending with
+#' \code{/}; current working directory by default
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory
-#' or a subfolder "package"?
+#' (default) or a subfolder "package"?
+#'
+#' @examples
+#' \dontrun{
+#' createProject(dir = "./", pkg = FALSE)
+#' dir.create("tmp")
+#' createProject(dir = "tmp/", pkg = TRUE, pkgOnToplevel = FALSE)
+#' }
 #'
 #' @export
 #'
-createProject <- function(dir, pkg, pkgOnToplevel) {
+createProject <- function(dir = "./", pkg, pkgOnToplevel = TRUE) {
   prefs <- c("Version: 1.0",
              "",
              "RestoreWorkspace: No",
@@ -145,8 +162,9 @@ createProject <- function(dir, pkg, pkgOnToplevel) {
                       if (!pkgOnToplevel) "PackagePath: package",
                       "PackageInstallArgs: --no-multiarch --with-keep.source",
                       "PackageRoxygenize: rd,collate,namespace,vignette")
-  projName <- paste0(getwd(), "/", dir) %>%
+  projName <- (if (dir == "./") getwd() else  dir) %>%
     strsplit("/") %>% unlist %>% `[`(length(.))
+
   writeLines(text = prefs,
              con = paste0(dir, projName, ".Rproj"))
 }
