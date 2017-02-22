@@ -6,5 +6,6 @@
 #' open_curly_linter spaces_inside_linter spaces_left_parentheses_linter
 #' trailing_blank_lines_linter trailing_whitespace_linter
 #' @importFrom utils sessionInfo
-
 NULL
+
+globalVariables(".")
