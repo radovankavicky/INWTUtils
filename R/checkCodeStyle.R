@@ -8,7 +8,7 @@
 #'
 #' @param file character: File to check
 #' @param type character: Type of the file (script or pkgFuns)
-#' 
+#'
 #' @examples \dontrun{
 #' # Write example file:
 #' writeLines(c(
@@ -17,10 +17,10 @@
 #'   "library(INWTUtils)",
 #'   "c(1+1 ,1)  ",
 #'   paste("print('A very long text which is nevertheless written into a",
-#'   "single line such that the line exceeds 100 character by far'))}"
-#' ),
+#'   "single line such that the line exceeds 100 character by far')}"
+#' )),
 #' con = "example.R")
-#' 
+#'
 #' # Check file:
 #' checkStyle(file = "example.R", type = "pkgFuns")
 #' }
@@ -37,10 +37,10 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
     NULL
   },
   function(text) checkText(file, text))
-  
+
   lint(file,
        linters = linterList())
-  
+
 }
 
 
@@ -77,7 +77,7 @@ linterList <- function() {
        multiple_dots_linter = multiple_dots_linter,
        no_tab_linter = no_tab_linter,
        object_usage_linter = object_usage_linter,
-       object_length_linter = object_length_linter,
+       object_length_linter = object_length_linter(25L),
        open_curly_linter = open_curly_linter,
        spaces_inside_linter = spaces_inside_linter,
        spaces_left_parentheses_linter = spaces_left_parentheses_linter,
@@ -97,7 +97,7 @@ linterList <- function() {
 #'
 #' @return If the text contains the pattern, a warning is returned, if not,
 #' nothing is returned.
-#' 
+#'
 #' @examples \dontrun{
 #' # Write example file:
 #' writeLines(c(
@@ -105,7 +105,7 @@ linterList <- function() {
 #'   "x <- 1:3",
 #'   "cat(INWTUtils:::forbiddenTextScript())"),
 #'   con = "example.R")
-#'   
+#'
 #' # Check file:
 #' checkText("example.R", ":::")
 #' }
@@ -119,9 +119,13 @@ checkText <- function(file, pattern) {
 }
 
 
-# Patterns that are not allowed in scripts
-forbiddenTextScript <- function() c("INWT\\w*:::")
 
+# Patterns that are not allowed in scripts
+forbiddenTextScript <- function() {
+  c("INWT\\w*:::")
+}
 
 # Patterns that are not allowed in the function code in R packages
-forbiddenTextPkgFuns <- function() c("setwd", "library", "source")
+forbiddenTextPkgFuns <- function() {
+  c("setwd", "library", "([^.]|^)source")
+}

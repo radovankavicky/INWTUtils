@@ -27,8 +27,8 @@ writeLines(c(
   "library(INWTUtils)",
   "c(1+1 ,1)  ",
   paste("print('A very long text which is nevertheless written into a",
-  "single line such that the line exceeds 100 character by far'))}"
-),
+  "single line such that the line exceeds 100 character by far')}"
+)),
 con = "example.R")
 
 # Check file:
