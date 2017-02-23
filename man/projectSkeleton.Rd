@@ -5,7 +5,7 @@
 \title{Create file structure}
 \usage{
 projectSkeleton(dir = ".", pkgName = NULL, pkgOnToplevel = TRUE,
-  rProject = FALSE, ...)
+  rProject = FALSE, exampleScript = TRUE, ...)
 }
 \arguments{
 \item{dir}{Directory where the file structure is created, relative to the
@@ -18,6 +18,8 @@ name is created.}
 (default) or in a subfolder called package?}
 
 \item{rProject}{logical: Create an R Project?}
+
+\item{exampleScript}{logical: Create example script?}
 
 \item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
 \code{\link[devtools]{setup}} if creating a package}
