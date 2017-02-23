@@ -34,7 +34,7 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
   } else if (all(type == "pkgFuns")) {
     forbiddenTextPkgFuns()
   } else {
-    NULL
+    forbiddenTextAll()
   },
   function(text) checkText(file, text))
 
@@ -77,7 +77,7 @@ linterList <- function() {
        multiple_dots_linter = multiple_dots_linter,
        no_tab_linter = no_tab_linter,
        object_usage_linter = object_usage_linter,
-       object_length_linter = object_length_linter(25L),
+       object_length_linter = object_length_linter(30L),
        open_curly_linter = open_curly_linter,
        spaces_inside_linter = spaces_inside_linter,
        spaces_left_parentheses_linter = spaces_left_parentheses_linter,
@@ -119,13 +119,21 @@ checkText <- function(file, pattern) {
 }
 
 
-
 # Patterns that are not allowed in scripts
 forbiddenTextScript <- function() {
-  c("INWT\\w*:::")
+  c(accessInternalFunction = "INWT\\w*:::",
+    forbiddenTextAll())
 }
+
 
 # Patterns that are not allowed in the function code in R packages
 forbiddenTextPkgFuns <- function() {
-  c("setwd", "library", "([^.]|^)source")
+  c(setwd = "setwd", library = "library", sourcedFiles = "([^.]|^)source",
+    forbiddenTextAll())
+}
+
+
+# Patterns that are never allowed
+forbiddenTextAll <- function() {
+  c(doubleWhitespace = "[^( | ')]  ")
 }

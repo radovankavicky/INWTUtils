@@ -14,6 +14,7 @@
 #' @param pkgOnToplevel logical: Should the package live in the main directory
 #' (default) or in a subfolder called package?
 #' @param rProject logical: Create an R Project?
+#' @param exampleScript logical: Create example script?
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}} if creating a package
 #'
@@ -24,6 +25,7 @@ projectSkeleton <- function(dir = ".",
                             pkgName = NULL,
                             pkgOnToplevel = TRUE,
                             rProject = FALSE,
+                            exampleScript = TRUE,
                             ...) {
 
   if (dir != ".") {
@@ -39,6 +41,8 @@ projectSkeleton <- function(dir = ".",
   message("Writing .gitignore")
   writeGitignore(paste0(dir, "libLinux"))
   writeGitignore(paste0(dir, "libWin"))
+
+  # Move example script to scripts
 
   message("Writing .Rprofile")
   writeLines(c('.First <- function() {',
@@ -58,7 +62,7 @@ projectSkeleton <- function(dir = ".",
     createPackage(dir, pkgName, pkgOnToplevel, ...)
   }
 
-  if(rProject) {
+  if (rProject) {
     message("Creating R Project")
     createProject(dir, !is.null(pkgName), pkgOnToplevel)
   }
@@ -77,8 +81,9 @@ writeGitignore <- function(dir) {
 #' Create package
 #'
 #' @description Creates a package, either directly in the passed directory or
-#' in a subfolder called package. Also creates infrastructure for testthat. An
-#' R project has to be created separately.
+#' in a subfolder called package. Also creates an infrastructure for testthat, a
+#' test of the package style. and an .Rbuildignore. An R project has to be
+#' created separately.
 #' Internally used by \code{\link{projectSkeleton}}.
 #'
 #' @param dir character: Directory
@@ -104,19 +109,26 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 
   do.call(if (pkgOnToplevel) setup else create,
           args = list(path = packageDir,
-                      description = list(Package = pkgName),
+                      description = list(Package = pkgName,
+                                         Imports = "lintr, INWTUtils"),
                       rstudio = FALSE,
                       ... = ...))
 
   use_testthat(pkg = packageDir)
-  # writeLines(c('context("Code Style")',
-  #              '# nolint start',
-  #              'test_that("Code style is in line with INWT style conventions", {',
-  #              '  lintr::expect_lint_free(linters = INWTUtils::linterList())',
-  #              '}',
-  #              '# nolint end',
-  #              ')'),
-  #            con = paste0(packageDir, "tests/testthat/test-codeStyle.R"))
+  writeLines(c('context("Code Style")',
+               '# nolint start',
+               'test_that("Code style is in line with INWT style conventions", {',
+               '  lintr::expect_lint_free(linters = INWTUtils::linterList())',
+               '}',
+               '# nolint end',
+               ')'),
+             con = paste0(packageDir, "tests/testthat/test-codeStyle.R"))
+
+  writeLines(c('^.*\\.Rproj$',
+               '^\\.Rproj\\.user$',
+               'lib*',
+               'RScripts'),
+             con = paste0(packageDir, ".Rbuildignore"))
 }
 
 
@@ -165,7 +177,7 @@ createProject <- function(dir = "./", pkg, pkgOnToplevel = TRUE) {
                       "PackageRoxygenize: rd,collate,namespace,vignette")
 
   if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
-  projName <- (if (dir == "./") getwd() else  dir) %>%
+  projName <- (if (dir == "./") getwd() else dir) %>%
     strsplit("/") %>% unlist %>% `[`(length(.))
 
   writeLines(text = prefs,

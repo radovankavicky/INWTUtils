@@ -19,8 +19,9 @@ directory or in a subfolder called package?}
 }
 \description{
 Creates a package, either directly in the passed directory or
-in a subfolder called package. Also creates infrastructure for testthat. An
-R project has to be created separately.
+in a subfolder called package. Also creates an infrastructure for testthat, a
+test of the package style. and an .Rbuildignore. An R project has to be
+created separately.
 Internally used by \code{\link{projectSkeleton}}.
 }
 \examples{
