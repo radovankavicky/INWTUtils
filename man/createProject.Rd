@@ -4,16 +4,16 @@
 \alias{createProject}
 \title{Create R project}
 \usage{
-createProject(dir = "./", pkg, pkgOnToplevel = TRUE)
+createProject(pkg, pkgOnToplevel = TRUE, dir = "./")
 }
 \arguments{
-\item{dir}{character: Directory where the R project is created; current
-working directory by default}
-
 \item{pkg}{logical: Does the project contain a package?}
 
 \item{pkgOnToplevel}{logical: Does the package live in the project directory
 (default) or a subfolder "package"?}
+
+\item{dir}{character: Directory where the R project is created; current
+working directory by default}
 }
 \description{
 Creates an R project with useful configuration. If the project
@@ -23,9 +23,9 @@ Internally used by \code{\link{projectSkeleton}}.
 }
 \examples{
 \dontrun{
-createProject(dir = "./", pkg = FALSE)
+createProject(pkg = FALSE, dir = "./")
 dir.create("tmp")
-createProject(dir = "tmp", pkg = TRUE, pkgOnToplevel = FALSE)
+createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")
 }
 
 }

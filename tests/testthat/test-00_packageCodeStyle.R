@@ -8,7 +8,8 @@ writeLines(pkgPath,
 scripts <- paste0(pkgPath, "/RScripts/",
                   list.files(paste0(pkgPath, "/RScripts")))
 pkgFuns <- paste0(pkgPath, "/R/",
-                  setdiff(list.files(paste0(pkgPath, "/R")), "checkCodeStyle.R"))
+                  setdiff(list.files(paste0(pkgPath, "/R")),
+                          "forbiddenPatterns.R"))
 
 
 test_that("Code is lint-free", {

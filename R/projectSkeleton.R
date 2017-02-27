@@ -64,7 +64,7 @@ projectSkeleton <- function(dir = ".",
 
   if (rProject) {
     message("Creating R Project")
-    createProject(dir, !is.null(pkgName), pkgOnToplevel)
+    createProject(!is.null(pkgName), pkgOnToplevel, dir)
   }
 
 }
@@ -138,23 +138,23 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' contains a package, the respective options are set. The project is named
 #' after the folder which contains it.
 #' Internally used by \code{\link{projectSkeleton}}.
-#'
-#' @param dir character: Directory where the R project is created; current
-#' working directory by default
+
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory
 #' (default) or a subfolder "package"?
+#' @param dir character: Directory where the R project is created; current
+#' working directory by default
 #'
 #' @examples
 #' \dontrun{
-#' createProject(dir = "./", pkg = FALSE)
+#' createProject(pkg = FALSE, dir = "./")
 #' dir.create("tmp")
-#' createProject(dir = "tmp", pkg = TRUE, pkgOnToplevel = FALSE)
+#' createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")
 #' }
 #'
 #' @export
 #'
-createProject <- function(dir = "./", pkg, pkgOnToplevel = TRUE) {
+createProject <- function(pkg, pkgOnToplevel = TRUE, dir = "./") {
   prefs <- c("Version: 1.0",
              "",
              "RestoreWorkspace: No",

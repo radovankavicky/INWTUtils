@@ -4,16 +4,18 @@
 \alias{checkText}
 \title{Check text file for a patterm}
 \usage{
-checkText(file, pattern)
+checkText(file, pattern, addWarningText = "")
 }
 \arguments{
 \item{file}{character: Path to a file}
 
 \item{pattern}{character: Pattern to look for}
+
+\item{addWarningText}{character: Additional text for the warnings}
 }
 \value{
-If the text contains the pattern, a warning is returned, if not,
-nothing is returned.
+If the file contains the pattern, a warning is returned, if not,
+nothing is returned. The warnings contains the pattern and the file.
 }
 \description{
 Checks a text file for a specific pattern. Regular expressions are allowed.
@@ -28,7 +30,7 @@ writeLines(c(
   "x <- 1:3",
   "cat(INWTUtils:::forbiddenTextScript())"),
   con = "example.R")
-  
+
 # Check file:
 checkText("example.R", ":::")
 }

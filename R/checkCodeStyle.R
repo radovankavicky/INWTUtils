@@ -29,14 +29,18 @@
 #'
 checkStyle <- function(file, type = c("script", "pkgFuns")) {
 
-  customTests <- lapply(if (all(type == "script")) {
+  forbiddenText <- if (all(type == "script")) {
     forbiddenTextScript()
   } else if (all(type == "pkgFuns")) {
     forbiddenTextPkgFuns()
   } else {
     forbiddenTextAll()
-  },
-  function(text) checkText(file, text))
+  }
+
+  customTests <- lapply(names(forbiddenText),
+                        function(name) checkText(file = file,
+                                                 pattern = forbiddenText[name],
+                                                 addWarningText = name))
 
   lint(file,
        linters = linterList())
@@ -94,9 +98,10 @@ linterList <- function() {
 #'
 #' @param file character: Path to a file
 #' @param pattern character: Pattern to look for
+#' @param addWarningText character: Additional text for the warnings
 #'
-#' @return If the text contains the pattern, a warning is returned, if not,
-#' nothing is returned.
+#' @return If the file contains the pattern, a warning is returned, if not,
+#' nothing is returned. The warnings contains the pattern and the file.
 #'
 #' @examples \dontrun{
 #' # Write example file:
@@ -112,28 +117,9 @@ linterList <- function() {
 #'
 #' @export
 #'
-checkText <- function(file, pattern) {
+checkText <- function(file, pattern, addWarningText = "") {
   fileContent <- readLines(file)
   if (length(grep(pattern, fileContent[!startsWith(fileContent, "#")])) > 0)
-    warning(paste0("Pattern '", pattern, "' appears in ", file, ".\n"))
-}
-
-
-# Patterns that are not allowed in scripts
-forbiddenTextScript <- function() {
-  c(accessInternalFunction = "INWT\\w*:::",
-    forbiddenTextAll())
-}
-
-
-# Patterns that are not allowed in the function code in R packages
-forbiddenTextPkgFuns <- function() {
-  c(setwd = "setwd", library = "library", sourcedFiles = "([^.]|^)source",
-    forbiddenTextAll())
-}
-
-
-# Patterns that are never allowed
-forbiddenTextAll <- function() {
-  c(doubleWhitespace = "[^( | ')]  ")
+    warning(paste0("Pattern '", pattern, "' appears in ", file, ". ",
+                   addWarningText, "\n"))
 }
