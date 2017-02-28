@@ -94,7 +94,7 @@ setwd_linter <- function(source_file) {
 #' unexpected side effects. (only for package functions)
 #' @export
 source_linter <- function(source_file) {
-  ids <- grep("([^.]|^)source\\(", source_file$file_lines)
+  ids <- grep("^[^#\'\"]*source\\(", source_file$file_lines)
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,
          line_number = id,
