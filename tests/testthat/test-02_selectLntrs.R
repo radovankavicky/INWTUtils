@@ -6,11 +6,13 @@ test_that("selectLntrs returns a list of functions", {
                 unlist %>%
                 all)
   expect_type(selectLntrs("pkgFuns"), "list")
-  expect_true(lapply(selectLntrs("pkgFuns"), function(x) class(x) == "function") %>%
+  expect_true(lapply(selectLntrs("pkgFuns"),
+                     function(x) class(x) == "function") %>%
                 unlist %>%
                 all)
   expect_type(selectLntrs("script"), "list")
-  expect_true(lapply(selectLntrs("script"), function(x) class(x) == "function") %>%
+  expect_true(lapply(selectLntrs("script"),
+                     function(x) class(x) == "function") %>%
                 unlist %>%
                 all)
 })

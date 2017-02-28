@@ -95,6 +95,7 @@ pkgFunLntrs <- function() {
        source_linter = source_linter)
 }
 
+
 scriptLntrs <- function() {
   list(internal_INWT_function_linter = internal_INWT_function_linter)
 }

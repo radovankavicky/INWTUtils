@@ -17,7 +17,7 @@ args_without_default_first_linter <- function(source_file) {
          column_number = NULL,
          type = "style",
          message = "Arguments without default value should be listed before
-         arguments with default value",
+         arguments with default value.",
          linter = "args_without_default_first_linter")
   })
 }
@@ -34,7 +34,7 @@ double_space_linter <- function(source_file) {
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "Double whitespace",
+         message = "Double whitespace.",
          linter = "double_space_linter")
   })
 }
@@ -52,7 +52,7 @@ internal_INWT_function_linter <- function(source_file) {
          column_number = NULL,
          type = "style",
          message = "If internal functions are used, the should rather be
-         documented and exported",
+         documented and exported.",
          linter = "internal_INWT_function_linter")
   })
 }
@@ -68,7 +68,7 @@ library_linter <- function(source_file) {
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "Don't use library in package functions",
+         message = "Don't use library in package functions.",
          linter = "library_linter")
   })
 }
@@ -84,7 +84,7 @@ setwd_linter <- function(source_file) {
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "Avoid side effects caused by setwd",
+         message = "Avoid side effects caused by setwd.",
          linter = "setwd_linter")
   })
 }
@@ -100,7 +100,7 @@ source_linter <- function(source_file) {
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "Don't use source in package functions",
+         message = "Don't use source in package functions.",
          linter = "source_linter")
   })
 }
