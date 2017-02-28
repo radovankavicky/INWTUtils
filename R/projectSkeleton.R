@@ -121,7 +121,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
   writeLines(c('context("Code Style")',
                '# nolint start',
                'test_that("Code style is in line with INWT style conventions", {',
-               '  lintr::expect_lint_free(linters = INWTUtils::linterList())',
+               '  lintr::expect_lint_free(linters = INWTUtils::selectLntrs())',
                '}',
                '# nolint end',
                ')'),

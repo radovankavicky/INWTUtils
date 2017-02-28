@@ -80,9 +80,9 @@ context("Style checking functions")
 #   expect_warning(checkText(paste0(pathPrefix, "checkText.txt"), "later"))
 # })
 #
-# test_that("linterList returns a list of functions", {
-#   expect_type(linterList(), "list")
-#   expect_true(lapply(linterList(), function(x) class(x) == "function") %>%
+# test_that("selectLntrs returns a list of functions", {
+#   expect_type(selectLntrs(), "list")
+#   expect_true(lapply(selectLntrs(), function(x) class(x) == "function") %>%
 #                 unlist %>%
 #                 all)
 # })
