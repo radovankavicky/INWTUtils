@@ -1,5 +1,5 @@
 #' @importFrom devtools create use_testthat setup
-#' @importFrom dplyr %>%
+#' @importFrom dplyr %>% contains
 #' @importFrom lintr expect_lint_free lint assignment_linter closed_curly_linter
 #' commas_linter infix_spaces_linter Lint line_length_linter no_tab_linter
 #' object_usage_linter multiple_dots_linter object_length_linter
