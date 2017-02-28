@@ -45,6 +45,7 @@ projectSkeleton <- function(dir = ".",
   # Move example script to scripts
 
   message("Writing .Rprofile")
+  # nolint start
   writeLines(c('.First <- function() {',
                '  if (grepl("Windows", Sys.getenv("OS"))) {',
                paste0('    .libPaths(new = c(paste(getwd(), "libWin",',
@@ -56,7 +57,9 @@ projectSkeleton <- function(dir = ".",
                '}',
                '',
                '.First()'),
+  # nolint end
              con = paste0(dir, ".Rprofile"))
+
 
   if (!is.null(pkgName)) {
     createPackage(dir, pkgName, pkgOnToplevel, ...)

@@ -1,4 +1,0 @@
-# Commented first line
-#' A roxygen comment line
-Normal text in a line
-If a comment starts later in the line, the line will still be checked # Comment

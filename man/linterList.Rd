@@ -4,13 +4,15 @@
 \alias{linterList}
 \title{List of linters tested to ensure INWT style conventions}
 \usage{
-linterList()
+linterList(type = c("script", "pkgFuns"))
 }
 \description{
-Used in \code{\link{checkStyle}}. Included linters are:
+Used in \code{\link{checkStyle}}. The set of included linters
+depends on the type of the file. The following linters are always included:
 \code{\link[lintr]{assignment_linter}},
 \code{\link[lintr]{closed_curly_linter}},
 \code{\link[lintr]{commas_linter}},
+\code{\link{double_whitepace_linter}},
 \code{\link[lintr]{infix_spaces_linter}},
 \code{\link[lintr]{line_length_linter}},
 \code{\link[lintr]{multiple_dots_linter}},

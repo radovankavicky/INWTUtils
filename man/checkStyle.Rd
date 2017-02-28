@@ -12,11 +12,13 @@ checkStyle(file, type = c("script", "pkgFuns"))
 \item{type}{character: Type of the file (script or pkgFuns)}
 }
 \description{
-A file is checked for violations of the INWT style conventions.
-All types of files are checked using \code{\link[lintr]{lint}}. For details
-about the tested linters see \code{\link{linterList}}. Further checks are
-conducted if the type of the file is specified ("script" or "pkgFuns"). Those
-checks are applied only to uncommented lines.
+A file is checked for violations of the INWT style conventions
+using \code{\link[lintr]{lint}}. In addition to the
+\code{\link[lintr]{linters}} provided by the package \code{lintr}, some
+custom linters are tested. For details about the tested linters see
+\code{\link{linterList}}. The set of used linters depends on the type of the
+file. If the type is specified ("script" or "pkgFuns"), some additional
+linters are tested.
 }
 \examples{
 \dontrun{

@@ -1,10 +1,12 @@
 #' Check code style
 #'
-#' @description A file is checked for violations of the INWT style conventions.
-#' All types of files are checked using \code{\link[lintr]{lint}}. For details
-#' about the tested linters see \code{\link{linterList}}. Further checks are
-#' conducted if the type of the file is specified ("script" or "pkgFuns"). Those
-#' checks are applied only to uncommented lines.
+#' @description A file is checked for violations of the INWT style conventions
+#' using \code{\link[lintr]{lint}}. In addition to the
+#' \code{\link[lintr]{linters}} provided by the package \code{lintr}, some
+#' custom linters are tested. For details about the tested linters see
+#' \code{\link{linterList}}. The set of used linters depends on the type of the
+#' file. If the type is specified ("script" or "pkgFuns"), some additional
+#' linters are tested.
 #'
 #' @param file character: File to check
 #' @param type character: Type of the file (script or pkgFuns)
@@ -28,32 +30,18 @@
 #' @export
 #'
 checkStyle <- function(file, type = c("script", "pkgFuns")) {
-
-  forbiddenText <- if (all(type == "script")) {
-    forbiddenTextScript()
-  } else if (all(type == "pkgFuns")) {
-    forbiddenTextPkgFuns()
-  } else {
-    forbiddenTextAll()
-  }
-
-  customTests <- lapply(names(forbiddenText),
-                        function(name) checkText(file = file,
-                                                 pattern = forbiddenText[name],
-                                                 addWarningText = name))
-
-  lint(file,
-       linters = linterList())
-
+  lint(file, linters = linterList(type))
 }
 
 
 #' List of linters tested to ensure INWT style conventions
 #'
-#' @description Used in \code{\link{checkStyle}}. Included linters are:
+#' @description Used in \code{\link{checkStyle}}. The set of included linters
+#' depends on the type of the file. The following linters are always included:
 #' \code{\link[lintr]{assignment_linter}},
 #' \code{\link[lintr]{closed_curly_linter}},
 #' \code{\link[lintr]{commas_linter}},
+#' \code{\link{double_whitepace_linter}},
 #' \code{\link[lintr]{infix_spaces_linter}},
 #' \code{\link[lintr]{line_length_linter}},
 #' \code{\link[lintr]{multiple_dots_linter}},
@@ -72,54 +60,35 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
 #'
 #' @export
 #'
-linterList <- function() {
-  list(assignment_linter = assignment_linter,
-       closed_curly_linter = closed_curly_linter,
-       commas_linter = commas_linter,
-       infix_spaces_linter = infix_spaces_linter,
-       line_length_linter = line_length_linter(100),
-       multiple_dots_linter = multiple_dots_linter,
-       no_tab_linter = no_tab_linter,
-       object_usage_linter = object_usage_linter,
-       object_length_linter = object_length_linter(30L),
-       open_curly_linter = open_curly_linter,
-       spaces_inside_linter = spaces_inside_linter,
-       spaces_left_parentheses_linter = spaces_left_parentheses_linter,
-       trailing_blank_lines_linter = trailing_blank_lines_linter,
-       trailing_whitespace_linter = trailing_whitespace_linter)
-}
+linterList <- function(type = c("script", "pkgFuns")) {
 
+  linters <- list(assignment_linter = assignment_linter,
+                  closed_curly_linter = closed_curly_linter,
+                  commas_linter = commas_linter,
+                  double_whitepace_linter = double_whitepace_linter,
+                  infix_spaces_linter = infix_spaces_linter,
+                  line_length_linter = line_length_linter(100),
+                  multiple_dots_linter = multiple_dots_linter,
+                  no_tab_linter = no_tab_linter,
+                  object_usage_linter = object_usage_linter,
+                  object_length_linter = object_length_linter(30L),
+                  open_curly_linter = open_curly_linter,
+                  spaces_inside_linter = spaces_inside_linter,
+                  spaces_left_parentheses_linter = spaces_left_parentheses_linter,
+                  trailing_blank_lines_linter = trailing_blank_lines_linter,
+                  trailing_whitespace_linter = trailing_whitespace_linter)
 
-#' Check text file for a patterm
-#'
-#' Checks a text file for a specific pattern. Regular expressions are allowed.
-#' Only uncommented lines (i.e., lines which do not start with \code{#}) are
-#' examined.
-#'
-#' @param file character: Path to a file
-#' @param pattern character: Pattern to look for
-#' @param addWarningText character: Additional text for the warnings
-#'
-#' @return If the file contains the pattern, a warning is returned, if not,
-#' nothing is returned. The warnings contains the pattern and the file.
-#'
-#' @examples \dontrun{
-#' # Write example file:
-#' writeLines(c(
-#'   "# This is an example document to demonstrate the function checkTest",
-#'   "x <- 1:3",
-#'   "cat(INWTUtils:::forbiddenTextScript())"),
-#'   con = "example.R")
-#'
-#' # Check file:
-#' checkText("example.R", ":::")
-#' }
-#'
-#' @export
-#'
-checkText <- function(file, pattern, addWarningText = "") {
-  fileContent <- readLines(file)
-  if (length(grep(pattern, fileContent[!startsWith(fileContent, "#")])) > 0)
-    warning(paste0("Pattern '", pattern, "' appears in ", file, ". ",
-                   addWarningText, "\n"))
+  if (all(type == "script")) {
+    linters <- c(linters,
+                 internal_INWT_function_linter = internal_INWT_function_linter)
+  }
+
+  if (all(type == "pkgFuns")) {
+    linters <- c(linters,
+                 args_without_default_first_linter = args_without_default_first_linter,
+                 library_linter = library_linter,
+                 setwd_linter = setwd_linter)
+  }
+
+  return(linters)
 }
