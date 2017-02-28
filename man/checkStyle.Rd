@@ -27,7 +27,7 @@ writeLines(c(
   "# This is an example document violating style conventions",
   "foo <- function() {",
   "library(INWTUtils)",
-  "c(1+1 ,1)  ",
+  "c(1+1 ,1) ",
   paste("print('A very long text which is nevertheless written into a",
   "single line such that the line exceeds 100 character by far')}"
 )),
