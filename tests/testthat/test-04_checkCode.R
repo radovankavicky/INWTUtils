@@ -6,7 +6,7 @@ writeLines(text = c("# This is an example file  for the checkStyle function",
                     "makeDouble <- function(vec) 2*vec",
                     "",
                     "y <- makeDouble(x)"),
-# nolint end
+           # nolint end
            con = paste0(tempdir(), "/checkCodeExample.txt"))
 
 
