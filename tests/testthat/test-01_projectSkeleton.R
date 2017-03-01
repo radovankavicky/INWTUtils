@@ -100,3 +100,45 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/tests/testthat.R")))
 })
+
+
+test_that("packages created with projectSkeleton can be built", {
+  projectSkeleton(paste0(tmpdir, "/tmp10/"),
+                  pkgName = "aTestPackage",
+                  pkgOnToplevel = TRUE)
+  expect_error(build(pkg = paste0(tmpdir, "/tmp10"),
+                     path = paste0(tmpdir, "/tmp10")),
+               NA)
+  expect_warning(build(pkg = paste0(tmpdir, "/tmp10"),
+                       path = paste0(tmpdir, "/tmp10")),
+                 NA)
+  projectSkeleton(paste0(tmpdir, "/tmp11"),
+                  pkgName = "aTestPackage",
+                  pkgOnToplevel = FALSE)
+  expect_error(build(pkg = paste0(tmpdir, "/tmp11/package"),
+                     path = paste0(tmpdir, "/tmp11")),
+               NA)
+  expect_warning(build(pkg = paste0(tmpdir, "/tmp11/package"),
+                       path = paste0(tmpdir, "/tmp11")),
+                 NA)
+  projectSkeleton(paste0(tmpdir, "/tmp12"),
+                  pkgName = "aTestPackage",
+                  pkgOnToplevel = TRUE,
+                  rProject = TRUE)
+  expect_error(build(pkg = paste0(tmpdir, "/tmp12"),
+                     path = paste0(tmpdir, "/tmp12")),
+               NA)
+  expect_warning(build(pkg = paste0(tmpdir, "/tmp12"),
+                       path = paste0(tmpdir, "/tmp12")),
+                 NA)
+  projectSkeleton(paste0(tmpdir, "/tmp13/"),
+                  pkgName = "aTestPackage",
+                  pkgOnToplevel = FALSE,
+                  rProject = TRUE)
+  expect_error(build(pkg = paste0(tmpdir, "/tmp13/package"),
+                     path = paste0(tmpdir, "/tmp13")),
+               NA)
+  expect_warning(build(pkg = paste0(tmpdir, "/tmp13/package"),
+                       path = paste0(tmpdir, "/tmp13")),
+                 NA)
+})
