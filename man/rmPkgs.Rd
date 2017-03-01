@@ -20,4 +20,3 @@ search()
 # INWTutils is not in the searchpath anymore
 }
 }
-

@@ -38,4 +38,3 @@ checkStyle(file = "example.R", type = "pkgFuns")
 }
 
 }
-

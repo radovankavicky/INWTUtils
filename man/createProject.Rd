@@ -29,4 +29,3 @@ createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")
 }
 
 }
-

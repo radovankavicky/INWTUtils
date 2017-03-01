@@ -32,4 +32,3 @@ createPackage(dir = "tmp/", pkgName = "aTestPackage", pkgOnToplevel = TRUE)
 }
 
 }
-

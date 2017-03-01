@@ -34,4 +34,3 @@ cat(paste0("\\\\code{\\\\link[lintr]{", sort(names(selectLntrs())), "}}",
   collapse = ",\\n#' "))
 
 }
-
