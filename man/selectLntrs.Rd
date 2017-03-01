@@ -7,30 +7,54 @@
 selectLntrs(type = c("script", "pkgFuns"))
 }
 \arguments{
-\item{type}{character: Type of the file (script or pkgFuns)}
+\item{type}{character: Type of the file}
 }
 \description{
 Used in \code{\link{checkStyle}}. The set of included linters
 depends on the type of the file. The following linters are always included:
-  \code{\link[lintr]{assignment_linter}},
-  \code{\link[lintr]{closed_curly_linter}},
-  \code{\link[lintr]{commas_linter}},
-  \code{\link{double_space_linter}},
-  \code{\link[lintr]{infix_spaces_linter}},
-  \code{\link[lintr]{line_length_linter}},
-  \code{\link[lintr]{multiple_dots_linter}},
-  \code{\link[lintr]{no_tab_linter}},
-  \code{\link[lintr]{object_length_linter}},
-  \code{\link[lintr]{object_usage_linter}},
-  \code{\link[lintr]{open_curly_linter}},
-  \code{\link[lintr]{spaces_inside_linter}},
-  \code{\link[lintr]{spaces_left_parentheses_linter}},
-  \code{\link[lintr]{trailing_blank_lines_linter}},
-  \code{\link[lintr]{trailing_whitespace_linter}}
+\itemize{
+  \item\code{\link[INWTUtils]{args_without_default_first_linter}},
+  \item\code{\link[lintr]{assignment_linter}},
+  \item\code{\link[lintr]{closed_curly_linter}},
+  \item\code{\link[lintr]{commas_linter}},
+  \item\code{\link[INWTUtils]{double_space_linter}},
+  \item\code{\link[lintr]{infix_spaces_linter}},
+  \item\code{\link[lintr]{line_length_linter}},
+  \item\code{\link[lintr]{multiple_dots_linter}},
+  \item\code{\link[lintr]{no_tab_linter}},
+  \item\code{\link[lintr]{object_length_linter}},
+  \item\code{\link[lintr]{object_usage_linter}},
+  \item\code{\link[lintr]{open_curly_linter}},
+  \item\code{\link[lintr]{spaces_inside_linter}},
+  \item\code{\link[lintr]{spaces_left_parentheses_linter}},
+  \item\code{\link[lintr]{trailing_blank_lines_linter}},
+  \item\code{\link[lintr]{trailing_whitespace_linter}}
+}
+
+The following linters are only included for \code{type = pkgFuns}:
+\itemize{
+  \item\code{\link{library_linter}},
+  \item\code{\link{setwd_linter}},
+  \item\code{\link{source_linter}}
+}
+
+The following linters are only included for \code{type = script}:
+\itemize{
+  \item\code{\link{internal_INWT_function_linter}}
+}
 }
 \examples{
-# Code that lists all tested linters:
-cat(paste0("\\\\code{\\\\link[lintr]{", sort(names(selectLntrs())), "}}",
-  collapse = ",\\n#' "))
+# Code listing tested linters:
+linterNames <- sort(names(selectLntrs()))
+packages <- unlist(lapply(linterNames,
+                          function(name) {
+                            erg <- help.search(name)
+                            erg$matches$Package
+                          }))
+# nolint start
+cat("#' \\\\itemize{\\n#'",
+    paste0("  \\\\item\\\\code{\\\\link[", packages, "]{", linterNames, "}}",
+           collapse = ",\\n#' "), "\\n#' }")
+# nolint end
 
 }

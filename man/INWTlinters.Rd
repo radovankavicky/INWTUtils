@@ -10,8 +10,6 @@
 \alias{source_linter}
 \title{INWT's own linters}
 \usage{
-INWTlinters()
-
 args_without_default_first_linter(source_file)
 
 double_space_linter(source_file)
@@ -34,9 +32,9 @@ Linters added by INWT. Can be used with
 \section{Functions}{
 \itemize{
 \item \code{args_without_default_first_linter}: Arguments without default values should come before
-arguments with default values. (only for package functions)
+arguments with default values.
 
-\item \code{double_space_linter}: Are there double whitespaces ("  ")?
+\item \code{double_space_linter}: Are there double whitespaces?
 
 \item \code{internal_INWT_function_linter}: Instead of using internal functions from an INWT
 package in scripts with \code{:::}, they should be exported and documented.
@@ -52,3 +50,26 @@ can have unexpected side effects. (only for package functions)
 unexpected side effects. (only for package functions)
 }}
 
+\examples{
+\dontrun{
+writeLines(con = "lintExample.txt",
+# nolint start
+           text = c("# Example script to demonstrate INWT's own linters",
+                    "",
+                    "source(anotherScript.R)",
+                    "",
+                    "foo <- function(x = 1, y) {",
+                    "  2 * x + 1",
+                    "}",
+                    "",
+                    "# This  line containts  double spaces",
+                    "",
+                    "print(INWTUtils:::scriptLntrs())"))
+# nolint end
+lint("lintExample.txt",
+     linters = list(argsWithoutDefault = args_without_default_first_linter,
+                    doubeWhitespace = double_space_linter,
+                    sourceLinter = source_linter))
+}
+
+}

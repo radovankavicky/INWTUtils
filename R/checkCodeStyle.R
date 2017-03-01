@@ -1,30 +1,34 @@
 #' Check code style
 #'
-#' @description A file is checked for violations of the INWT style conventions
-#' using \code{\link[lintr]{lint}}. In addition to the
-#' \code{\link[lintr]{linters}} provided by the package \code{lintr}, some
-#' custom linters are tested. For details about the tested linters see
-#' \code{\link{selectLntrs}}. The set of used linters depends on the type of the
-#' file. If the type is specified ("script" or "pkgFuns"), some additional
-#' linters are tested.
+#' @description Checks a for violations of the INWT style conventions using
+#' \code{\link[lintr]{lint}}. In addition to the \code{\link[lintr]{linters}}
+#' provided by the package \code{lintr}, some custom linters are tested. The set
+#' of used linters depends on the type of the file. If the type is specified
+#' ("script" or "pkgFuns"), some additional linters are tested. For details
+#' about the tested linters see \code{\link{selectLntrs}}.
 #'
 #' @param file character: File to check
 #' @inheritParams selectLntrs
 #'
 #' @examples \dontrun{
-#' # Write example file:
-#' writeLines(c(
-#'   "# This is an example document violating style conventions",
-#'   "foo <- function() {",
-#'   "library(INWTUtils)",
-#'   "c(1+1 ,1) ",
-#'   paste("print('A very long text which is nevertheless written into a",
-#'   "single line such that the line exceeds 100 character by far')}"
-#' )),
-#' con = "example.R")
+#' writeLines(con = "lintExample.txt",
+#'            text = c("# Example script to demonstrate INWT's own linters",
+#'            # nolint start
+#'                     "",
+#'                     "foo <- function(x = 1, y) {",
+#'                     "  2*x + 1",
+#'                     "}",
+#'                     "",
+#'                     paste0("# This  line containts  double spaces and is ",
+#'                            "very long. The following lines will use = ",
+#'                            "instead of <- and access an internal INWT ",
+#'                            "function."),
+#'                     "z = 1",
+#'                     "print(INWTUtils:::scriptLntrs())",
+#'                     ""))
+#'            # nolint end
+#' checkStyle("lintExample.txt", type = "script")
 #'
-#' # Check file:
-#' checkStyle(file = "example.R", type = "pkgFuns")
 #' }
 #'
 #' @export
@@ -38,33 +42,60 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
 #'
 #' @description Used in \code{\link{checkStyle}}. The set of included linters
 #' depends on the type of the file. The following linters are always included:
-#'   \code{\link[lintr]{assignment_linter}},
-#'   \code{\link[lintr]{closed_curly_linter}},
-#'   \code{\link[lintr]{commas_linter}},
-#'   \code{\link{double_space_linter}},
-#'   \code{\link[lintr]{infix_spaces_linter}},
-#'   \code{\link[lintr]{line_length_linter}},
-#'   \code{\link[lintr]{multiple_dots_linter}},
-#'   \code{\link[lintr]{no_tab_linter}},
-#'   \code{\link[lintr]{object_length_linter}},
-#'   \code{\link[lintr]{object_usage_linter}},
-#'   \code{\link[lintr]{open_curly_linter}},
-#'   \code{\link[lintr]{spaces_inside_linter}},
-#'   \code{\link[lintr]{spaces_left_parentheses_linter}},
-#'   \code{\link[lintr]{trailing_blank_lines_linter}},
-#'   \code{\link[lintr]{trailing_whitespace_linter}}
+#' \itemize{
+#'   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
+#'   \item\code{\link[lintr]{assignment_linter}},
+#'   \item\code{\link[lintr]{closed_curly_linter}},
+#'   \item\code{\link[lintr]{commas_linter}},
+#'   \item\code{\link[INWTUtils]{double_space_linter}},
+#'   \item\code{\link[lintr]{infix_spaces_linter}},
+#'   \item\code{\link[lintr]{line_length_linter}},
+#'   \item\code{\link[lintr]{multiple_dots_linter}},
+#'   \item\code{\link[lintr]{no_tab_linter}},
+#'   \item\code{\link[lintr]{object_length_linter}},
+#'   \item\code{\link[lintr]{object_usage_linter}},
+#'   \item\code{\link[lintr]{open_curly_linter}},
+#'   \item\code{\link[lintr]{spaces_inside_linter}},
+#'   \item\code{\link[lintr]{spaces_left_parentheses_linter}},
+#'   \item\code{\link[lintr]{trailing_blank_lines_linter}},
+#'   \item\code{\link[lintr]{trailing_whitespace_linter}}
+#' }
 #'
-#' @param type character: Type of the file (script or pkgFuns)
+#' The following linters are only included for \code{type = pkgFuns}:
+#' \itemize{
+#'   \item\code{\link{library_linter}},
+#'   \item\code{\link{setwd_linter}},
+#'   \item\code{\link{source_linter}}
+#' }
 #'
-#' @examples # Code that lists all tested linters:
-#' cat(paste0("\\code{\\link[lintr]{", sort(names(selectLntrs())), "}}",
-#'   collapse = ",\n#' "))
+#' The following linters are only included for \code{type = script}:
+#' \itemize{
+#'   \item\code{\link{internal_INWT_function_linter}}
+#' }
+#'
+#' @param type character: Type of the file
+#'
+#' @examples
+#' # Code listing tested linters:
+#' linterNames <- sort(names(selectLntrs()))
+#' packages <- unlist(lapply(linterNames,
+#'                           function(name) {
+#'                             erg <- help.search(name)
+#'                             erg$matches$Package
+#'                           }))
+#' # nolint start
+#' cat("#' \\itemize{\n#'",
+#'     paste0("  \\item\\code{\\link[", packages, "]{", linterNames, "}}",
+#'            collapse = ",\n#' "), "\n#' }")
+#' # nolint end
 #'
 #' @export
 #'
 selectLntrs <- function(type = c("script", "pkgFuns")) {
 
-  linters <- list(assignment_linter = assignment_linter,
+  linters <- list(args_without_default_first_linter =
+                    args_without_default_first_linter,
+                  assignment_linter = assignment_linter,
                   closed_curly_linter = closed_curly_linter,
                   commas_linter = commas_linter,
                   double_space_linter = double_space_linter,
@@ -89,8 +120,7 @@ selectLntrs <- function(type = c("script", "pkgFuns")) {
 
 
 pkgFunLntrs <- function() {
-  list(args_without_default_first_linter = args_without_default_first_linter,
-       library_linter = library_linter,
+  list(library_linter = library_linter,
        setwd_linter = setwd_linter,
        source_linter = source_linter)
 }

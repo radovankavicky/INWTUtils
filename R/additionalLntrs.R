@@ -1,12 +1,38 @@
-#' INWT's own linters
+#' @title INWT's own linters
+#'
+#' @name INWTlinters
+#'
 #' @description Linters added by INWT. Can be used with
 #' \code{\link[lintr]{lint}}.
+#'
 #' @param source_file returned by \code{\link[lintr]{get_source_expressions}}
-INWTlinters <- function() NULL
+#'
+#' @examples \dontrun{
+#' writeLines(con = "lintExample.txt",
+#' # nolint start
+#'            text = c("# Example script to demonstrate INWT's own linters",
+#'                     "",
+#'                     "source(anotherScript.R)",
+#'                     "",
+#'                     "foo <- function(x = 1, y) {",
+#'                     "  2 * x + 1",
+#'                     "}",
+#'                     "",
+#'                     "# This  line containts  double spaces",
+#'                     "",
+#'                     "print(INWTUtils:::scriptLntrs())"))
+#' # nolint end
+#' lint("lintExample.txt",
+#'      linters = list(argsWithoutDefault = args_without_default_first_linter,
+#'                     doubeWhitespace = double_space_linter,
+#'                     sourceLinter = source_linter))
+#' }
+#'
+NULL
 
 
 #' @describeIn INWTlinters Arguments without default values should come before
-#' arguments with default values. (only for package functions)
+#' arguments with default values.
 #' @export
 args_without_default_first_linter <- function(source_file) {
   ids <- grep("function\\(.*=.*,[\n]?[ ]*[A-z0-9_\\.]*[^...][\\),]",
@@ -23,10 +49,8 @@ args_without_default_first_linter <- function(source_file) {
 }
 
 
-# nolint start
-#' @describeIn INWTlinters Are there double whitespaces ("  ")?
+#' @describeIn INWTlinters Are there double whitespaces?
 #' @export
-# nolint end
 double_space_linter <- function(source_file) {
   ids <- grep("[^#']+[^ ]+ {2,}", source_file$file_lines)
   lapply(ids, function(id) {

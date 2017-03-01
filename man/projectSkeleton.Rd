@@ -8,8 +8,8 @@ projectSkeleton(dir = ".", pkgName = NULL, pkgOnToplevel = TRUE,
   rProject = FALSE, exampleScript = TRUE, ...)
 }
 \arguments{
-\item{dir}{Directory where the file structure is created, relative to the
-current working directory. The current working directory by default.}
+\item{dir}{character: Directory where the file structure is created, relative
+to the current working directory. The current working directory by default.}
 
 \item{pkgName}{character: If \code{pkgName} is specified, a package with this
 name is created.}
@@ -19,20 +19,25 @@ name is created.}
 
 \item{rProject}{logical: Create an R Project?}
 
-\item{exampleScript}{logical: Create example script?}
+\item{exampleScript}{logical: Create example script? (not yet used)}
 
 \item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
 \code{\link[devtools]{setup}} if creating a package}
 }
 \description{
-Creates a file structure with a useful folder structure. This
-includes the folders data, reports and rScripts to store files. Furthermore,
-the folders libWin and libLinux are created, together with an .Rprofile file.
-Newly installed packages are then stored in the respective lib folder to
-enable work in a sandbox. The infrastructure for a package and an RStudio
-project can be added.
+Creates a useful file and folder structure. This includes:
+\itemize{
+  \item data (folder)
+  \item reports (folder)
+  \item rScripts (folder)
+  \item libWin (folder) containing .gitginore
+  \item libLinux (folder) containing .gitginore
+  \item .Rprofile
+  \item .Rproj (optional)
+}
+The infrastructure for a package can be added.
 }
 \examples{
-projectSkeleton("tmp")
+projectSkeleton("tmp", rProject = TRUE)
 
 }

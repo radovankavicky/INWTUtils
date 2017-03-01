@@ -1,24 +1,29 @@
 #' Create file structure
 #'
-#' @description Creates a file structure with a useful folder structure. This
-#' includes the folders data, reports and rScripts to store files. Furthermore,
-#' the folders libWin and libLinux are created, together with an .Rprofile file.
-#' Newly installed packages are then stored in the respective lib folder to
-#' enable work in a sandbox. The infrastructure for a package and an RStudio
-#' project can be added.
+#' @description Creates a useful file and folder structure. This includes:
+#' \itemize{
+#'   \item data (folder)
+#'   \item reports (folder)
+#'   \item rScripts (folder)
+#'   \item libWin (folder) containing .gitginore
+#'   \item libLinux (folder) containing .gitginore
+#'   \item .Rprofile
+#'   \item .Rproj (optional)
+#' }
+#' The infrastructure for a package can be added.
 #'
-#' @param dir Directory where the file structure is created, relative to the
-#' current working directory. The current working directory by default.
+#' @param dir character: Directory where the file structure is created, relative
+#' to the current working directory. The current working directory by default.
 #' @param pkgName character: If \code{pkgName} is specified, a package with this
 #' name is created.
 #' @param pkgOnToplevel logical: Should the package live in the main directory
 #' (default) or in a subfolder called package?
 #' @param rProject logical: Create an R Project?
-#' @param exampleScript logical: Create example script?
+#' @param exampleScript logical: Create example script? (not yet used)
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}} if creating a package
 #'
-#' @examples projectSkeleton("tmp")
+#' @examples projectSkeleton("tmp", rProject = TRUE)
 #'
 #' @export
 projectSkeleton <- function(dir = ".",
@@ -42,8 +47,6 @@ projectSkeleton <- function(dir = ".",
   writeGitignore(paste0(dir, "libLinux"))
   writeGitignore(paste0(dir, "libWin"))
 
-  # Move example script to scripts
-
   message("Writing .Rprofile")
   # nolint start
   writeLines(c('.First <- function() {',
@@ -57,9 +60,12 @@ projectSkeleton <- function(dir = ".",
                '}',
                '',
                '.First()'),
-  # nolint end
+             # nolint end
              con = paste0(dir, ".Rprofile"))
 
+  if (exampleScript) {
+    # Move example script to scripts
+  }
 
   if (!is.null(pkgName)) {
     createPackage(dir, pkgName, pkgOnToplevel, ...)
@@ -72,7 +78,6 @@ projectSkeleton <- function(dir = ".",
 
 }
 
-
 # Write empty .gitignore to push lib folders to github
 writeGitignore <- function(dir) {
   writeLines(c("# Ignore everything in this directory",
@@ -83,11 +88,11 @@ writeGitignore <- function(dir) {
 
 #' Create package
 #'
-#' @description Creates a package, either directly in the passed directory or
-#' in a subfolder called package. Also creates an infrastructure for testthat, a
-#' test of the package style. and an .Rbuildignore. An R project has to be
-#' created separately.
-#' Internally used by \code{\link{projectSkeleton}}.
+#' @description Creates a package, either directly in the directory specified in
+#' \code{dir} or in a subfolder called "package". Also creates an infrastructure
+#' for testthat, a test for the package style and an .Rbuildignore. An R project
+#' has to be created separately.
+#' Used by \code{\link{projectSkeleton}}.
 #'
 #' @param dir character: Directory
 #' @param pkgName character: Package name
