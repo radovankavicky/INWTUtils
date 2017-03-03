@@ -66,7 +66,7 @@ writeLines(con = "lintExample.txt",
                     "",
                     "print(INWTUtils:::scriptLntrs())"))
 # nolint end
-lint("lintExample.txt",
+lintr::lint("lintExample.txt",
      linters = list(argsWithoutDefault = args_without_default_first_linter,
                     doubeWhitespace = double_space_linter,
                     sourceLinter = source_linter))

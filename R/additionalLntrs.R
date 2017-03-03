@@ -22,7 +22,7 @@
 #'                     "",
 #'                     "print(INWTUtils:::scriptLntrs())"))
 #' # nolint end
-#' lint("lintExample.txt",
+#' lintr::lint("lintExample.txt",
 #'      linters = list(argsWithoutDefault = args_without_default_first_linter,
 #'                     doubeWhitespace = double_space_linter,
 #'                     sourceLinter = source_linter))
@@ -35,8 +35,24 @@ NULL
 #' arguments with default values.
 #' @export
 args_without_default_first_linter <- function(source_file) {
-  ids <- grep("function\\(.*=.*,[\n]?[ ]*[A-z0-9_\\.]*[^...][\\),]",
-              source_file$file_lines)
+
+  pattern <- paste0("function\\([^\\)]*[A-z0-9_\\. '\"]+=[A-z0-9_\\. '\"]+,",
+                    "[ ]*",
+                    "[A-z0-9_\\. '\"]+[^(\\.\\.\\.)][\\),]+")
+
+  # Problems within lines
+  idsWithin <- grep(pattern, source_file$file_lines)
+
+  # Problems over two lines
+  pastedText <- lapply(1:(length(source_file$file_lines) - 1),
+                       function(x) paste(source_file$file_lines[x],
+                                         source_file$file_lines[x + 1]))
+
+  idsMult <- grep(pattern, pastedText)
+
+  # Remove double-counted problems
+  ids <- c(idsWithin, setdiff(idsMult, c(idsWithin - 1))) %>% unique
+
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,
          line_number = id,

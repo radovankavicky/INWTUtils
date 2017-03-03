@@ -1,13 +1,21 @@
 context("INWT's own linter functions")
 
+test_that("args_without_default_first_linter", {
+  erg <- lintr::lint("tests/testthat/testScript_args_without_default_first_linter.R",
+                     linters = list(argsWithoutDefault =
+                                      args_without_default_first_linter))
+  expect_equal(lapply(erg, function(lint) lint$line_number) %>% unlist,
+               c(9, 13, 15, 19, 23, 26, 29, 33))
+})
 
-test_that("args_without_default_first_linter (within line)", {
+
+test_that("args_without_default_first_linter (only within line)", {
   # nolint start
   inputWrong <- list(filename = "An example object",
                      file_lines = c("function(arg1 = TRUE, arg2)",
-                                    "function(arg1 = TRUE, arg2, arg3)",
-                                    "function(arg1, arg2 = TRUE, arg3)",
-                                    "function(arg1 = 1, arg2, arg3 = 'astring')",
+                                    "function(arg1 = 'aString', arg2, arg3)",
+                                    "function(arg1, arg2 = TRUE, arg3) { }",
+                                    "function(arg1 = 1, arg2, arg3 = 'aString')",
                                     "function(arg1 = TRUE, arg.2 = 123, arg3)"))
   # nolint end
   inputCorrect <- list(filename = "An example object",
