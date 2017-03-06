@@ -43,12 +43,20 @@ test_that("double_space_linter", {
                      file_lines = c("Simple text with  double whitespace",
                                     "  indented text  with double whitespace",
                                     "  # Commented  text",
-                                    "  # Indented  line  commented out"))
+                                    "  # Indented  line  commented out",
+                                    "x <-  3",
+                                    "  x <-  3",
+                                    "mean(x) # Comment  with double whitespace",
+                                    "    x <- 3 #  indented and commented",
+                                    "#'   \"# This is an example  document violating style conventions\","))
   inputCorrect <- list(filename = "An example object",
                        file_lines = c("Normal text",
                                       "  indented text",
                                       "#'   An indented roxygen comment",
-                                      "  # Indented line commented out"))
+                                      "  # Indented line commented out",
+                                      "    x <- 3",
+                                      "#'   \"# This is an example document violating style conventions\",",
+                                      "#   \"# This is an example document violating style conventions\","))
   # nolint end
   expect_true(lapply(double_space_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
@@ -83,13 +91,16 @@ test_that("library_linter", {
   # nolint start
   inputWrong <- list(filename = "An example object",
                      file_lines = c("library(pkg)",
-                                    'library("pkg"',
-                                    "  library(pkg)"))
+                                    'library("pkg")',
+                                    "  library(pkg)",
+                                    "mean(x); library(INWTutils)"))
   # nolint end
   inputCorrect <- list(filename = "An example object",
-                       file_lines = c("# Comment with the word library",
-                                      "#' Roxygen comment containing library",
-                                      "some code 123 # comment with library"))
+                       file_lines = c("# Comment with library(pkg)",
+                                      "#' Roxygen comment containing library(pkg)",
+                                      "some code 123 # comment with library(pkg)",
+                                      '"string containing library(pkg)"',
+                                      "'string containing library(pkg)'"))
   expect_true(lapply(library_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
   expect_equal(library_linter(inputWrong) %>% length,
