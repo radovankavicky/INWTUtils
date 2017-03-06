@@ -1,6 +1,10 @@
 context("Project Skeleton")
 
 tmpdir <- tempdir()
+if (interactive()) {
+  dir.create("../temp")
+  tmpdir <- "../temp"
+}
 
 test_that("projectSkeleton does not produce any errors", {
   expect_error(projectSkeleton(paste0(tmpdir, "/tmp1")), NA)
@@ -102,16 +106,17 @@ test_that("createPackage creates correct files - pkg in own folder", {
 })
 
 
-test_that("packages created with projectSkeleton can be built", {
+test_that("packages created with projectSkeleton can be built and checked", {
   projectSkeleton(paste0(tmpdir, "/tmp10/"),
                   pkgName = "aTestPackage",
                   pkgOnToplevel = TRUE)
-  expect_error(build(pkg = paste0(tmpdir, "/tmp10"),
-                     path = paste0(tmpdir, "/tmp10")),
-               NA)
-  expect_warning(build(pkg = paste0(tmpdir, "/tmp10"),
-                       path = paste0(tmpdir, "/tmp10")),
-                 NA)
+  res10 <- devtools::check(pkg = paste0(tmpdir, "/tmp10/"),
+                           document = FALSE,
+                           quiet = TRUE)
+  expect_length(res10$errors, 0)
+  expect_length(res10$warnings, 1)
+  expect_length(res10$notes, 0)
+
   projectSkeleton(paste0(tmpdir, "/tmp11"),
                   pkgName = "aTestPackage",
                   pkgOnToplevel = FALSE)
@@ -121,24 +126,26 @@ test_that("packages created with projectSkeleton can be built", {
   expect_warning(build(pkg = paste0(tmpdir, "/tmp11/package"),
                        path = paste0(tmpdir, "/tmp11")),
                  NA)
+
   projectSkeleton(paste0(tmpdir, "/tmp12"),
                   pkgName = "aTestPackage",
                   pkgOnToplevel = TRUE,
                   rProject = TRUE)
-  expect_error(build(pkg = paste0(tmpdir, "/tmp12"),
-                     path = paste0(tmpdir, "/tmp12")),
-               NA)
-  expect_warning(build(pkg = paste0(tmpdir, "/tmp12"),
-                       path = paste0(tmpdir, "/tmp12")),
-                 NA)
+  res12 <- devtools::check(pkg = paste0(tmpdir, "/tmp12/"),
+                           document = FALSE,
+                           quiet = TRUE)
+  expect_length(res12$errors, 0)
+  expect_length(res12$warnings, 1)
+  expect_length(res12$notes, 0)
+
   projectSkeleton(paste0(tmpdir, "/tmp13/"),
                   pkgName = "aTestPackage",
                   pkgOnToplevel = FALSE,
                   rProject = TRUE)
-  expect_error(build(pkg = paste0(tmpdir, "/tmp13/package"),
-                     path = paste0(tmpdir, "/tmp13")),
-               NA)
-  expect_warning(build(pkg = paste0(tmpdir, "/tmp13/package"),
-                       path = paste0(tmpdir, "/tmp13")),
-                 NA)
+  res13 <- devtools::check(pkg = paste0(tmpdir, "/tmp13/package"),
+                           document = FALSE,
+                           quiet = TRUE)
+  expect_length(res13$errors, 0)
+  expect_length(res13$warnings, 1)
+  expect_length(res13$notes, 0)
 })
