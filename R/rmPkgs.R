@@ -3,6 +3,7 @@
 #' @description Removes all non-standard packages from the searchpath. Only
 #' packages loaded when starting R remain in the searchpath. This leads to a
 #' clean searchpath without unwanted masking effects.
+#' @export
 #'
 #' @examples
 #' \dontrun{
