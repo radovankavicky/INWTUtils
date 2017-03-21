@@ -1,9 +1,12 @@
 context("INWT's own linter functions")
 
 test_that("args_without_default_first_linter", {
-  erg <- lintr::lint("tests/testthat/testScript_args_without_default_first_linter.R",
-                     linters = list(argsWithoutDefault =
-                                      args_without_default_first_linter))
+  expect_true(file.exists(system.file("testScript_args_without_default_first_linter.R",
+                                      package = "INWTUtils")))
+  erg <- lint(system.file("testScript_args_without_default_first_linter.R",
+                          package = "INWTUtils"),
+              linters = list(argsWithoutDefault =
+                               args_without_default_first_linter))
   expect_equal(lapply(erg, function(lint) lint$line_number) %>% unlist,
                c(9, 13, 15, 19, 23, 26, 29, 33))
 })
