@@ -1,7 +1,6 @@
 context("Project Skeleton")
 
 tmpdir <- tempdir()
-# tmpdir <- "/home/mklein/Netzfreigaben/Git_TEX/INWTUtils/tmpForTest"
 if (interactive()) {
   dir.create("../temp")
   tmpdir <- "../temp"
@@ -98,6 +97,8 @@ test_that("createPackage creates correct files - pkg on top level", {
   expect_true(file.exists(paste0(tmpdir, "/tmp9/NAMESPACE")))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/tests/testthat.R")))
+  expect_true(file.exists(paste0(tmpdir,
+                                 "/tmp9/tests/testthat/test-codeStyle.R")))
 })
 
 
@@ -114,6 +115,8 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/NAMESPACE")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/tests/testthat.R")))
+  expect_true(file.exists(paste0(tmpdir,
+                                 "/tmp0/package/tests/testthat/test-codeStyle.R")))
 })
 
 
