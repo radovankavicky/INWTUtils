@@ -33,7 +33,6 @@ depends on the type of the file. The following linters are always included:
 
 The following linters are only included for \code{type = pkgFuns}:
 \itemize{
-  \item\code{\link{library_linter}},
   \item\code{\link{setwd_linter}},
   \item\code{\link{source_linter}}
 }

@@ -87,30 +87,6 @@ test_that("internal_INWT_function_linter", {
 })
 
 
-test_that("library_linter", {
-  # nolint start
-  inputWrong <- list(filename = "An example object",
-                     file_lines = c("library(pkg)",
-                                    'library("pkg")',
-                                    "  library(pkg)",
-                                    "mean(x); library(INWTutils)"))
-  # nolint end
-  inputCorrect <- list(filename = "An example object",
-                       file_lines = c("# Comment with library(pkg)",
-                                      "#' Roxygen comment containing library(pkg)",
-                                      "some code 123 # comment with library(pkg)",
-                                      '"string containing library(pkg)"',
-                                      "'string containing library(pkg)'"))
-  expect_true(lapply(library_linter(inputWrong),
-                     function(x) class(x) == "lint") %>% unlist %>% all)
-  expect_equal(library_linter(inputWrong) %>% length,
-               inputWrong$file_lines %>% length)
-  expect_true(lapply(library_linter(inputCorrect),
-                     function(x) class(x) == "lint") %>% unlist %>% all)
-  expect_equal(library_linter(inputCorrect) %>% length, 0)
-})
-
-
 test_that("setwd_linter", {
   # nolint start
   inputWrong <- list(filename = "An example object",

@@ -5,7 +5,6 @@
 \alias{args_without_default_first_linter}
 \alias{double_space_linter}
 \alias{internal_INWT_function_linter}
-\alias{library_linter}
 \alias{setwd_linter}
 \alias{source_linter}
 \title{INWT's own linters}
@@ -15,8 +14,6 @@ args_without_default_first_linter(source_file)
 double_space_linter(source_file)
 
 internal_INWT_function_linter(source_file)
-
-library_linter(source_file)
 
 setwd_linter(source_file)
 
@@ -39,9 +36,6 @@ arguments with default values.
 \item \code{internal_INWT_function_linter}: Instead of using internal functions from an INWT
 package in scripts with \code{:::}, they should be exported and documented.
 (only for scripts)
-
-\item \code{library_linter}: Using library in package functions can have
-unexpected side effects. (only for package functions)
 
 \item \code{setwd_linter}: Changing the working directory in package functions
 can have unexpected side effects. (only for package functions)

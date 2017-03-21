@@ -98,22 +98,6 @@ internal_INWT_function_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTlinters Using library in package functions can have
-#' unexpected side effects. (only for package functions)
-#' @export
-library_linter <- function(source_file) {
-  ids <- grep("^[^#\'\"]*library\\(", source_file$file_lines)
-  lapply(ids, function(id) {
-    Lint(filename = source_file$filename,
-         line_number = id,
-         column_number = NULL,
-         type = "style",
-         message = "Don't use library in package functions.",
-         linter = "library_linter")
-  })
-}
-
-
 #' @describeIn INWTlinters Changing the working directory in package functions
 #' can have unexpected side effects. (only for package functions)
 #' @export

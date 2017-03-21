@@ -63,7 +63,6 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
 #'
 #' The following linters are only included for \code{type = pkgFuns}:
 #' \itemize{
-#'   \item\code{\link{library_linter}},
 #'   \item\code{\link{setwd_linter}},
 #'   \item\code{\link{source_linter}}
 #' }
@@ -120,8 +119,7 @@ selectLntrs <- function(type = c("script", "pkgFuns")) {
 
 
 pkgFunLntrs <- function() {
-  list(library_linter = library_linter,
-       setwd_linter = setwd_linter,
+  list(setwd_linter = setwd_linter,
        source_linter = source_linter)
 }
 
