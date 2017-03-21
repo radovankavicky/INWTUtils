@@ -91,7 +91,7 @@ internal_INWT_function_linter <- function(source_file) {
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "If internal functions are used, the should rather be
+         message = "If internal functions are used, they should rather be
          documented and exported.",
          linter = "internal_INWT_function_linter")
   })

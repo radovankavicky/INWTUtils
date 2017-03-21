@@ -124,7 +124,9 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
                ')'),
              con = paste0(packageDir, "tests/testthat/test-codeStyle.R"))
 
-  copyFile(dir, ".Rbuildignore", ifelse(pkgOnToplevel, "", "package"))
+  copyFile(dir, "Rbuildignore", ifelse(pkgOnToplevel,
+                                       ".Rbuildignore",
+                                       "package/.Rbuildignore"))
 }
 
 
@@ -133,7 +135,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' @description Creates an R project with useful configuration. If the project
 #' contains a package, the respective options are set. The project is named
 #' after the folder which contains it.
-#' Internally used by \code{\link{crateProjectSkeleton}}.
+#' Internally used by \code{\link{createProjectSkeleton}}.
 
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory
