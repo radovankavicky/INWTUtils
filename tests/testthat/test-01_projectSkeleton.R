@@ -1,6 +1,7 @@
 context("Project Skeleton")
 
 tmpdir <- tempdir()
+# tmpdir <- "/home/mklein/Netzfreigaben/Git_TEX/INWTUtils/tmpForTest"
 if (interactive()) {
   dir.create("../temp")
   tmpdir <- "../temp"
@@ -39,12 +40,22 @@ test_that("projectSkeleton creates correct files", {
                   rProject = TRUE)
   expect_true(file.exists(paste0(tmpdir, "/tmp7")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/data")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/libLinux")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/libWin")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/reports")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libLinux/.gitignore")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libWin/.gitignore")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/.Rprofile")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts/exampleScript.R")))
+  # Package files
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/package")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/DESCRIPTION")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/tests/testthat.R")))
-  expect_true(file.exists(paste0(tmpdir, "/tmp7/reports")))
-  expect_true(file.exists(paste0(tmpdir, "/tmp7/rScripts")))
+  expect_true(file.exists(paste0(tmpdir,
+                                 "/tmp7/package/tests/testthat/test-codeStyle.R")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/package/.Rbuildignore")))
+  # rProject
   expect_true(file.exists(paste0(tmpdir, "/tmp7/tmp7.Rproj")))
 })
 

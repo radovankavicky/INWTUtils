@@ -39,32 +39,20 @@ projectSkeleton <- function(dir = ".",
   }
   if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
 
-  folders <- c("data", "libLinux", "libWin", "reports", "rScripts")
+  folders <- c("data", "libLinux", "libWin", "reports", "RScripts")
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
   lapply(paste0(dir, folders), dir.create)
 
   message("Writing .gitignore")
-  writeGitignore(paste0(dir, "libLinux"))
-  writeGitignore(paste0(dir, "libWin"))
+  copyFile(dir, "gitignore", "libLinux/.gitignore")
+  copyFile(dir, "gitignore", "libWin/.gitignore")
 
   message("Writing .Rprofile")
-  # nolint start
-  writeLines(c('.First <- function() {',
-               '  if (grepl("Windows", Sys.getenv("OS"))) {',
-               paste0('    .libPaths(new = c(paste(getwd(), "libWin",',
-                      ' sep = "/"), .libPaths()))'),
-               '  } else {',
-               paste0('    .libPaths(new = c(paste(getwd(), "libLinux",',
-                      ' sep = "/"), .libPaths()))'),
-               '  }',
-               '}',
-               '',
-               '.First()'),
-             # nolint end
-             con = paste0(dir, ".Rprofile"))
+  copyFile(dir, "Rprofile", ".Rprofile")
 
   if (exampleScript) {
-    # Move example script to scripts
+    message("Writing example script")
+    copyFile(dir, "exampleScript.R", "RScripts")
   }
 
   if (!is.null(pkgName)) {
@@ -78,11 +66,15 @@ projectSkeleton <- function(dir = ".",
 
 }
 
-# Write empty .gitignore to push lib folders to github
-writeGitignore <- function(dir) {
-  writeLines(c("# Ignore everything in this directory",
-               "*", "# Except this file", "!.gitignore"),
-             con = paste0(dir, "/.gitignore"))
+
+# Copy a file from inst to the - per default - respective directory relative to
+# the project root
+# dir: project root
+# origin: name/path of file relative to inst
+# dest: new path (path only or path with filename) relative to project root
+copyFile <- function(dir, origin, dest = origin, ...) {
+  file.copy(from = system.file(origin, package = "INWTUtils"),
+            to = paste0(dir, dest), ...)
 }
 
 
@@ -132,11 +124,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
                ')'),
              con = paste0(packageDir, "tests/testthat/test-codeStyle.R"))
 
-  writeLines(c('^.*\\.Rproj$',
-               '^\\.Rproj\\.user$',
-               'lib*',
-               'RScripts'),
-             con = paste0(packageDir, ".Rbuildignore"))
+  copyFile(dir, ".Rbuildignore", ifelse(pkgOnToplevel, "", "package"))
 }
 
 
