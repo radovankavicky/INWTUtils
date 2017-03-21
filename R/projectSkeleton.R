@@ -23,15 +23,15 @@
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}} if creating a package
 #'
-#' @examples projectSkeleton("tmp", rProject = TRUE)
+#' @examples createProjectSkeleton("tmp", rProject = TRUE)
 #'
 #' @export
-projectSkeleton <- function(dir = ".",
-                            pkgName = NULL,
-                            pkgOnToplevel = TRUE,
-                            rProject = FALSE,
-                            exampleScript = TRUE,
-                            ...) {
+createProjectSkeleton <- function(dir = ".",
+                                  pkgName = NULL,
+                                  pkgOnToplevel = TRUE,
+                                  rProject = FALSE,
+                                  exampleScript = TRUE,
+                                  ...) {
 
   if (dir != ".") {
     message(paste0("Creating '", dir, "/'"))
@@ -84,7 +84,7 @@ copyFile <- function(dir, origin, dest = origin, ...) {
 #' \code{dir} or in a subfolder called "package". Also creates an infrastructure
 #' for testthat, a test for the package style and an .Rbuildignore. An R project
 #' has to be created separately.
-#' Used by \code{\link{projectSkeleton}}.
+#' Used by \code{\link{createProjectSkeleton}}.
 #'
 #' @param dir character: Directory
 #' @param pkgName character: Package name
@@ -133,7 +133,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' @description Creates an R project with useful configuration. If the project
 #' contains a package, the respective options are set. The project is named
 #' after the folder which contains it.
-#' Internally used by \code{\link{projectSkeleton}}.
+#' Internally used by \code{\link{crateProjectSkeleton}}.
 
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory

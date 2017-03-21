@@ -22,7 +22,7 @@ Creates a package, either directly in the directory specified in
 \code{dir} or in a subfolder called "package". Also creates an infrastructure
 for testthat, a test for the package style and an .Rbuildignore. An R project
 has to be created separately.
-Used by \code{\link{projectSkeleton}}.
+Used by \code{\link{createProjectSkeleton}}.
 }
 \examples{
 \dontrun{

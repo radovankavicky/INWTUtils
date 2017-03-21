@@ -19,7 +19,7 @@ working directory by default}
 Creates an R project with useful configuration. If the project
 contains a package, the respective options are set. The project is named
 after the folder which contains it.
-Internally used by \code{\link{projectSkeleton}}.
+Internally used by \code{\link{crateProjectSkeleton}}.
 }
 \examples{
 \dontrun{
