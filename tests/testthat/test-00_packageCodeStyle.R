@@ -28,3 +28,9 @@ test_that("Code is lint-free", {
 
   unlink(".lintr")
 })
+
+
+test_that("Example script is lint-free", {
+  exampleScript <- system.file("exampleScript.R", package = "INWTUtils")
+  expect_length(checkStyle(exampleScript, type = "script"), 0)
+})
