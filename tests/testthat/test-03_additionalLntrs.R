@@ -41,7 +41,8 @@ test_that("args_without_default_first_linter (only within line)", {
 test_that("double_space_linter", {
   # nolint start
   inputWrong <- list(filename = "An example object",
-                     file_lines = c("Simple text with  double whitespace",
+                     file_lines = c("# A header line with faulty  double space  #",
+                                    "Simple text with  double whitespace",
                                     "  indented text  with double whitespace",
                                     "  # Commented  text",
                                     "  # Indented  line  commented out",
@@ -51,10 +52,13 @@ test_that("double_space_linter", {
                                     "    x <- 3 #  indented and commented",
                                     "#'   \"# This is an example  document violating style conventions\","))
   inputCorrect <- list(filename = "An example object",
-                       file_lines = c("Normal text",
+                       file_lines = c("# A header line ending with spaces and hash  #",
+                                      "# A header line ending with many spaces and hash       #",
+                                      "Normal text",
                                       "  indented text",
                                       "#'   An indented roxygen comment",
                                       "  # Indented line commented out",
+                                      "  #   Indented line commented out",
                                       "    x <- 3",
                                       "#'   \"# This is an example document violating style conventions\",",
                                       "#   \"# This is an example document violating style conventions\","))

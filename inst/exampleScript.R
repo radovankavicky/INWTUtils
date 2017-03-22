@@ -34,6 +34,3 @@ exampleVector <- c(1:3) # lowerCamelCase for ordinary object names
 
 
 # 02 ... -----------------------------------------------------------------------
-
-
-
