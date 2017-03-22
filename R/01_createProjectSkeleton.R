@@ -34,8 +34,12 @@ createProjectSkeleton <- function(dir = ".",
                                   ...) {
 
   if (dir != ".") {
-    message(paste0("Creating '", dir, "/'"))
-    dir.create(dir)
+    if (dir.exists(dir)) {
+      message("Directory already exists and will be used.")
+    } else {
+      message(paste0("Creating '", dir, "/'"))
+      dir.create(dir)
+    }
   }
   if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
 
