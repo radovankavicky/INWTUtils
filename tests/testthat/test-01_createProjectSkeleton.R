@@ -7,36 +7,42 @@ if (interactive()) {
 }
 
 test_that("createProjectSkeleton does not produce any errors", {
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp1")), NA)
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp2/"),
-                                     pkgName = "aTestPackage",
-                                     pkgOnToplevel = TRUE),
-               NA)
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp3"),
-                                     pkgName = "aTestPackage",
-                                     pkgOnToplevel = FALSE),
-               NA)
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp4/"),
-                                     rProject = TRUE),
-               NA)
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp5"),
-                                     pkgName = "aTestPackage",
-                                     pkgOnToplevel = TRUE,
-                                     rProject = TRUE),
-               NA)
-  expect_error(createProjectSkeleton(paste0(tmpdir, "/tmp6/"),
-                                     pkgName = "aTestPackage",
-                                     pkgOnToplevel = FALSE,
-                                     rProject = TRUE),
-               NA)
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp1")), NA)))
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp2/"),
+                          pkgName = "aTestPackage",
+                          pkgOnToplevel = TRUE),
+    NA)))
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp3"),
+                          pkgName = "aTestPackage",
+                          pkgOnToplevel = FALSE),
+    NA)))
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp4/"),
+                          rProject = TRUE),
+    NA)))
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp5"),
+                          pkgName = "aTestPackage",
+                          pkgOnToplevel = TRUE,
+                          rProject = TRUE),
+    NA)))
+  expect_error(invisible(capture.output(
+    createProjectSkeleton(paste0(tmpdir, "/tmp6/"),
+                          pkgName = "aTestPackage",
+                          pkgOnToplevel = FALSE,
+                          rProject = TRUE),
+    NA)))
 })
 
 
 test_that("createProjectSkeleton creates correct files", {
-  createProjectSkeleton(paste0(tmpdir, "/tmp7"),
-                        pkgName = "aTestPackage",
-                        pkgOnToplevel = FALSE,
-                        rProject = TRUE)
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp7"),
+                                                 pkgName = "aTestPackage",
+                                                 pkgOnToplevel = FALSE,
+                                                 rProject = TRUE)))
   expect_true(file.exists(paste0(tmpdir, "/tmp7")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/data")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libLinux")))
@@ -51,8 +57,8 @@ test_that("createProjectSkeleton creates correct files", {
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/DESCRIPTION")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/tests/testthat.R")))
-  expect_true(file.exists(paste0(tmpdir,
-                                 "/tmp7/package/tests/testthat/test-codeStyle.R")))
+  expect_true(file.exists(paste0(
+    tmpdir, "/tmp7/package/tests/testthat/test-codeStyle.R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/.Rbuildignore")))
   # rProject
   expect_true(file.exists(paste0(tmpdir, "/tmp7/tmp7.Rproj")))
@@ -86,8 +92,9 @@ test_that("createProject creates correct files", {
 
 test_that("createPackage creates correct files - pkg on top level", {
   dir.create(paste0(tmpdir, "/tmp9"))
-  createPackage(dir = paste0(tmpdir, "/tmp9"), pkgName = "testPackage",
-                pkgOnToplevel = TRUE)
+  invisible(capture.output(createPackage(dir = paste0(tmpdir, "/tmp9"),
+                                         pkgName = "testPackage",
+                                         pkgOnToplevel = TRUE)))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp9/.Rbuildignore"))[3:4],
                c("lib*", "RScripts"))
@@ -104,8 +111,9 @@ test_that("createPackage creates correct files - pkg on top level", {
 
 test_that("createPackage creates correct files - pkg in own folder", {
   dir.create(paste0(tmpdir, "/tmp0"))
-  createPackage(dir = paste0(tmpdir, "/tmp0"), pkgName = "testPackage",
-                pkgOnToplevel = FALSE)
+  invisible(capture.output(createPackage(dir = paste0(tmpdir, "/tmp0"),
+                                         pkgName = "testPackage",
+                                         pkgOnToplevel = FALSE)))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp0/package/.Rbuildignore"))[3:4],
                c("lib*", "RScripts"))
@@ -115,15 +123,15 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/NAMESPACE")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/tests/testthat.R")))
-  expect_true(file.exists(paste0(tmpdir,
-                                 "/tmp0/package/tests/testthat/test-codeStyle.R")))
+  expect_true(file.exists(paste0(
+    tmpdir, "/tmp0/package/tests/testthat/test-codeStyle.R")))
 })
 
 
-test_that("packages created with createProjectSkeleton can be built and checked", {
-  createProjectSkeleton(paste0(tmpdir, "/tmp10/"),
-                        pkgName = "aTestPackage",
-                        pkgOnToplevel = TRUE)
+test_that("packages created with createProjectSkeleton can be built/checked", {
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp10/"),
+                                                 pkgName = "aTestPackage",
+                                                 pkgOnToplevel = TRUE)))
   res10 <- check(pkg = paste0(tmpdir, "/tmp10/"),
                  document = FALSE,
                  quiet = TRUE)
@@ -131,9 +139,9 @@ test_that("packages created with createProjectSkeleton can be built and checked"
   expect_length(res10$warnings, 1)
   expect_length(res10$notes, 0)
 
-  createProjectSkeleton(paste0(tmpdir, "/tmp11"),
-                        pkgName = "aTestPackage",
-                        pkgOnToplevel = FALSE)
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp11"),
+                                                 pkgName = "aTestPackage",
+                                                 pkgOnToplevel = FALSE)))
   expect_error(build(pkg = paste0(tmpdir, "/tmp11/package"),
                      path = paste0(tmpdir, "/tmp11")),
                NA)
@@ -141,10 +149,10 @@ test_that("packages created with createProjectSkeleton can be built and checked"
                        path = paste0(tmpdir, "/tmp11")),
                  NA)
 
-  createProjectSkeleton(paste0(tmpdir, "/tmp12"),
-                        pkgName = "aTestPackage",
-                        pkgOnToplevel = TRUE,
-                        rProject = TRUE)
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp12"),
+                                                 pkgName = "aTestPackage",
+                                                 pkgOnToplevel = TRUE,
+                                                 rProject = TRUE)))
   res12 <- check(pkg = paste0(tmpdir, "/tmp12/"),
                  document = FALSE,
                  quiet = TRUE)
@@ -152,10 +160,10 @@ test_that("packages created with createProjectSkeleton can be built and checked"
   expect_length(res12$warnings, 1)
   expect_length(res12$notes, 0)
 
-  createProjectSkeleton(paste0(tmpdir, "/tmp13/"),
-                        pkgName = "aTestPackage",
-                        pkgOnToplevel = FALSE,
-                        rProject = TRUE)
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp13/"),
+                                                 pkgName = "aTestPackage",
+                                                 pkgOnToplevel = FALSE,
+                                                 rProject = TRUE)))
   res13 <- check(pkg = paste0(tmpdir, "/tmp13/package"),
                  document = FALSE,
                  quiet = TRUE)
