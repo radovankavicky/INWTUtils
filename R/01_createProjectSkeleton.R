@@ -119,14 +119,10 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
                       ... = ...))
 
   use_testthat(pkg = packageDir)
-  writeLines(c('context("Code Style")',
-               '# nolint start',
-               'test_that("Code style is in line with INWT style conventions", {',
-               '  lintr::expect_lint_free(linters = INWTUtils::selectLntrs())',
-               '}',
-               '# nolint end',
-               ')'),
-             con = paste0(packageDir, "tests/testthat/test-codeStyle.R"))
+
+  copyFile(dir, "testForCodeStyle.R",
+           paste0(ifelse(pkgOnToplevel, "", "package/"),
+                  "tests/testthat/test-00_codeStyle.R"))
 
   copyFile(dir, "Rbuildignore", ifelse(pkgOnToplevel,
                                        ".Rbuildignore",

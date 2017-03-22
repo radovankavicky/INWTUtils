@@ -58,7 +58,7 @@ test_that("createProjectSkeleton creates correct files", {
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/DESCRIPTION")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/tests/testthat.R")))
   expect_true(file.exists(paste0(
-    tmpdir, "/tmp7/package/tests/testthat/test-codeStyle.R")))
+    tmpdir, "/tmp7/package/tests/testthat/test-00_codeStyle.R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/.Rbuildignore")))
   # rProject
   expect_true(file.exists(paste0(tmpdir, "/tmp7/tmp7.Rproj")))
@@ -105,7 +105,7 @@ test_that("createPackage creates correct files - pkg on top level", {
   expect_true(file.exists(paste0(tmpdir, "/tmp9/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/tests/testthat.R")))
   expect_true(file.exists(paste0(tmpdir,
-                                 "/tmp9/tests/testthat/test-codeStyle.R")))
+                                 "/tmp9/tests/testthat/test-00_codeStyle.R")))
 })
 
 
@@ -124,7 +124,7 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/tests/testthat.R")))
   expect_true(file.exists(paste0(
-    tmpdir, "/tmp0/package/tests/testthat/test-codeStyle.R")))
+    tmpdir, "/tmp0/package/tests/testthat/test-00_codeStyle.R")))
 })
 
 
