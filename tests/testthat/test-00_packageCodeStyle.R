@@ -3,12 +3,14 @@ context("Package code style")
 test_that("Code is lint-free", {
 
   # Files to exclude from linter check
-  excludedFiles <- c("testScript_args_without_default_first_linter.R",
-                     "exampleScript.R",
+  excludedFiles <- c("exampleScript.R",
+                     "testScript_args_without_default.R",
                      "testScript_checkStyle.R")
 
-  exclusions <- as.list(paste0(if (interactive()) "inst/" else "",
-                               excludedFiles))
+  exclusions <- lapply(excludedFiles, function(file) {
+    system.file(file, package = "INWTUtils") %>%
+      gsub(paste0(getwd(), "/"), "", .)
+  })
 
   writeLines(c('linters: with_defaults()',
                paste0('exclusions: list("',
