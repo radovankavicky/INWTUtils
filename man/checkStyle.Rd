@@ -4,10 +4,10 @@
 \alias{checkStyle}
 \title{Check code style}
 \usage{
-checkStyle(file, type = c("script", "pkgFuns"))
+checkStyle(files, type = c("script", "pkgFuns"))
 }
 \arguments{
-\item{file}{character: Filepath}
+\item{files}{character vector: One or more filepaths}
 
 \item{type}{character: Type of the file}
 }
@@ -38,6 +38,7 @@ writeLines(con = "lintExample.txt",
                     ""))
            # nolint end
 checkStyle("lintExample.txt", type = "script")
+unlink("lintExample.txt") # Remove file
 
 }
 

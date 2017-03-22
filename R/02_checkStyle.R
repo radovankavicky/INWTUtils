@@ -7,7 +7,7 @@
 #' ("script" or "pkgFuns"), additional linters are tested. For details about the
 #' tested linters see \code{\link{selectLntrs}}.
 #'
-#' @param file character: Filepath
+#' @param files character vector: One or more filepaths
 #' @inheritParams selectLntrs
 #'
 #' @examples \dontrun{
@@ -28,13 +28,17 @@
 #'                     ""))
 #'            # nolint end
 #' checkStyle("lintExample.txt", type = "script")
+#' unlink("lintExample.txt") # Remove file
 #'
 #' }
 #'
 #' @export
 #'
-checkStyle <- function(file, type = c("script", "pkgFuns")) {
-  lint(file, linters = selectLntrs(type))
+checkStyle <- function(files, type = c("script", "pkgFuns")) {
+  erg <- lapply(files, function(file) lint(file, linters = selectLntrs(type)))
+  erg <- do.call(c, erg)
+  class(erg) <- "lints"
+  erg
 }
 
 
