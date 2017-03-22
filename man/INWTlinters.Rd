@@ -23,8 +23,8 @@ source_linter(source_file)
 \item{source_file}{returned by \code{\link[lintr]{get_source_expressions}}}
 }
 \description{
-Linters added by INWT. Can be used with
-\code{\link[lintr]{lint}}.
+Linters added by INWT. Usually not called directly but used
+with \code{\link[lintr]{lint}}.
 }
 \section{Functions}{
 \itemize{

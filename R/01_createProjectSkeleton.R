@@ -8,9 +8,10 @@
 #'   \item libWin (folder) containing .gitginore
 #'   \item libLinux (folder) containing .gitginore
 #'   \item .Rprofile
-#'   \item .Rproj (optional)
+#'   \item .Rproj (optional; created with \code{\link{createProject}})
 #' }
-#' The infrastructure for a package can be added.
+#' The infrastructure for a package can also be added optionally (created with
+#' \code{\link{createPackage}}).
 #'
 #' @param dir character: Directory where the file structure is created, relative
 #' to the current working directory. The current working directory by default.
@@ -18,7 +19,7 @@
 #' name is created.
 #' @param pkgOnToplevel logical: Should the package live in the main directory
 #' (default) or in a subfolder called package?
-#' @param rProject logical: Create an R Project?
+#' @param rProject logical: Create Rproject file?
 #' @param exampleScript logical: Create example script? (not yet used)
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}} if creating a package
@@ -82,12 +83,12 @@ copyFile <- function(dir, origin, dest = origin, ...) {
 }
 
 
-#' Create package
+#' Create package with style test
 #'
-#' @description Creates a package, either directly in the directory specified in
-#' \code{dir} or in a subfolder called "package". Also creates an infrastructure
-#' for testthat, a test for the package style and an .Rbuildignore. An R project
-#' has to be created separately.
+#' @description Creates a package, either directly into the directory specified
+#' in \code{dir}, or in a subfolder \emph{package}. Also creates an infrastructure
+#' for \code{testthat}, a test for the package style and an .Rbuildignore.
+#' An R project can be created separately with \code{\link{createProject}}.
 #' Used by \code{\link{createProjectSkeleton}}.
 #'
 #' @param dir character: Directory
@@ -135,11 +136,11 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' @description Creates an R project with useful configuration. If the project
 #' contains a package, the respective options are set. The project is named
 #' after the folder which contains it.
-#' Internally used by \code{\link{createProjectSkeleton}}.
+#' Used in \code{\link{createProjectSkeleton}}.
 
 #' @param pkg logical: Does the project contain a package?
 #' @param pkgOnToplevel logical: Does the package live in the project directory
-#' (default) or a subfolder "package"?
+#' (default) or a subfolder \emph{package}?
 #' @param dir character: Directory where the R project is created; current
 #' working directory by default
 #'
@@ -147,8 +148,7 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' \dontrun{
 #' createProject(pkg = FALSE, dir = "./")
 #' dir.create("tmp")
-#' createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")
-#' }
+#' createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")}
 #'
 #' @export
 #'

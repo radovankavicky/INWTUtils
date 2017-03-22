@@ -2,7 +2,7 @@
 % Please edit documentation in R/01_createProjectSkeleton.R
 \name{createPackage}
 \alias{createPackage}
-\title{Create package}
+\title{Create package with style test}
 \usage{
 createPackage(dir, pkgName, pkgOnToplevel, ...)
 }
@@ -18,10 +18,10 @@ directory or in a subfolder called package?}
 \code{\link[devtools]{setup}}}
 }
 \description{
-Creates a package, either directly in the directory specified in
-\code{dir} or in a subfolder called "package". Also creates an infrastructure
-for testthat, a test for the package style and an .Rbuildignore. An R project
-has to be created separately.
+Creates a package, either directly into the directory specified
+in \code{dir}, or in a subfolder \emph{package}. Also creates an infrastructure
+for \code{testthat}, a test for the package style and an .Rbuildignore.
+An R project can be created separately with \code{\link{createProject}}.
 Used by \code{\link{createProjectSkeleton}}.
 }
 \examples{

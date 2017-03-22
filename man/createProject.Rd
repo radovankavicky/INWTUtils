@@ -10,7 +10,7 @@ createProject(pkg, pkgOnToplevel = TRUE, dir = "./")
 \item{pkg}{logical: Does the project contain a package?}
 
 \item{pkgOnToplevel}{logical: Does the package live in the project directory
-(default) or a subfolder "package"?}
+(default) or a subfolder \emph{package}?}
 
 \item{dir}{character: Directory where the R project is created; current
 working directory by default}
@@ -19,13 +19,12 @@ working directory by default}
 Creates an R project with useful configuration. If the project
 contains a package, the respective options are set. The project is named
 after the folder which contains it.
-Internally used by \code{\link{createProjectSkeleton}}.
+Used in \code{\link{createProjectSkeleton}}.
 }
 \examples{
 \dontrun{
 createProject(pkg = FALSE, dir = "./")
 dir.create("tmp")
-createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")
-}
+createProject(pkg = TRUE, pkgOnToplevel = FALSE, dir = "tmp")}
 
 }

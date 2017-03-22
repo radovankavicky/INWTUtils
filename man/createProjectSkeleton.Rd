@@ -17,7 +17,7 @@ name is created.}
 \item{pkgOnToplevel}{logical: Should the package live in the main directory
 (default) or in a subfolder called package?}
 
-\item{rProject}{logical: Create an R Project?}
+\item{rProject}{logical: Create Rproject file?}
 
 \item{exampleScript}{logical: Create example script? (not yet used)}
 
@@ -33,9 +33,10 @@ Creates a useful file and folder structure. This includes:
   \item libWin (folder) containing .gitginore
   \item libLinux (folder) containing .gitginore
   \item .Rprofile
-  \item .Rproj (optional)
+  \item .Rproj (optional; created with \code{\link{createProject}})
 }
-The infrastructure for a package can be added.
+The infrastructure for a package can also be added optionally (created with
+\code{\link{createPackage}}).
 }
 \examples{
 createProjectSkeleton("tmp", rProject = TRUE)

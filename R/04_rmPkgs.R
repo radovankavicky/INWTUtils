@@ -7,11 +7,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(INWTutils)
+#' library(INWUtils)
 #' search()
 #' rmPkgs()
 #' search()
-#' # INWTutils is not in the searchpath anymore
+#' # INWUtils is not in the searchpath anymore
 #' }
 rmPkgs <- function() {
   if (!is.null(packages <- names(sessionInfo()$otherPkgs))) {

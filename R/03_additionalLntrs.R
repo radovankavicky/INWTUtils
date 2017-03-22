@@ -2,8 +2,8 @@
 #'
 #' @name INWTlinters
 #'
-#' @description Linters added by INWT. Can be used with
-#' \code{\link[lintr]{lint}}.
+#' @description Linters added by INWT. Usually not called directly but used
+#' with \code{\link[lintr]{lint}}.
 #'
 #' @param source_file returned by \code{\link[lintr]{get_source_expressions}}
 #'

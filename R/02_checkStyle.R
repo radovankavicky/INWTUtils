@@ -1,13 +1,13 @@
 #' Check code style
 #'
-#' @description Checks a for violations of the INWT style conventions using
+#' @description Checks a file for violations of the INWT style conventions using
 #' \code{\link[lintr]{lint}}. In addition to the \code{\link[lintr]{linters}}
 #' provided by the package \code{lintr}, some custom linters are tested. The set
 #' of used linters depends on the type of the file. If the type is specified
-#' ("script" or "pkgFuns"), some additional linters are tested. For details
-#' about the tested linters see \code{\link{selectLntrs}}.
+#' ("script" or "pkgFuns"), additional linters are tested. For details about the
+#' tested linters see \code{\link{selectLntrs}}.
 #'
-#' @param file character: File to check
+#' @param file character: Filepath
 #' @inheritParams selectLntrs
 #'
 #' @examples \dontrun{
@@ -61,13 +61,13 @@ checkStyle <- function(file, type = c("script", "pkgFuns")) {
 #'   \item\code{\link[lintr]{trailing_whitespace_linter}}
 #' }
 #'
-#' The following linters are only included for \code{type = pkgFuns}:
+#' The following linters are only included if \code{type = pkgFuns}:
 #' \itemize{
 #'   \item\code{\link{setwd_linter}},
 #'   \item\code{\link{source_linter}}
 #' }
 #'
-#' The following linters are only included for \code{type = script}:
+#' The following linters are only included if \code{type = script}:
 #' \itemize{
 #'   \item\code{\link{internal_INWT_function_linter}}
 #' }

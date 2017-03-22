@@ -5,9 +5,9 @@ Authors@R: c(person("Mira Celine", "Klein",
     email = "mira-klein@inwt-statistics.de", role = "cre"))
 Maintainer: 'Mira Celine Klein' <mira-klein@inwt-statistics.de>
 Description: This package provides several useful functions for the work with
-    R projects and packages as well as an example script. INWT Statistics uses
-    these functions to ensure a clean working environment, a consistent file
-    structure and code style.
+    R projects and packages. There are helpful functions to create the file
+	structure for a new project, functions to check the code style, and a
+    function to ensure a clean working environment.
 Depends:
     R (>= 3.3.2)
 Imports:
