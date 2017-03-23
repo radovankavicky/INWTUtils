@@ -36,7 +36,7 @@ The latter two can also be done separately (see sections 2 and 3).
 ### Calling `createProjectSkeleton` with default values
 
 Using the function with just the default values will create the following
-file structure in your present working directory (which would in this case be 
+file structure in your current working directory (which would in this case be 
 named *myfolder*):
 
 ```{r, echo = FALSE, eval = FALSE}
@@ -69,7 +69,8 @@ workspace, not saving the history and inserting spaces for tabs.
 The resulting file structure can be customized via the following arguments
 for `createProjectSkeleton:`
 
-- `dir:` Directory where the file structure should be created
+- `dir:` Directory where the file structure should be created (absolute path
+  or path relative to the current working directory)
 - `pkgName:` If you specify a package name via this argument, a package with
   this name is created in your folder. It already contains the infrastructure
   to use the

@@ -8,8 +8,9 @@ createProjectSkeleton(dir = ".", pkgName = NULL, pkgOnToplevel = TRUE,
   rProject = TRUE, exampleScript = TRUE, ...)
 }
 \arguments{
-\item{dir}{character: Directory where the file structure is created, relative
-to the current working directory. The current working directory by default.}
+\item{dir}{character: Directory where the file structure is created, absolute
+or relative to the current working directory. The current working directory
+by default.}
 
 \item{pkgName}{character: If \code{pkgName} is specified, a package with this
 name is created.}

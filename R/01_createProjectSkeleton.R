@@ -13,8 +13,9 @@
 #' The infrastructure for a package can also be added optionally (created with
 #' \code{\link{createPackage}}).
 #'
-#' @param dir character: Directory where the file structure is created, relative
-#' to the current working directory. The current working directory by default.
+#' @param dir character: Directory where the file structure is created, absolute
+#' or relative to the current working directory. The current working directory
+#' by default.
 #' @param pkgName character: If \code{pkgName} is specified, a package with this
 #' name is created.
 #' @param pkgOnToplevel logical: Should the package live in the main directory
