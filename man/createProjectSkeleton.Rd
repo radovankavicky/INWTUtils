@@ -5,7 +5,7 @@
 \title{Create file structure}
 \usage{
 createProjectSkeleton(dir = ".", pkgName = NULL, pkgOnToplevel = TRUE,
-  rProject = FALSE, exampleScript = TRUE, ...)
+  rProject = TRUE, exampleScript = TRUE, ...)
 }
 \arguments{
 \item{dir}{character: Directory where the file structure is created, relative

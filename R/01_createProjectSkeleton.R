@@ -30,7 +30,7 @@
 createProjectSkeleton <- function(dir = ".",
                                   pkgName = NULL,
                                   pkgOnToplevel = TRUE,
-                                  rProject = FALSE,
+                                  rProject = TRUE,
                                   exampleScript = TRUE,
                                   ...) {
 
