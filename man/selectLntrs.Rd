@@ -20,7 +20,6 @@ depends on the type of the file. The following linters are always included:
   \item\code{\link[INWTUtils]{double_space_linter}},
   \item\code{\link[lintr]{infix_spaces_linter}},
   \item\code{\link[lintr]{line_length_linter}},
-  \item\code{\link[lintr]{multiple_dots_linter}},
   \item\code{\link[lintr]{no_tab_linter}},
   \item\code{\link[lintr]{object_length_linter}},
   \item\code{\link[lintr]{object_usage_linter}},
