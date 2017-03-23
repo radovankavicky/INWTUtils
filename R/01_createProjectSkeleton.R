@@ -73,11 +73,13 @@ createProjectSkeleton <- function(dir = ".",
 }
 
 
-# Copy a file from inst to the - per default - respective directory relative to
-# the project root
-# dir: project root
-# origin: name/path of file relative to inst
-# dest: new path (path only or path with filename) relative to project root
+#' Copy file from inst
+#' @description Copy a file from inst to the - per default - respective
+#' directory relative to the project root
+#' @param dir character: project root
+#' @param origin character: name/path of file relative to inst
+#' @param dest character: new path (path to directory or path with filename)
+#' relative to project root
 copyFile <- function(dir, origin, dest = origin, ...) {
   file.copy(from = system.file(origin, package = "INWTUtils"),
             to = paste0(dir, dest), ...)
