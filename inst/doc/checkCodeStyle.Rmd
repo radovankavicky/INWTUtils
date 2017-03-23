@@ -115,7 +115,7 @@ because they can cause side effects when used in functions.
 
 The remaining linters are taken from the `lintr` package.
 Details can be found via
-[`?lintr::linters`](https://rdrr.io/cran/lintr/man/linters.html).
+[`?lintr::linters`](https://rdrr.io/cran/lintr/man/linters.html) .
 
 
 ## Exclude lines from checking
