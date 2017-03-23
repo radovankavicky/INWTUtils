@@ -4,14 +4,15 @@
 \alias{selectLntrs}
 \title{List of linters to check INWT style conventions}
 \usage{
-selectLntrs(type = c("script", "pkgFuns"))
+selectLntrs(type = NULL)
 }
 \arguments{
 \item{type}{character: Type of the file}
 }
 \description{
 Used in \code{\link{checkStyle}}. The set of included linters
-depends on the type of the file. The following linters are always included:
+depends on the type of the file (\code{"script"}, \code{"pkgFuns"}, or
+\code{NULL}). The following linters are always included:
 \itemize{
   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
   \item\code{\link[lintr]{assignment_linter}},

@@ -45,7 +45,8 @@ checkStyle <- function(files, type = c("script", "pkgFuns")) {
 #' List of linters to check INWT style conventions
 #'
 #' @description Used in \code{\link{checkStyle}}. The set of included linters
-#' depends on the type of the file. The following linters are always included:
+#' depends on the type of the file (\code{"script"}, \code{"pkgFuns"}, or
+#' \code{NULL}). The following linters are always included:
 #' \itemize{
 #'   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
 #'   \item\code{\link[lintr]{assignment_linter}},
@@ -54,7 +55,6 @@ checkStyle <- function(files, type = c("script", "pkgFuns")) {
 #'   \item\code{\link[INWTUtils]{double_space_linter}},
 #'   \item\code{\link[lintr]{infix_spaces_linter}},
 #'   \item\code{\link[lintr]{line_length_linter}},
-#'   \item\code{\link[lintr]{multiple_dots_linter}},
 #'   \item\code{\link[lintr]{no_tab_linter}},
 #'   \item\code{\link[lintr]{object_length_linter}},
 #'   \item\code{\link[lintr]{object_usage_linter}},
@@ -94,7 +94,9 @@ checkStyle <- function(files, type = c("script", "pkgFuns")) {
 #'
 #' @export
 #'
-selectLntrs <- function(type = c("script", "pkgFuns")) {
+selectLntrs <- function(type = NULL) {
+
+  if (is.null(type)) type <- ""
 
   linters <- list(args_without_default_first_linter =
                     args_without_default_first_linter,
@@ -104,7 +106,6 @@ selectLntrs <- function(type = c("script", "pkgFuns")) {
                   double_space_linter = double_space_linter,
                   infix_spaces_linter = infix_spaces_linter,
                   line_length_linter = line_length_linter(100),
-                  multiple_dots_linter = multiple_dots_linter,
                   no_tab_linter = no_tab_linter,
                   object_usage_linter = object_usage_linter,
                   object_length_linter = object_length_linter(30L),
@@ -115,8 +116,8 @@ selectLntrs <- function(type = c("script", "pkgFuns")) {
                   trailing_blank_lines_linter = trailing_blank_lines_linter,
                   trailing_whitespace_linter = trailing_whitespace_linter)
 
-  if (all(type == "script")) linters <- c(linters, scriptLntrs())
-  if (all(type == "pkgFuns")) linters <- c(linters, pkgFunLntrs())
+  if (type == "script") linters <- c(linters, scriptLntrs())
+  if (type == "pkgFuns") linters <- c(linters, pkgFunLntrs())
 
   return(linters)
 }
