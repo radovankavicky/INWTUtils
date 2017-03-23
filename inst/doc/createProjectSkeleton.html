@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Mira Céline Klein" />
+
+<meta name="date" content="2017-03-23" />
+
+<title>Creating a file structure for a new project</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Creating a file structure for a new project</h1>
+<h4 class="author"><em>Mira Céline Klein</em></h4>
+<h4 class="date"><em>2017-03-23</em></h4>
+
+
+
+<p>When you start a new project in R, you usually first need a particular file strucure. This includes certain folders, maybe the structure for an R package including some basic tests, and several configuration files (e.g., a .gitignore, an .Rprofile, …). You could create this structure from scratch everytime, or copy it from an existing project (followed by deleting all the unnecessary files from the old project and realizing that you still did not catch the latest version of some file). An easier way is to do it with the function <code>createProjectSkeleton</code> from the <code>INWTUtils</code> package.</p>
+<p>This furthermore enables working in a sandbox, i.e. you can play around without running into danger of destroying something outside our project (for details see section 4).</p>
+<div id="usage-of-createprojectskeleton" class="section level2">
+<h2>1 Usage of <code>createProjectSkeleton</code></h2>
+<p><code>createProjectSkeleton</code> goes into action in the very beginning of a new project: You still have nothing or maybe an existing empty folder and you need a complete file structure as sketched above. If you wish, you can add a package infrastructure and/or an .Rproject file. The latter two can also be done separately (see sections 2 and 3).</p>
+<div id="calling-createprojectskeleton-with-default-values" class="section level3">
+<h3>Calling <code>createProjectSkeleton</code> with default values</h3>
+<p>Using the function with just the default values will create the following file structure in your present working directory (which would in this case be named <em>myfolder</em>):</p>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Fig. 1: File structure created by createProjectSkeleton() with default values." />
+<p class="caption">Fig. 1: File structure created by <code>createProjectSkeleton()</code> with default values.</p>
+</div>
+<p>The purposes of the folders are mostly obvious:</p>
+<ul>
+<li><em>data</em>: all data, original or modified, e.g., .Rdata, .csv, or .xlsx files.</li>
+<li><em>libLinux</em> and <em>libWin</em> are folders where packages will be installed (see also section 4). They already contain a .gitignore file ignoring everything except itself.</li>
+<li><em>reports</em> will contain R Markdown reports.</li>
+<li><em>RScrips</em> is for your scripts. It already contains an example script to demonstrate a useful script structure.</li>
+</ul>
+<p>The <em>.RProfile</em> is required for working in a sandbox (for details see section 4). Finally the <em>myfolder.Rproj</em> file has been created. This R project file is already filled with useful preferences, e.g. not saving and restoring the R workspace, not saving the history and inserting spaces for tabs.</p>
+</div>
+<div id="customizing-createprojectskeleton" class="section level3">
+<h3>Customizing <code>createProjectSkeleton</code></h3>
+<p>The resulting file structure can be customized via the following arguments for <code>createProjectSkeleton:</code></p>
+<ul>
+<li><code>dir:</code> Directory where the file structure should be created</li>
+<li><code>pkgName:</code> If you specify a package name via this argument, a package with this name is created in your folder. It already contains the infrastructure to use the <a href="https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">testthat package</a> and a first test for the code style of your package.</li>
+<li><code>pkgOnToplevel:</code> Decide if your package lives in the project root or in a separate folder called <em>package</em>. The latter may lead to a better overview in your project root and is appropriate for projects whose main scope is not package development, e.g., a forecasting project. However if your project’s purpose is package development, rather choose the argument default <code>TRUE</code>. The package infrastructure is created with <code>create</code> resp. <code>setup</code> from the <a href="https://cran.r-project.org/web/packages/devtools/devtools.pdf">devtools package</a>.</li>
+<li><code>rProject:</code> You may already have an R Project file and don’t want to create a new one.</li>
+<li><code>exampleScript:</code> If you don’t want an example script in <em>RScripts</em>, set this argument to <code>FALSE</code>.</li>
+</ul>
+<p>For example, the following function call would result in the file structure shown in figure 2:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">createProjectSkeleton</span>(<span class="dt">dir =</span> <span class="st">&quot;playWith&quot;</span>,
+                      <span class="dt">pkgName =</span> <span class="st">&quot;playPkg&quot;</span>,
+                      <span class="dt">pkgOnToplevel =</span> <span class="ot">TRUE</span>, <span class="co"># Default; could be left out</span>
+                      <span class="dt">rProject =</span> <span class="ot">FALSE</span>,
+                      <span class="dt">exampleScript =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Fig. 2: Another file structure created by createProjectSkeleton(), this time including a package." />
+<p class="caption">Fig. 2: Another file structure created by <code>createProjectSkeleton()</code>, this time including a package.</p>
+</div>
+<p>In addition to the files from figure 1, you can see the package infrastructure in the main directory:</p>
+<ul>
+<li>The folder <em>R</em> for R files containing the package functions</li>
+<li>A folder <em>tests</em> (already containing one test)</li>
+<li>An <em>.Rbuildignore</em>: This file specifies files to be ignored when building the package. It includes <em>.Rproj</em> files, <em>.Rproj.user</em> folders, the folders <em>libWin</em> and <em>libLinux</em> as well es <em>RScripts</em>.</li>
+<li>The <em>DESCRIPTION</em> file containing your package name and the packages lintr (for the test) and INWTUtils as imports. All other information must be added by hand, e.g., your name.</li>
+<li>The <em>NAMSPACE</em> file.</li>
+</ul>
+<p>Of course, the <em>RScripts</em> folder does not contain the example script, and there is no <em>.Rproj</em> file.</p>
+</div>
+</div>
+<div id="creating-only-the-package-with-createpackage" class="section level2">
+<h2>2 Creating only the package with <code>createPackage</code></h2>
+<p><code>createPackage()</code> is generally called inside <code>createProjectSkeleton</code>. It can also be called directly, for example if you want to add a package to an existing project with an existing file structure. In addition to <code>devtools::create</code> or <code>devtools::setup</code> it also provides a test for the code style, the appropriate <em>.Rbuildignore</em> and imports in the <em>DESCRIPTION</em> file.</p>
+</div>
+<div id="creating-only-the-r-project-with-createproject" class="section level2">
+<h2>3 Creating only the R project with <code>createProject</code></h2>
+<p><code>createProject()</code> writes an <em>.Rproject</em> file with useful configurations. You can specifiy if the project contains a package (logical argument <code>pkg</code>), if the package lives in the project directory vs. a separate folder (logical argument <code>pkgOnToplevel</code>), and, of course, the directory (argument <code>dir</code>).</p>
+</div>
+<div id="working-in-a-sandbox" class="section level2">
+<h2>4 Working in a sandbox</h2>
+<p>As mentioned above, <code>createProjectSkeleton</code> makes working in a sandbox possible.</p>
+<div id="what-does-that-mean" class="section level3">
+<h3>What does that mean?</h3>
+<p>It means that you can play around without affecting the outside world. For example: There may be a network drive where all packages for the whole team are installed. If you want to add features to one of those packages, it should of course not be built on the network drive during the developmen! Or you just want to try out a new package (version) without affecting your team’s work.</p>
+<p>By working with the structure created by <code>createProjectSkeleton</code>, all packages you build or install are installed into <em>libWin</em> or <em>libLinux</em> (depending on your operating system) by default. The otherwise default library stays unaffected.</p>
+</div>
+<div id="how-does-that-work" class="section level3">
+<h3>How does that work?</h3>
+<p>R knows several library paths where it installs new packages. You can display them via <code>.libPaths()</code>. The first path is the default path.</p>
+<p>The <em>.Rprofile</em> file is always sourced first when you open R. The <em>.Rprofile</em> created here simply contains a function adding the folder <em>libWin</em> resp. <em>libLinux</em> to the first position of the lib path. As a result, R installs all packages into this folder by default, even if the package you’re installing is already installed in another lib path.</p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

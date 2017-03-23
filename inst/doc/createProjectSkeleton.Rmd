@@ -1,0 +1,164 @@
+---
+title: "Creating a file structure for a new project"
+author: "Mira Céline Klein"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Creating a project skeleton}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+When you start a new project in R, you usually first need a particular file
+strucure.
+This includes certain folders, maybe the structure for an R package including
+some basic tests, and several configuration files (e.g., a .gitignore, an
+.Rprofile, ...). You could create this structure from scratch everytime, or copy it from an
+existing project (followed by deleting all the unnecessary files from the old
+project and realizing that you still did not catch the latest version of some
+file). An easier way is to do it with the function `createProjectSkeleton`
+from the `INWTUtils` package.
+
+This furthermore enables working in a sandbox, i.e. you can play around without 
+running into danger of destroying something outside our project (for details see
+section 4).
+
+
+## 1 Usage of `createProjectSkeleton`
+
+`createProjectSkeleton` goes into action in the very beginning of a new project:
+You still have nothing or maybe an existing empty folder and you need a complete
+file structure as sketched above.
+If you wish, you can add a package infrastructure and/or an .Rproject file.
+The latter two can also be done separately (see sections 2 and 3).
+
+
+### Calling `createProjectSkeleton` with default values
+
+Using the function with just the default values will create the following
+file structure in your present working directory (which would in this case be 
+named *myfolder*):
+
+```{r, echo = FALSE, eval = FALSE}
+library(INWTUtils)
+createProjectSkeleton("../myfolder")
+```
+
+![Fig. 1: File structure created by `createProjectSkeleton()` with default values.](skeleton_01default.PNG)
+
+The purposes of the folders are mostly obvious:
+
+- *data*: all data, original or modified, e.g., .Rdata, .csv,
+or .xlsx files.
+- *libLinux* and *libWin* are folders where packages will be
+  installed (see also section 4). They already contain a .gitignore file
+  ignoring everything except itself.
+- *reports* will contain R Markdown reports.
+- *RScrips* is for your scripts. It already contains an example script to
+  demonstrate a useful script structure.
+
+The *.RProfile* is required for working in a sandbox (for details see section
+4).
+Finally the *myfolder.Rproj* file has been created. This R project file is
+already filled with useful preferences, e.g. not saving and restoring the R
+workspace, not saving the history and inserting spaces for tabs.
+
+
+### Customizing `createProjectSkeleton`
+
+The resulting file structure can be customized via the following arguments
+for `createProjectSkeleton:`
+
+- `dir:` Directory where the file structure should be created
+- `pkgName:` If you specify a package name via this argument, a package with
+  this name is created in your folder. It already contains the infrastructure
+  to use the
+  [testthat package](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf)
+   and a first test for the code style of your package.
+- `pkgOnToplevel:` Decide if your package lives in the project root or in a
+  separate folder called *package*. The latter may lead to a better overview in
+  your project root and is appropriate for projects whose main scope is not
+  package development, e.g., a forecasting project. However if your project's
+  purpose is package development, rather choose the argument default `TRUE`.
+  The package infrastructure is created with `create` resp. `setup` from the
+  [devtools package](https://cran.r-project.org/web/packages/devtools/devtools.pdf).
+- `rProject:` You may already have an R Project file and don't want to create a
+  new one.
+- `exampleScript:` If you don't want an example script in *RScripts*, set this
+  argument to `FALSE`.
+
+For example, the following function call would result in the file structure
+shown in figure 2:
+
+```{r, echo, eval = FALSE}
+createProjectSkeleton(dir = "playWith",
+                      pkgName = "playPkg",
+                      pkgOnToplevel = TRUE, # Default; could be left out
+                      rProject = FALSE,
+                      exampleScript = FALSE)
+```
+
+![Fig. 2: Another file structure created by `createProjectSkeleton()`, this time including a package.](skeleton_02otherArgs.PNG)
+
+In addition to the files from figure 1, you can see the package infrastructure
+in the main directory:
+
+- The folder *R* for R files containing the package functions
+- A folder *tests* (already containing one test)
+- An *.Rbuildignore*: This file specifies files to be ignored when building the
+  package. It includes *.Rproj* files, *.Rproj.user* folders, the folders *libWin* and
+  *libLinux* as well es *RScripts*.
+- The *DESCRIPTION* file containing your package name and the packages 
+  lintr (for the test) and INWTUtils as imports. All other information must be
+  added by hand, e.g., your name.
+- The *NAMSPACE* file.
+
+Of course, the *RScripts* folder does not contain the example script,
+and there is no *.Rproj* file.
+  
+
+## 2 Creating only the package with `createPackage`
+
+`createPackage()` is generally called inside `createProjectSkeleton`.
+It can also be called directly, for example if you want to add a package to an
+existing project with an existing file structure. In addition to
+`devtools::create` or `devtools::setup` it also provides a test for the code
+style, the appropriate *.Rbuildignore* and imports in the *DESCRIPTION* file.
+
+
+## 3 Creating only the R project with `createProject`
+`createProject()` writes an *.Rproject* file with useful configurations. You can
+specifiy if the project contains a package (logical argument `pkg`), if the
+package lives in the project directory vs. a separate folder (logical argument
+`pkgOnToplevel`), and, of course, the directory (argument `dir`).
+
+
+## 4 Working in a sandbox
+
+As mentioned above, `createProjectSkeleton` makes working in a sandbox possible.
+
+### What does that mean?
+
+It means that you can play around without affecting the outside world. For 
+example: There may be a network drive where all packages for the whole team are
+installed. If you want to add features to one of those packages, it should of
+course not be built on the network drive during the developmen!
+Or you just want to try out a new package (version) without affecting your
+team's work.
+
+By working with the structure created by `createProjectSkeleton`, all packages
+you build or install are installed into *libWin* or *libLinux* (depending on
+your operating system) by default. The otherwise default library stays
+unaffected.
+
+
+### How does that work?
+
+R knows several library paths where it installs new packages. You can display
+them via `.libPaths()`. The first path is the default path.
+
+The *.Rprofile* file is always sourced first when you open R. The *.Rprofile*
+created here simply contains a function adding the folder *libWin* resp.
+*libLinux* to the first position of the lib path. As a result, R installs all
+packages into this folder by default, even if the package you're installing is
+already installed in another lib path.
