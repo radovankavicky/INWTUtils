@@ -5,7 +5,7 @@
 ## ---- echo, eval = FALSE-------------------------------------------------
 #  createProjectSkeleton(dir = "playWith",
 #                        pkgName = "playPkg",
-#                        pkgOnToplevel = TRUE, # Default; could be left out
+#                        pkgFolder = "." # Default, could be left out
 #                        rProject = FALSE,
 #                        exampleScript = FALSE)
 

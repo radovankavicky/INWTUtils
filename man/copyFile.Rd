@@ -13,6 +13,8 @@ copyFile(dir, origin, dest = origin, ...)
 
 \item{dest}{character: new path (path to directory or path with filename)
 relative to project root}
+
+\item{...}{Further arguments passed to \code{\link[base]{file.copy}}}
 }
 \description{
 Copy a file from inst to the - per default - respective
