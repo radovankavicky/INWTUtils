@@ -4,7 +4,9 @@ test_that("Code is lint-free", {
 
   # Files to exclude from linter check
   excludedFiles <- c("testScript_args_without_default.R",
-                     "testScript_checkStyle.R")
+                     "testScript_checkStyle.R",
+                     "doc/createProjectSkeleton.R",
+                     "doc/checkCodeStyle.R")
 
   if (interactive()) load_all()
 
