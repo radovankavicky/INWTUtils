@@ -37,7 +37,7 @@ named *myfolder*):
 
 
 
-![Fig. 1: File structure created by `createProjectSkeleton` with default values.](skeleton_01default.PNG)
+![Fig. 1: File structure created by `createProjectSkeleton` with default values.](vignettes/skeleton_01default.PNG)
 
 The purposes of the folders are mostly obvious:
 
@@ -98,7 +98,7 @@ createProjectSkeleton(dir = "playWith",
                       exampleScript = FALSE)
 ```
 
-![Fig. 2: Another file structure created by `createProjectSkeleton`, this time including a package.](skeleton_02otherArgs.PNG)
+![Fig. 2: Another file structure created by `createProjectSkeleton`, this time including a package.](vignettes/skeleton_02otherArgs.PNG)
 
 In addition to the files from figure 1, you can see the package infrastructure
 in the project directory:
@@ -172,6 +172,8 @@ created here simply contains a function adding the folder *libWin* resp.
 *libLinux* to the first position of the lib path. As a result, R installs all
 packages into this folder by default, even if the package you're installing is
 already installed in another lib path.
+
+
 # Checking code style with INWTUtils
 
 ## Overview
@@ -240,7 +242,7 @@ lints for each file. You can start to edit the code and repeat the check
 until the opened tab remains empty.
 
 ![Output produced by `checkStyle`: For each file you see the full path and a 
-list of style rule violations (lints).](style_01checkStyleOutput.PNG)
+list of style rule violations (vignettes/lints).](vignettes/style_01checkStyleOutput.PNG)
 
 
 ## Included linters

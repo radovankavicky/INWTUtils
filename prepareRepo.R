@@ -3,7 +3,11 @@ devtools::build_vignettes()
 for (thema in c("createProjectSkeleton", "checkCodeStyle")) {
   knitr::knit(paste0("inst/doc/", thema, ".Rmd"),
               paste0("inst/", thema, ".md"))
-  assign(thema, readLines(paste0("inst/", thema, ".md")))
+  text <- readLines(paste0("inst/", thema, ".md"))
+  # Add "vignette" to image paths
+  picLines <- grep("\\(\\w+\\.PNG", text, value = FALSE)
+  text[picLines] <- gsub("\\(", "(vignettes/", x = text[picLines])
+  assign(thema, text)
 }
 
 getTitle <- function(lines) {
