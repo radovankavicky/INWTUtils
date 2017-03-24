@@ -10,11 +10,9 @@ test_that("checkStyle returns correct type", {
 
 
 test_that("checkStyle returns correct content", {
-  erg <- checkStyle(
-    # system.file("testScript_checkStyle.R",
-    #                             package = "INWTUtils"),
-    "inst/testScript_checkStyle.R",
-    type = "script")
+  erg <- checkStyle(system.file("testScript_checkStyle.R",
+                                package = "INWTUtils"),
+                    type = "script")
   expect_true(erg[[1]]$message == paste("Arguments without default value should",
                                         "be listed before\n         arguments",
                                         "with default value."))
