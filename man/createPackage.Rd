@@ -4,31 +4,31 @@
 \alias{createPackage}
 \title{Create package with style test}
 \usage{
-createPackage(dir, pkgName, pkgOnToplevel, ...)
+createPackage(dir, pkgName, pkgFolder = ".", ...)
 }
 \arguments{
 \item{dir}{character: Directory}
 
 \item{pkgName}{character: Package name}
 
-\item{pkgOnToplevel}{logical: Should the package live in the main
-directory or in a subfolder called package?}
+\item{pkgFolder}{character: Folder where the package should live. \code{dir}
+per default.}
 
 \item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
 \code{\link[devtools]{setup}}}
 }
 \description{
 Creates a package, either directly into the directory specified
-in \code{dir}, or in a subfolder \emph{package}. Also creates an infrastructure
+in \code{dir} or in a subfolder. Also creates an infrastructure
 for \code{testthat}, a test for the package style and an .Rbuildignore.
 An R project can be created separately with \code{\link{createProject}}.
 Used by \code{\link{createProjectSkeleton}}.
 }
 \examples{
 \dontrun{
-createPackage(dir = "./", pkgName = "aTestPackage", pkgOnToplevel = FALSE)
+createPackage(dir = "./", pkgName = "aTestPackage", pkgFolder = "package")
 dir.create("tmp")
-createPackage(dir = "tmp/", pkgName = "aTestPackage", pkgOnToplevel = TRUE)
+createPackage(dir = "tmp/", pkgName = "aTestPackage")
 }
 
 }

@@ -4,13 +4,13 @@
 \alias{createProject}
 \title{Create R project}
 \usage{
-createProject(pkg, pkgOnToplevel = TRUE, dir = "./")
+createProject(pkg, pkgFolder = ".", dir = ".")
 }
 \arguments{
 \item{pkg}{logical: Does the project contain a package?}
 
-\item{pkgOnToplevel}{logical: Does the package live in the project directory
-(default) or a subfolder \emph{package}?}
+\item{pkgFolder}{character: Folder where the package lives. "." per
+default, i.e., \code{dir}.}
 
 \item{dir}{character: Directory where the R project is created; current
 working directory by default}

@@ -18,8 +18,8 @@
 #' by default.
 #' @param pkgName character: If \code{pkgName} is specified, a package with this
 #' name is created.
-#' @param pkgOnToplevel logical: Should the package live in the main directory
-#' (default) or in a subfolder called package?
+#' @param pkgFolder character: Folder where the package (if created) should
+#' live, relative to \code{dir}. "." per default, i.e., the project root.
 #' @param rProject logical: Create Rproject file?
 #' @param exampleScript logical: Create example script? (not yet used)
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
@@ -30,7 +30,7 @@
 #' @export
 createProjectSkeleton <- function(dir = ".",
                                   pkgName = NULL,
-                                  pkgOnToplevel = TRUE,
+                                  pkgFolder = ".",
                                   rProject = TRUE,
                                   exampleScript = TRUE,
                                   ...) {
@@ -43,7 +43,8 @@ createProjectSkeleton <- function(dir = ".",
       dir.create(dir)
     }
   }
-  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
+
+  dir <- addBackslash(dir)
 
   folders <- c("data", "libLinux", "libWin", "reports", "RScripts")
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
@@ -62,12 +63,12 @@ createProjectSkeleton <- function(dir = ".",
   }
 
   if (!is.null(pkgName)) {
-    createPackage(dir, pkgName, pkgOnToplevel, ...)
+    createPackage(dir, pkgName, pkgFolder, ...)
   }
 
   if (rProject) {
     message("Creating R Project")
-    createProject(!is.null(pkgName), pkgOnToplevel, dir)
+    createProject(!is.null(pkgName), pkgFolder, dir)
   }
 
 }
@@ -80,40 +81,46 @@ createProjectSkeleton <- function(dir = ".",
 #' @param origin character: name/path of file relative to inst
 #' @param dest character: new path (path to directory or path with filename)
 #' relative to project root
+#' @param ... Further arguments passed to \code{\link[base]{file.copy}}
 copyFile <- function(dir, origin, dest = origin, ...) {
   file.copy(from = system.file(origin, package = "INWTUtils"),
-            to = paste0(dir, dest), ...)
+            to = paste0(dir, dest),
+            ...)
 }
 
 
 #' Create package with style test
 #'
 #' @description Creates a package, either directly into the directory specified
-#' in \code{dir}, or in a subfolder \emph{package}. Also creates an infrastructure
+#' in \code{dir} or in a subfolder. Also creates an infrastructure
 #' for \code{testthat}, a test for the package style and an .Rbuildignore.
 #' An R project can be created separately with \code{\link{createProject}}.
 #' Used by \code{\link{createProjectSkeleton}}.
 #'
 #' @param dir character: Directory
 #' @param pkgName character: Package name
-#' @param pkgOnToplevel logical: Should the package live in the main
-#' directory or in a subfolder called package?
+#' @param pkgFolder character: Folder where the package should live. \code{dir}
+#' per default.
 #' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
 #' \code{\link[devtools]{setup}}
 #'
 #' @examples
 #' \dontrun{
-#' createPackage(dir = "./", pkgName = "aTestPackage", pkgOnToplevel = FALSE)
+#' createPackage(dir = "./", pkgName = "aTestPackage", pkgFolder = "package")
 #' dir.create("tmp")
-#' createPackage(dir = "tmp/", pkgName = "aTestPackage", pkgOnToplevel = TRUE)
+#' createPackage(dir = "tmp/", pkgName = "aTestPackage")
 #' }
 #'
 #' @export
 #'
-createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
+createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
 
-  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
-  packageDir <- if (pkgOnToplevel) dir else paste0(dir, "package/")
+  dir <- addBackslash(dir)
+
+  pkgFolder <- addBackslash(pkgFolder)
+  pkgOnToplevel <- (pkgFolder %in% c("./", "/"))
+
+  packageDir <- if (pkgOnToplevel) dir else paste0(dir, pkgFolder)
 
   do.call(if (pkgOnToplevel) setup else create,
           args = list(path = packageDir,
@@ -125,12 +132,11 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
   use_testthat(pkg = packageDir)
 
   copyFile(dir, "testForCodeStyle.R",
-           paste0(ifelse(pkgOnToplevel, "", "package/"),
+           paste0(ifelse(pkgOnToplevel, "", pkgFolder),
                   "tests/testthat/test-00_codeStyle.R"))
 
-  copyFile(dir, "Rbuildignore", ifelse(pkgOnToplevel,
-                                       ".Rbuildignore",
-                                       "package/.Rbuildignore"))
+  copyFile(dir, "Rbuildignore",
+           paste0(ifelse(pkgOnToplevel, "", pkgFolder), ".Rbuildignore"))
 }
 
 
@@ -142,8 +148,8 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #' Used in \code{\link{createProjectSkeleton}}.
 
 #' @param pkg logical: Does the project contain a package?
-#' @param pkgOnToplevel logical: Does the package live in the project directory
-#' (default) or a subfolder \emph{package}?
+#' @param pkgFolder character: Folder where the package lives. "." per
+#' default, i.e., \code{dir}.
 #' @param dir character: Directory where the R project is created; current
 #' working directory by default
 #'
@@ -155,7 +161,10 @@ createPackage <- function(dir, pkgName, pkgOnToplevel, ...) {
 #'
 #' @export
 #'
-createProject <- function(pkg, pkgOnToplevel = TRUE, dir = "./") {
+createProject <- function(pkg, pkgFolder = ".", dir = ".") {
+
+  pkgFolder <- rmBackslash(pkgFolder)
+
   prefs <- c("Version: 1.0",
              "",
              "RestoreWorkspace: No",
@@ -173,11 +182,12 @@ createProject <- function(pkg, pkgOnToplevel = TRUE, dir = "./") {
                       "",
                       "BuildType: Package",
                       "PackageUseDevtools: Yes",
-                      if (!pkgOnToplevel) "PackagePath: package",
+                      if (pkgFolder != ".") paste0("PackagePath: ", pkgFolder),
                       "PackageInstallArgs: --no-multiarch --with-keep.source",
                       "PackageRoxygenize: rd,collate,namespace,vignette")
 
-  if (substr(dir, nchar(dir), nchar(dir)) != "/") dir <- paste0(dir, "/")
+  dir <- addBackslash(dir)
+
   projName <- (if (dir == "./") getwd() else dir) %>%
     strsplit("/") %>% unlist %>% `[`(length(.))
 

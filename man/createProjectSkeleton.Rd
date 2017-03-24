@@ -4,7 +4,7 @@
 \alias{createProjectSkeleton}
 \title{Create file structure}
 \usage{
-createProjectSkeleton(dir = ".", pkgName = NULL, pkgOnToplevel = TRUE,
+createProjectSkeleton(dir = ".", pkgName = NULL, pkgFolder = ".",
   rProject = TRUE, exampleScript = TRUE, ...)
 }
 \arguments{
@@ -15,8 +15,8 @@ by default.}
 \item{pkgName}{character: If \code{pkgName} is specified, a package with this
 name is created.}
 
-\item{pkgOnToplevel}{logical: Should the package live in the main directory
-(default) or in a subfolder called package?}
+\item{pkgFolder}{character: Folder where the package (if created) should
+live, relative to \code{dir}. "." per default, i.e., the project root.}
 
 \item{rProject}{logical: Create Rproject file?}
 
