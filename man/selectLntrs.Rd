@@ -16,16 +16,12 @@ depends on the type of the file. The following linters are always included:
 \itemize{
   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
   \item\code{\link[lintr]{assignment_linter}},
-  \item\code{\link[lintr]{closed_curly_linter}},
   \item\code{\link[lintr]{commas_linter}},
   \item\code{\link[INWTUtils]{double_space_linter}},
   \item\code{\link[lintr]{infix_spaces_linter}},
   \item\code{\link[lintr]{line_length_linter}},
   \item\code{\link[lintr]{no_tab_linter}},
   \item\code{\link[lintr]{object_length_linter}},
-  \item\code{\link[lintr]{object_usage_linter}},
-  \item\code{\link[lintr]{open_curly_linter}},
-  \item\code{\link[lintr]{spaces_inside_linter}},
   \item\code{\link[lintr]{spaces_left_parentheses_linter}},
   \item\code{\link[lintr]{trailing_blank_lines_linter}},
   \item\code{\link[lintr]{trailing_whitespace_linter}}
