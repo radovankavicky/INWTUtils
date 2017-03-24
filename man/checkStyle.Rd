@@ -4,12 +4,13 @@
 \alias{checkStyle}
 \title{Check code style}
 \usage{
-checkStyle(files, type = c("script", "pkgFuns"))
+checkStyle(files, type = NULL)
 }
 \arguments{
 \item{files}{character vector: One or more filepaths}
 
-\item{type}{character: Type of the file}
+\item{type}{character: Type of the file (\code{"script"}, \code{"pkgFuns"},
+or \code{NULL})}
 }
 \description{
 Checks a file for violations of the INWT style conventions using
