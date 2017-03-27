@@ -2,7 +2,7 @@
 % Please edit documentation in R/04_rmPkgs.R
 \name{rmPkgs}
 \alias{rmPkgs}
-\title{Remove non-standard packages}
+\title{Remove non-standard packages from searchpath}
 \usage{
 rmPkgs()
 }

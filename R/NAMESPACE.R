@@ -5,7 +5,8 @@
 #' no_tab_linter object_length_linter object_usage_linter
 #' spaces_left_parentheses_linter trailing_blank_lines_linter
 #' trailing_whitespace_linter
-#' @importFrom utils sessionInfo
+#' @importFrom stats setNames
+#' @importFrom utils installed.packages remove.packages sessionInfo
 NULL
 
 globalVariables(".")
