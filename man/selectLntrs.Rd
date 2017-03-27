@@ -4,15 +4,34 @@
 \alias{selectLntrs}
 \title{List of linters to check INWT style conventions}
 \usage{
-selectLntrs(type = NULL)
+selectLntrs(type = NULL, excludeLinters = list(), addLinters = list())
 }
 \arguments{
 \item{type}{character: Type of the file (\code{"script"}, \code{"pkgFuns"},
 or \code{NULL})}
+
+\item{excludeLinters}{character vector: Names of linters to be excluded}
+
+\item{addLinters}{list: Named list of linter functions to be added}
+}
+\value{
+Named list of linter functions
 }
 \description{
-Used in \code{\link{checkStyle}}. The set of included linters
-depends on the type of the file. The following linters are always included:
+Used in \code{\link{checkStyle}}.
+
+If you want to customize the set of tested linters, you can
+\itemize{
+  \item Specify the file \code{type} ("script" or "pkgFuns") to add linters
+  \item exclude particular linters to the default linter set via
+        \code{excludeLinters}
+  \item add linters via \code{addLinters}
+ }
+\code{excludeLinters} is evaluated in the end, i.e., it affects all linters
+included by default, file type, or \code{addLinters}.
+}
+\details{
+The following linters are always included:
 \itemize{
   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
   \item\code{\link[lintr]{assignment_linter}},
@@ -39,6 +58,12 @@ The following linters are only included if \code{type = "script"}:
 }
 }
 \examples{
+selectLntrs(type = "script",
+            excludeLinters = c("object_length_linter",
+                               "args_without_default_first_linter"),
+            addLinters = list(setwd_l = setwd_linter,
+                              source_l = source_linter))
+
 # Code listing tested linters:
 linterNames <- sort(names(selectLntrs()))
 packages <- unlist(lapply(linterNames,

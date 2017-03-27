@@ -4,21 +4,26 @@
 \alias{checkStyle}
 \title{Check code style}
 \usage{
-checkStyle(files, type = NULL)
+checkStyle(files, linters = selectLntrs(...), ...)
 }
 \arguments{
 \item{files}{character vector: One or more filepaths}
 
-\item{type}{character: Type of the file (\code{"script"}, \code{"pkgFuns"},
-or \code{NULL})}
+\item{linters}{list: Named list of used linter functions}
+
+\item{...}{Arguments passed to \code{\link{selectLntrs}}}
 }
 \description{
 Checks a file for violations of the INWT style conventions using
-\code{\link[lintr]{lint}}. In addition to the \code{\link[lintr]{linters}}
-provided by the package \code{lintr}, some custom linters are tested. The set
-of used linters depends on the type of the file. If the type is specified
-("script" or "pkgFuns"), additional linters are tested. For details about the
-tested linters see \code{\link{selectLntrs}}.
+\code{\link[lintr]{lint}}.
+The \code{\link[lintr]{linters}} are partly taken from the package
+\code{lintr}, and partly from this package.
+}
+\details{
+Per default, the used linters are selected via
+\code{\link{selectLntrs}}. If you pass a list of linters directly via the
+\code{linters} argument, all arguments passed to \code{\link{selectLntrs}}
+via \code{...} will be ignored.
 }
 \examples{
 \dontrun{
@@ -40,7 +45,6 @@ writeLines(con = "lintExample.txt",
            # nolint end
 checkStyle("lintExample.txt", type = "script")
 unlink("lintExample.txt") # Remove file
-
 }
 
 }

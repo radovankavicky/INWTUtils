@@ -1,14 +1,19 @@
 #' Check code style
 #'
 #' @description Checks a file for violations of the INWT style conventions using
-#' \code{\link[lintr]{lint}}. In addition to the \code{\link[lintr]{linters}}
-#' provided by the package \code{lintr}, some custom linters are tested. The set
-#' of used linters depends on the type of the file. If the type is specified
-#' ("script" or "pkgFuns"), additional linters are tested. For details about the
-#' tested linters see \code{\link{selectLntrs}}.
+#' \code{\link[lintr]{lint}}.
+#' The \code{\link[lintr]{linters}} are partly taken from the package
+#' \code{lintr}, and partly from this package.
 #'
 #' @param files character vector: One or more filepaths
+#' @param linters list: Named list of used linter functions
+#' @param ... Arguments passed to \code{\link{selectLntrs}}
 #' @inheritParams selectLntrs
+#'
+#' @details Per default, the used linters are selected via
+#' \code{\link{selectLntrs}}. If you pass a list of linters directly via the
+#' \code{linters} argument, all arguments passed to \code{\link{selectLntrs}}
+#' via \code{...} will be ignored.
 #'
 #' @examples \dontrun{
 #' writeLines(con = "lintExample.txt",
@@ -29,13 +34,14 @@
 #'            # nolint end
 #' checkStyle("lintExample.txt", type = "script")
 #' unlink("lintExample.txt") # Remove file
-#'
 #' }
 #'
 #' @export
 #'
-checkStyle <- function(files, type = NULL) {
-  erg <- lapply(files, function(file) lint(file, linters = selectLntrs(type)))
+checkStyle <- function(files,
+                       linters = selectLntrs(...),
+                       ...) {
+  erg <- lapply(files, function(file) lint(file, linters))
   erg <- do.call(c, erg)
   class(erg) <- "lints"
   erg
@@ -44,8 +50,19 @@ checkStyle <- function(files, type = NULL) {
 
 #' List of linters to check INWT style conventions
 #'
-#' @description Used in \code{\link{checkStyle}}. The set of included linters
-#' depends on the type of the file. The following linters are always included:
+#' @description Used in \code{\link{checkStyle}}.
+#'
+#' If you want to customize the set of tested linters, you can
+#' \itemize{
+#'   \item Specify the file \code{type} ("script" or "pkgFuns") to add linters
+#'   \item exclude particular linters to the default linter set via
+#'         \code{excludeLinters}
+#'   \item add linters via \code{addLinters}
+#'  }
+#' \code{excludeLinters} is evaluated in the end, i.e., it affects all linters
+#' included by default, file type, or \code{addLinters}.
+#'
+#' @details The following linters are always included:
 #' \itemize{
 #'   \item\code{\link[INWTUtils]{args_without_default_first_linter}},
 #'   \item\code{\link[lintr]{assignment_linter}},
@@ -73,8 +90,18 @@ checkStyle <- function(files, type = NULL) {
 #'
 #' @param type character: Type of the file (\code{"script"}, \code{"pkgFuns"},
 #' or \code{NULL})
+#' @param excludeLinters character vector: Names of linters to be excluded
+#' @param addLinters list: Named list of linter functions to be added
+#'
+#' @return Named list of linter functions
 #'
 #' @examples
+#' selectLntrs(type = "script",
+#'             excludeLinters = c("object_length_linter",
+#'                                "args_without_default_first_linter"),
+#'             addLinters = list(setwd_l = setwd_linter,
+#'                               source_l = source_linter))
+#'
 #' # Code listing tested linters:
 #' linterNames <- sort(names(selectLntrs()))
 #' packages <- unlist(lapply(linterNames,
@@ -87,40 +114,57 @@ checkStyle <- function(files, type = NULL) {
 #'     paste0("  \\item\\code{\\link[", packages, "]{", linterNames, "}}",
 #'            collapse = ",\n#' "), "\n#' }")
 #' # nolint end
+
 #'
 #' @export
 #'
-selectLntrs <- function(type = NULL) {
+selectLntrs <- function(type = NULL,
+                        excludeLinters = list(),
+                        addLinters = list()) {
 
   if (is.null(type)) type <- ""
 
-  linters <- list(args_without_default_first_linter =
-                    args_without_default_first_linter,
-                  assignment_linter = assignment_linter,
-                  commas_linter = commas_linter,
-                  double_space_linter = double_space_linter,
-                  infix_spaces_linter = infix_spaces_linter,
-                  line_length_linter = line_length_linter(100),
-                  no_tab_linter = no_tab_linter,
-                  object_length_linter = object_length_linter(30L),
-                  spaces_left_parentheses_linter =
-                    spaces_left_parentheses_linter,
-                  trailing_blank_lines_linter = trailing_blank_lines_linter,
-                  trailing_whitespace_linter = trailing_whitespace_linter)
+  linters <- generalLntrs()
 
   if (type == "script") linters <- c(linters, scriptLntrs())
   if (type == "pkgFuns") linters <- c(linters, pkgFunLntrs())
 
-  return(linters)
+  linters <- c(linters, addLinters)
+  linters <- linters[setdiff(names(linters), excludeLinters)]
+
+  return(linters[unique(names(linters))])
 }
 
 
+#' General linters
+#' @description Linters used by default
+generalLntrs <- function() {
+  list(args_without_default_first_linter =
+         args_without_default_first_linter,
+       assignment_linter = assignment_linter,
+       commas_linter = commas_linter,
+       double_space_linter = double_space_linter,
+       infix_spaces_linter = infix_spaces_linter,
+       line_length_linter = line_length_linter(100),
+       no_tab_linter = no_tab_linter,
+       object_length_linter = object_length_linter(30L),
+       spaces_left_parentheses_linter =
+         spaces_left_parentheses_linter,
+       trailing_blank_lines_linter = trailing_blank_lines_linter,
+       trailing_whitespace_linter = trailing_whitespace_linter)
+}
+
+
+#' Package function linters
+#' @description Linters for files containing (package) functions
 pkgFunLntrs <- function() {
   list(setwd_linter = setwd_linter,
        source_linter = source_linter)
 }
 
 
+#' Script linters
+#' @description Linters for files of type script
 scriptLntrs <- function() {
   list(internal_INWT_function_linter = internal_INWT_function_linter)
 }
