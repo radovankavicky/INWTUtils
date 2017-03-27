@@ -273,8 +273,6 @@ The following linters are used by default:
 
 - trailing_blank_lines_linter
 
-- trailing_whitespace_linter
-
 If `type = "script"`, the following linters are added:
 
 - internal_INWT_function_linter
