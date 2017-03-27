@@ -4,14 +4,14 @@
 \alias{checkStyle}
 \title{Check code style}
 \usage{
-checkStyle(files, linters = selectLntrs(...), ...)
+checkStyle(files, linters = selectLinters(...), ...)
 }
 \arguments{
 \item{files}{character vector: One or more filepaths}
 
 \item{linters}{list: Named list of used linter functions}
 
-\item{...}{Arguments passed to \code{\link{selectLntrs}}}
+\item{...}{Arguments passed to \code{\link{selectLinters}}}
 }
 \description{
 Checks a file for violations of the INWT style conventions using
@@ -21,8 +21,8 @@ The \code{\link[lintr]{linters}} are partly taken from the package
 }
 \details{
 Per default, the used linters are selected via
-\code{\link{selectLntrs}}. If you pass a list of linters directly via the
-\code{linters} argument, all arguments passed to \code{\link{selectLntrs}}
+\code{\link{selectLinters}}. If you pass a list of linters directly via the
+\code{linters} argument, all arguments passed to \code{\link{selectLinters}}
 via \code{...} will be ignored.
 }
 \examples{
@@ -40,7 +40,7 @@ writeLines(con = "lintExample.txt",
                            "instead of <- and access an internal INWT ",
                            "function."),
                     "z = 1",
-                    "print(INWTUtils:::scriptLntrs())",
+                    "print(INWTUtils:::scriptLinters())",
                     ""))
            # nolint end
 checkStyle("lintExample.txt", type = "script")

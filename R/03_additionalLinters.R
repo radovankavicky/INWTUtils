@@ -1,6 +1,6 @@
 #' @title INWT's own linters
 #'
-#' @name INWTlinters
+#' @name INWTLinters
 #'
 #' @description Linters added by INWT. Usually not called directly but used
 #' with \code{\link[lintr]{lint}}.
@@ -20,7 +20,7 @@
 #'                     "",
 #'                     "# This  line containts  double spaces",
 #'                     "",
-#'                     "print(INWTUtils:::scriptLntrs())"))
+#'                     "print(INWTUtils:::scriptLinters())"))
 #' # nolint end
 #' lintr::lint("lintExample.txt",
 #'      linters = list(argsWithoutDefault = args_without_default_first_linter,
@@ -31,7 +31,7 @@
 NULL
 
 
-#' @describeIn INWTlinters Arguments without default values should come before
+#' @describeIn INWTLinters Arguments without default values should come before
 #' arguments with default values.
 #' @export
 args_without_default_first_linter <- function(source_file) {
@@ -78,7 +78,7 @@ args_without_default_first_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTlinters Are there double whitespaces?
+#' @describeIn INWTLinters Are there double whitespaces?
 #' @export
 double_space_linter <- function(source_file) {
 
@@ -100,7 +100,7 @@ double_space_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTlinters Instead of using internal functions from an INWT
+#' @describeIn INWTLinters Instead of using internal functions from an INWT
 #' package in scripts with \code{:::}, they should be exported and documented.
 #' (only for scripts)
 #' @export
@@ -123,7 +123,7 @@ internal_INWT_function_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTlinters Changing the working directory in package functions
+#' @describeIn INWTLinters Changing the working directory in package functions
 #' can have unexpected side effects. (only for package functions)
 #' @export
 setwd_linter <- function(source_file) {
@@ -144,7 +144,7 @@ setwd_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTlinters Sourcing files in package functions can have
+#' @describeIn INWTLinters Sourcing files in package functions can have
 #' unexpected side effects. (only for package functions)
 #' @export
 source_linter <- function(source_file) {

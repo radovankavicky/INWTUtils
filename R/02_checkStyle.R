@@ -7,12 +7,12 @@
 #'
 #' @param files character vector: One or more filepaths
 #' @param linters list: Named list of used linter functions
-#' @param ... Arguments passed to \code{\link{selectLntrs}}
-#' @inheritParams selectLntrs
+#' @param ... Arguments passed to \code{\link{selectLinters}}
+#' @inheritParams selectLinters
 #'
 #' @details Per default, the used linters are selected via
-#' \code{\link{selectLntrs}}. If you pass a list of linters directly via the
-#' \code{linters} argument, all arguments passed to \code{\link{selectLntrs}}
+#' \code{\link{selectLinters}}. If you pass a list of linters directly via the
+#' \code{linters} argument, all arguments passed to \code{\link{selectLinters}}
 #' via \code{...} will be ignored.
 #'
 #' @examples \dontrun{
@@ -29,7 +29,7 @@
 #'                            "instead of <- and access an internal INWT ",
 #'                            "function."),
 #'                     "z = 1",
-#'                     "print(INWTUtils:::scriptLntrs())",
+#'                     "print(INWTUtils:::scriptLinters())",
 #'                     ""))
 #'            # nolint end
 #' checkStyle("lintExample.txt", type = "script")
@@ -39,7 +39,7 @@
 #' @export
 #'
 checkStyle <- function(files,
-                       linters = selectLntrs(...),
+                       linters = selectLinters(...),
                        ...) {
   erg <- lapply(files, function(file) lint(file, linters))
   erg <- do.call(c, erg)
@@ -96,14 +96,14 @@ checkStyle <- function(files,
 #' @return Named list of linter functions
 #'
 #' @examples
-#' selectLntrs(type = "script",
+#' selectLinters(type = "script",
 #'             excludeLinters = c("object_length_linter",
 #'                                "args_without_default_first_linter"),
 #'             addLinters = list(setwd_l = setwd_linter,
 #'                               source_l = source_linter))
 #'
 #' # Code listing tested linters:
-#' linterNames <- sort(names(selectLntrs()))
+#' linterNames <- sort(names(selectLinters()))
 #' packages <- unlist(lapply(linterNames,
 #'                           function(name) {
 #'                             erg <- help.search(name)
@@ -118,16 +118,16 @@ checkStyle <- function(files,
 #'
 #' @export
 #'
-selectLntrs <- function(type = NULL,
+selectLinters <- function(type = NULL,
                         excludeLinters = list(),
                         addLinters = list()) {
 
   if (is.null(type)) type <- ""
 
-  linters <- generalLntrs()
+  linters <- generalLinters()
 
-  if (type == "script") linters <- c(linters, scriptLntrs())
-  if (type == "pkgFuns") linters <- c(linters, pkgFunLntrs())
+  if (type == "script") linters <- c(linters, scriptLinters())
+  if (type == "pkgFuns") linters <- c(linters, pkgFunLinters())
 
   linters <- c(linters, addLinters)
   linters <- linters[setdiff(names(linters), excludeLinters)]
@@ -138,7 +138,7 @@ selectLntrs <- function(type = NULL,
 
 #' General linters
 #' @description Linters used by default
-generalLntrs <- function() {
+generalLinters <- function() {
   list(args_without_default_first_linter =
          args_without_default_first_linter,
        assignment_linter = assignment_linter,
@@ -157,7 +157,7 @@ generalLntrs <- function() {
 
 #' Package function linters
 #' @description Linters for files containing (package) functions
-pkgFunLntrs <- function() {
+pkgFunLinters <- function() {
   list(setwd_linter = setwd_linter,
        source_linter = source_linter)
 }
@@ -165,6 +165,6 @@ pkgFunLntrs <- function() {
 
 #' Script linters
 #' @description Linters for files of type script
-scriptLntrs <- function() {
+scriptLinters <- function() {
   list(internal_INWT_function_linter = internal_INWT_function_linter)
 }

@@ -26,7 +26,7 @@ test_that("Code is lint-free", {
 
   lintr:::read_settings(".lintr")
 
-  expect_lint_free(linters = selectLntrs())
+  expect_lint_free(linters = selectLinters())
 
   unlink(".lintr")
 })

@@ -17,13 +17,13 @@ library(INWTUtils)
 #             type = "script")
 
 ## ----lintersAlways, results = 'asis', echo = FALSE-----------------------
-cat("-", paste0(names(selectLntrs()), collapse = "\n\n- "))
+cat("-", paste0(names(selectLinters()), collapse = "\n\n- "))
 
 ## ----lintersScript, results = 'asis', echo = FALSE-----------------------
-cat("-", paste0(names(INWTUtils:::scriptLntrs()), collapse = "\n\n- "))
+cat("-", paste0(names(INWTUtils:::scriptLinters()), collapse = "\n\n- "))
 
 ## ----lintersFuns, results = 'asis', echo = FALSE-------------------------
-cat("-", paste0(names(INWTUtils:::pkgFunLntrs()), collapse = "\n\n- "))
+cat("-", paste0(names(INWTUtils:::pkgFunLinters()), collapse = "\n\n- "))
 
 ## ----nolint, eval = FALSE------------------------------------------------
 #  # nolint start
