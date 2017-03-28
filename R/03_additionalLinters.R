@@ -82,13 +82,15 @@ args_without_default_first_linter <- function(source_file) {
 #' @export
 double_space_linter <- function(source_file) {
 
-  ids <- grep("[^#' ]+.*[^ ]+ {2,}[^( +#$)]", source_file$file_lines)
+  ids <- grep("([^#' ]+.*[^ ]+ {2,}[^( +#$)])|(^# \\w {2,})",
+              source_file$file_lines)
   # At least one character which is neither # nor '
   # Any characters
   # At least one character which is not space
   # At least two spaces
   # ...not directly followed by some spaces and a hash
-
+  # OR: Starting with #, then space, then word character, then at least two
+  # spaces
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,
          line_number = id,

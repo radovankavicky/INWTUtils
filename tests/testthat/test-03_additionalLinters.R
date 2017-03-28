@@ -48,6 +48,7 @@ test_that("double_space_linter", {
                                     "  # Indented  line  commented out",
                                     "x <-  3",
                                     "  x <-  3",
+                                    "# A  comment with whitespace after first word",
                                     "mean(x) # Comment  with double whitespace",
                                     "    x <- 3 #  indented and commented",
                                     "#'   \"# This is an example  document violating style conventions\","))
