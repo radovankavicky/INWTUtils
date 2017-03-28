@@ -83,7 +83,7 @@ list of style rule violations (lints).](style_01checkStyleOutput.PNG)
 The following linters are used by default:
 
 ```{r lintersAlways, results = 'asis', echo = FALSE}
-cat("-", paste0(names(selectLinters()), collapse = "\n\n- "))
+cat("-", paste0(names(INWTUtils:::generalLinters()), collapse = "\n\n- "))
 ```
 
 If `type = "script"`, the following linters are added:

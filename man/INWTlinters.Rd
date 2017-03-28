@@ -7,6 +7,7 @@
 \alias{internal_INWT_function_linter}
 \alias{setwd_linter}
 \alias{source_linter}
+\alias{trailing_whitespaces_linter}
 \title{INWT's own linters}
 \usage{
 args_without_default_first_linter(source_file)
@@ -18,6 +19,8 @@ internal_INWT_function_linter(source_file)
 setwd_linter(source_file)
 
 source_linter(source_file)
+
+trailing_whitespaces_linter(source_file)
 }
 \arguments{
 \item{source_file}{returned by \code{\link[lintr]{get_source_expressions}}}
@@ -42,6 +45,12 @@ can have unexpected side effects. (only for package functions)
 
 \item \code{source_linter}: Sourcing files in package functions can have
 unexpected side effects. (only for package functions)
+
+\item \code{trailing_whitespaces_linter}: Trailing whitespaces are superfluos. In contrast to
+\code{\link[lintr]{trailing_whitespace_linter}}, this function detects
+whitespaces after \code{\link[dplyr]{\%>\%}} only if there are at least two
+(since one whitespace is inserted automatically after
+\code{\link[dplyr]{\%>\%}}).
 }}
 
 \examples{
@@ -53,7 +62,7 @@ writeLines(con = "lintExample.txt",
                     "source(anotherScript.R)",
                     "",
                     "foo <- function(x = 1, y) {",
-                    "  2 * x + 1",
+                    "  2 * x + 1  ",
                     "}",
                     "",
                     "# This  line containts  double spaces",

@@ -56,6 +56,7 @@ test_that("double_space_linter", {
                        file_lines = c("# A header line ending with spaces and hash  #",
                                       "# A header line ending with many spaces and hash       #",
                                       "Normal text",
+                                      "  ",
                                       "  indented text",
                                       "#'   An indented roxygen comment",
                                       "  # Indented line commented out",
@@ -134,4 +135,24 @@ test_that("source_linter", {
   expect_true(lapply(source_linter(inputCorrect),
                      function(x) class(x) == "lint") %>% unlist %>% all)
   expect_equal(source_linter(inputCorrect) %>% length, 0)
+})
+
+
+test_that("trailing_whitespaces_linter", {
+  # nolint start
+  inputWrong <- list(filename = "An example object",
+                     file_lines = c("x <- 1  ",
+                                    "x <- 1 ",
+                                    "x <- 5 %>%  "))
+  # nolint end
+  inputCorrect <- list(filename = "An example object",
+                       file_lines = c("x <- 1",
+                                      "x <- 5 %>% "))
+  expect_true(lapply(trailing_whitespaces_linter(inputWrong),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(trailing_whitespaces_linter(inputWrong) %>% length,
+               inputWrong$file_lines %>% length)
+  expect_true(lapply(trailing_whitespaces_linter(inputCorrect),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(trailing_whitespaces_linter(inputCorrect) %>% length, 0)
 })

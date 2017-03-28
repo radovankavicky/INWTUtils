@@ -17,7 +17,7 @@ library(INWTUtils)
 #             type = "script")
 
 ## ----lintersAlways, results = 'asis', echo = FALSE-----------------------
-cat("-", paste0(names(selectLinters()), collapse = "\n\n- "))
+cat("-", paste0(names(INWTUtils:::generalLinters()), collapse = "\n\n- "))
 
 ## ----lintersScript, results = 'asis', echo = FALSE-----------------------
 cat("-", paste0(names(INWTUtils:::scriptLinters()), collapse = "\n\n- "))

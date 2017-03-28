@@ -74,6 +74,7 @@ checkStyle <- function(files,
 #'   \item\code{\link[lintr]{object_length_linter}},
 #'   \item\code{\link[lintr]{spaces_left_parentheses_linter}},
 #'   \item\code{\link[lintr]{trailing_blank_lines_linter}},
+#'   \item\code{\link[INWTUtils]{trailing_whitespaces_linter}},
 #' }
 #'
 #' The following linters are only included if \code{type = "pkgFuns"}:
@@ -149,7 +150,8 @@ generalLinters <- function() {
        object_length_linter = object_length_linter(30L),
        spaces_left_parentheses_linter =
          spaces_left_parentheses_linter,
-       trailing_blank_lines_linter = trailing_blank_lines_linter)
+       trailing_blank_lines_linter = trailing_blank_lines_linter,
+       trailing_whitespaces_linter = trailing_whitespaces_linter)
 }
 
 

@@ -15,7 +15,7 @@
 #'                     "source(anotherScript.R)",
 #'                     "",
 #'                     "foo <- function(x = 1, y) {",
-#'                     "  2 * x + 1",
+#'                     "  2 * x + 1  ",
 #'                     "}",
 #'                     "",
 #'                     "# This  line containts  double spaces",
@@ -163,5 +163,28 @@ source_linter <- function(source_file) {
          type = "style",
          message = "Don't use source in package functions.",
          linter = "source_linter")
+  })
+}
+
+
+#' @describeIn INWTLinters Trailing whitespaces are superfluos. In contrast to
+#' \code{\link[lintr]{trailing_whitespace_linter}}, this function detects
+#' whitespaces after \code{\link[dplyr]{\%>\%}} only if there are at least two
+#' (since one whitespace is inserted automatically after
+#' \code{\link[dplyr]{\%>\%}}).
+#' @export
+trailing_whitespaces_linter <- function(source_file) {
+
+  ids <- grep("([^(%>%)] +$)|(%>% {2,})$", source_file$file_lines)
+  # Space at the end of string
+  # Or: two spaces after pipe operator (at the end of the string)
+
+  lapply(ids, function(id) {
+    Lint(filename = source_file$filename,
+         line_number = id,
+         column_number = NULL,
+         type = "style",
+         message = "Trailing whitespaces.",
+         linter = "trailing_whitespaces_linter")
   })
 }
