@@ -36,24 +36,19 @@ It's never to late to adapt a good coding style -- and never to early.
 
 ## How to use `checkStyle`
 
-`checkStyle` can be applied to one or more files.
-With the `type` argument you can optionally specify a document type. 
-This adds some linters to the set of used linters.
-You can choose between scripts (`type = "script"`) or files with package 
-functions (`type = "pkgFuns"`). Or you can just ignore the argument.
-
-To demonstrate the usage, we first create two scripts with examples for bad
-style:
+`checkStyle` can be applied to one or more files. If you don't add any other
+argument, the default set of linters is used as returned by the function
+`selectLinters`. To demonstrate the usage, we first create two files with
+examples for bad style:
 
 ```{r, echo = FALSE}
 library(INWTUtils)
 ```
 
-```{r badStyleScript, eval = FALSE}
+```{r badStyleFile, eval = FALSE}
 writeLines(c("# This is an example for bad style",
              "x = 1+2",
              "# A comment with  double  spaces",
-             "foo <- function( y) print(paste('You entered', y))",
              ""),
            con = "badStyle1.R")
 writeLines(c("# This is a second example   ",
@@ -65,8 +60,7 @@ How many violations of common style conventions do you see? `checkStyle` may
 find some more:
 
 ```{r checkStyle, results = "hide", eval = FALSE}
-checkStyle(files = c("badStyle1.R", "badStyle2.R"),
-           type = "script")
+checkStyle(files = c("badStyle1.R", "badStyle2.R"))
 ```
 
 A new tab opens in RStudio which lists all lints found in the checked files.
@@ -76,6 +70,39 @@ until the opened tab remains empty.
 
 ![Output produced by `checkStyle`: For each file you see the full path and a 
 list of style rule violations (lints).](style_01checkStyleOutput.PNG)
+
+
+If you want to customize the set of used linters, there are
+three possibilities:
+
+- Specify a file type with the `type` argument
+- Exclude linters with the `excludeLinters` argument
+- Add more linters with the `addLinters` argument
+
+These arguments are passed to `selectLinters` and change the set of linters that
+the function returns.
+
+Specifying a file type via the `type` argument adds some linters to the set of
+used linters.
+You can choose between scripts (`type = "script"`) or files with package 
+functions (`type = "pkgFuns"`). Or you can just ignore the argument.
+
+`excludeLinters` just needs a vector or list with names of the linters you want
+to exclude.
+`addLinters` needs a bit more: a named vector or named list of linters. How you
+choose the exact names doesn't play a role, but the values have to be linter
+functions from an attached package.
+
+For example:
+
+```{r checkStyleArgs, results = "hide", eval = FALSE}
+checkStyle(files = c("badStyle1.R", "badStyle2.R"),
+           type = "script",
+           excludeLinters = c("object_length_linter",
+                              "args_without_default_first_linter"),
+           addLinters = list(setwd_linter = setwd_linter,
+                             a = source_linter))
+```
 
 
 ## Included linters
@@ -98,6 +125,11 @@ If `type = "pkgFuns"`, the following linters are added:
 cat("-", paste0(names(INWTUtils:::pkgFunLinters()), collapse = "\n\n- "))
 ```
 
+The following linters stem from the `INWTUtils` package:
+
+`args_without_default_first_linter` checks if arguments without default value
+are listed before arguments with default value in function definitions.
+
 `double_space_linter` checks for double empty spaces.
 
 `internal_INWT_function_linter` checks for the use of internal functions from
@@ -106,6 +138,9 @@ linter will barely go into action. [^a]
 
 `setwd_linter` and `source_linter` check for `setwd` or `source` statements
 because they can cause side effects when used in functions.
+
+`trailing_whitespaces_linter` looks for superfluous whitespaces at the end of
+a line. [^b]
 
 The remaining linters are taken from the `lintr` package.
 Details can be found via
@@ -136,3 +171,10 @@ Either it should not be used in a context outside its package, or the author did
 not feel like writing a documentation. To avoid the latter, we want to be
 notified about the usage of an internal INWT function so we can add a
 documentation to the function and export it.
+
+[^b]: This linter is very similar to `trailing_whitespace_linter` from the
+`lintr` package, but it takes a special case into account: If you insert the
+pipe operator `%>%` from the [dplyr package](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
+using the shortcut `Ctrl` + `Shift` + `m`, a whitespace is inserted behind it
+per default. These whitespaces are not detected by `trailing_whitespaces_linter`
+because it would lead to many annoying alarms.

@@ -1,11 +1,10 @@
 ## ---- echo = FALSE-------------------------------------------------------
 library(INWTUtils)
 
-## ----badStyleScript, eval = FALSE----------------------------------------
+## ----badStyleFile, eval = FALSE------------------------------------------
 #  writeLines(c("# This is an example for bad style",
 #               "x = 1+2",
 #               "# A comment with  double  spaces",
-#               "foo <- function( y) print(paste('You entered', y))",
 #               ""),
 #             con = "badStyle1.R")
 #  writeLines(c("# This is a second example   ",
@@ -13,8 +12,15 @@ library(INWTUtils)
 #             con = "badStyle2.R")
 
 ## ----checkStyle, results = "hide", eval = FALSE--------------------------
+#  checkStyle(files = c("badStyle1.R", "badStyle2.R"))
+
+## ----checkStyleArgs, results = "hide", eval = FALSE----------------------
 #  checkStyle(files = c("badStyle1.R", "badStyle2.R"),
-#             type = "script")
+#             type = "script",
+#             excludeLinters = c("object_length_linter",
+#                                "args_without_default_first_linter"),
+#             addLinters = list(setwd_linter = setwd_linter,
+#                               a = source_linter))
 
 ## ----lintersAlways, results = 'asis', echo = FALSE-----------------------
 cat("-", paste0(names(INWTUtils:::generalLinters()), collapse = "\n\n- "))
