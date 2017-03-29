@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mira Céline Klein" />
 
-<meta name="date" content="2017-03-28" />
+<meta name="date" content="2017-03-29" />
 
 <title>Checking code style with INWTUtils</title>
 
@@ -70,18 +70,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Checking code style with INWTUtils</h1>
 <h4 class="author"><em>Mira Céline Klein</em></h4>
-<h4 class="date"><em>2017-03-28</em></h4>
+<h4 class="date"><em>2017-03-29</em></h4>
 
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>This vignette describes how to check your code files for a good style with <code>checkStyle</code> (a wrapper for the <code>lint</code> function of the <code>lintr</code> package). The function is tailored to the usage at the INWT Statistics company but can by applied in other contexts without any disadvantages.</p>
-<p>For several so-called <em>lints</em> the functions checks if they appear in the code. In this context, lints are (mostly small) violations of style rules, e.g., missing spaces around operators, double spaces, very long lines or trailing blank lines. A function checking an specific lint is called linter function. Section “Included linters” gives more information about the set of tested lints.</p>
+<p>For several so-called <em>lints</em> the function checks if they appear in the code. In this context, lints are (mostly small) violations of style rules, e.g., missing spaces around operators, double spaces, very long lines or trailing blank lines. A function checking a specific lint is called linter function. The section “Included linters” gives more information about the set of tested lints.</p>
 </div>
 <div id="why-should-you-watch-your-style" class="section level2">
 <h2>Why should you watch your style?</h2>
-<p>Your code may be robust and fast in spite of a bad style. But a good style makes your code more beautiful and easier to read – especially for others. Adapting a consistent style in a team helps to find your way around in the code written by someone else.</p>
+<p>Your code may be robust and fast in spite of a bad style. But a good style makes your code more beautiful and easier to read – especially for others. Adapting a consistent style within a team helps to find your way around in the code written by someone else.</p>
 <p>It’s never to late to adapt a good coding style – and never to early.</p>
 </div>
 <div id="how-to-use-checkstyle" class="section level2">
@@ -138,7 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="exclude-lines-from-checking" class="section level2">
 <h2>Exclude lines from checking</h2>
-<p>Sometimes you may want to exclude specific lines from the check because the found lint cannot be removed for some reason. You achieve this by adding the <code>nolint</code> commands (see also <a href="https://rdrr.io/cran/lintr/man/exclude.html"><code>?lintr::exclude</code></a>):</p>
+<p>Sometimes you may want to exclude specific lines from the check because the found lint cannot be removed for some reason. You achieve this by adding the <code>nolint</code> commands into the file to be checked (see also <a href="https://rdrr.io/cran/lintr/man/exclude.html"><code>?lintr::exclude</code></a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># nolint start</span>
 x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) <span class="co"># This line will be excluded from the checks</span>
 <span class="co"># nolint end</span>
