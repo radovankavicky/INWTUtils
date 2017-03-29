@@ -6,6 +6,8 @@
 # E-mail: mira-klein@inwt-statistic.de                                         #
 ################################################################################
 
+library(dplyr)
+
 devtools::build_vignettes()
 
 for (thema in c("createProjectSkeleton", "checkCodeStyle")) {
