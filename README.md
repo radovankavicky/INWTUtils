@@ -187,19 +187,19 @@ with `checkStyle` (a wrapper for the `lint` function of the
 `lintr` package). The function is tailored to the usage at the INWT Statistics
 company but can by applied in other contexts without any disadvantages.
 
-For several so-called *lints* the functions checks if they appear in the code.
+For several so-called *lints* the function checks if they appear in the code.
 In this context, lints are (mostly small) violations of style rules, e.g.,
 missing spaces around operators, double spaces, very long lines or trailing
 blank lines.
-A function checking an specific lint is called linter function.
-Section "Included linters" gives more information about the set of tested lints. 
+A function checking a specific lint is called linter function.
+The section "Included linters" gives more information about the set of tested lints. 
 
 
 ## Why should you watch your style?
 
 Your code may be robust and fast in spite of a bad style. But a good style
 makes your code more beautiful and easier to read -- especially for others.
-Adapting a consistent style in a team helps to find your way around in the code
+Adapting a consistent style within a team helps to find your way around in the code
 written by someone else.
 
 It's never to late to adapt a good coding style -- and never to early.
@@ -291,12 +291,6 @@ If `type = "pkgFuns"`, the following linters are added:
 packages whose name starts with INWT. Outside of the INWT company, this
 linter will barely go into action. [^a]
 
-[^a]: There is usually a reason why an internal function has not been exported.
-Either it should not be used in a context outside its package, or the author did
-not feel like writing a documentation. To avoid the latter, we want to be
-notified about the usage of an internal INWT function so we can add a
-documentation to the function and export it.
-
 `setwd_linter` and `source_linter` check for `setwd` or `source` statements
 because they can cause side effects when used in functions.
 
@@ -309,7 +303,7 @@ Details can be found via
 
 Sometimes you may want to exclude specific lines from the check because the
 found lint cannot be removed for some reason. You achieve this by adding the
-`nolint` commands (see also 
+`nolint` commands into the file to be checked (see also 
 [`?lintr::exclude`](https://rdrr.io/cran/lintr/man/exclude.html)):
 
 
@@ -322,3 +316,9 @@ y <- c(3, 4) # This line won't be excluded anymore.
 
 
 
+
+[^a]: There is usually a reason why an internal function has not been exported.
+Either it should not be used in a context outside its package, or the author did
+not feel like writing a documentation. To avoid the latter, we want to be
+notified about the usage of an internal INWT function so we can add a
+documentation to the function and export it.

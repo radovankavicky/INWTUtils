@@ -104,12 +104,6 @@ cat("-", paste0(names(INWTUtils:::pkgFunLinters()), collapse = "\n\n- "))
 packages whose name starts with INWT. Outside of the INWT company, this
 linter will barely go into action. [^a]
 
-[^a]: There is usually a reason why an internal function has not been exported.
-Either it should not be used in a context outside its package, or the author did
-not feel like writing a documentation. To avoid the latter, we want to be
-notified about the usage of an internal INWT function so we can add a
-documentation to the function and export it.
-
 `setwd_linter` and `source_linter` check for `setwd` or `source` statements
 because they can cause side effects when used in functions.
 
@@ -136,3 +130,9 @@ y <- c(3, 4) # This line won't be excluded anymore.
 ```{r rmFiles, echo = FALSE, results = 'hide', eval = FALSE}
 lapply(c("badStyle1.R", "badStyle2.R"), unlink)
 ```
+
+[^a]: There is usually a reason why an internal function has not been exported.
+Either it should not be used in a context outside its package, or the author did
+not feel like writing a documentation. To avoid the latter, we want to be
+notified about the usage of an internal INWT function so we can add a
+documentation to the function and export it.
