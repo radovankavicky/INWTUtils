@@ -3,3 +3,4 @@
 ^libWin$
 ^libLinux$
 ^prepareRepo.R$
+^blogEntry_.*\.Rmd$
