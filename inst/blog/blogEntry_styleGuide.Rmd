@@ -19,7 +19,7 @@ things to get started with and it will have an immediate impact.
 When you begin to care about readability, here is a short list of benefits:
 
 - Your colleagues will like you and are happy to pick your work up where you
-left off. Well not quite, but we can get there.
+left off. Well, not quite, but we can get there.
 - Errors are easier to spot.
 - When you review your own source code you will fewer and fewer ask yourself: 
 *Who wrote this? And what does it mean?*
@@ -31,19 +31,18 @@ is [the style guide from Google](https://google.github.io/styleguide/Rguide.xml)
 and the other one can be found
 in [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/Style.html). 
 
-We deviate only on some specific rules from these guides. Furthermore we have
+We deviate only on some specific rules from these guides. Furthermore, we have
 decided to make them mandatory. Every time code is committed into a git
-repository, a CI tool will automatically check for any style violations. Some
-details about the implementation can be found below. Another component is a
-template for a typical script which can as well be found below.
-We also implemented
+repository, a CI tool will automatically check for any style violations. Another
+component is a template for a typical script which can be found below.
+We also implemented 
 most of these rules and some more ideas in a dedicated package `INWTUtils` which
 can be found in [its GitHub repository](https://github.com/INWT/INWTUtils).
 
 
 ## Naming convention
 
-In contrast to the two style guides mentioned before we decided to use
+In contrast to the two style guides mentioned before, we decided to use
 `lowerCamelCase` for most identifiers. Underscores and dots are not allowed in
 usual object names. There is one case where you could deviate from this
 convention: By naming GLOBAL_VARIABLES -- they are only used in scripts and only
@@ -60,9 +59,9 @@ useful functions to run such checks. You can apply these checks to a package or
 a single file. While doing so, you can choose exactly which rules you want to
 test. Our own checks are:
 
--	Use <- for assignment, not =
+-	Use `<-` for assignment, not `=`
 -	Spaces should be after all commas, but not before
--	Operators like +, -, =, … should be surrounded by spaces
+-	Operators like `+, -, =, …` should be surrounded by spaces
 -	The line length should not exceed a certain number of characters, i.e., 80 or
   100
 -	Spaces should be used instead of tabs
@@ -87,9 +86,9 @@ the package:
 If you want to get started, we recommend you to install the packages `lintr` and
 read the help for `lintr::lint`.
 
-In the beginning it may be hard to follow these style rules, especially if they
+In the beginning, it may be hard to follow these style rules, especially if they
 have been chosen by someone else and are not in line with your personal
-preferences. But eventually it will help you to write cleaner code. In addition
+preferences. But eventually, it will help you to write cleaner code. In addition,
 you may adapt a consistent coding style in your team, which makes cooperation a
 bit more comfortable.
 
