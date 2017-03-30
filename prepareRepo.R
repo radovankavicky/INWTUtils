@@ -10,7 +10,9 @@ library(dplyr)
 
 devtools::build_vignettes()
 
-for (thema in c("createProjectSkeleton", "checkCodeStyle")) {
+themas <- c("createProjectSkeleton", "checkCodeStyle")
+
+for (thema in themas) {
 
   # Create md files of vignettes
   knitr::knit(paste0("inst/doc/", thema, ".Rmd"),
@@ -43,3 +45,5 @@ text <- c("# INWTUtils",
           checkCodeStyle)
 
 writeLines(text, "README.md")
+
+unlink(paste0("inst/", themas, ".md"))
