@@ -24,7 +24,7 @@ situations.
 There is of course not the one and only best file structure. The following
 figure shows our solution:
 
-![Fig. 1 -- A useful file structure](fileStructure.png)
+![Fig. 1 -- A useful file structure](blog/fileStructure.png)
 
 The most important file is maybe the *.Rproj* file. You should always work in a
 project when you’re working with R. This has the big advantage that all file
@@ -66,7 +66,7 @@ project root. This is the case for our
 advantage that the package can be installed directly from GitHub.)
 
 
-![Fig. 2 -- A file structure including a package](fileStructureWithPkg.png)
+![Fig. 2 -- A file structure including a package](blog/fileStructureWithPkg.png)
 
 
 ## Work in a sandbox
