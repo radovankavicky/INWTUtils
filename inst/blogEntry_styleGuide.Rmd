@@ -18,10 +18,10 @@ things to get started with and it will have an immediate impact.
 
 When you begin to care about readability, here is a short list of benefits:
 
-- Your colleagues will like you and are happy to pick your work up where you left
-off. Well not quite, but we can get there.
+- Your colleagues will like you and are happy to pick your work up where you
+left off. Well not quite, but we can get there.
 - Errors are easier to spot.
-- when you review your own source code you will fewer and fewer ask yourself: 
+- When you review your own source code you will fewer and fewer ask yourself: 
 *Who wrote this? And what does it mean?*
 
 When you decide to stick to any style guidelines, be aware that it is not that
@@ -32,10 +32,11 @@ and the other one can be found
 in [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/Style.html). 
 
 We deviate only on some specific rules from these guides. Furthermore we have
-decided to make them mandatory. Every time code is checked into a git
-repository, a CI-tool will automatically check for any style violations. Some
-details can be found below how this is implemented. Another component is a
-template for a typical script which can also be found below. We also implemented
+decided to make them mandatory. Every time code is committed into a git
+repository, a CI tool will automatically check for any style violations. Some
+details about the implementation can be found below. Another component is a
+template for a typical script which can as well be found below.
+We also implemented
 most of these rules and some more ideas in a dedicated package `INWTUtils` which
 can be found in [its GitHub repository](https://github.com/INWT/INWTUtils).
 
@@ -46,7 +47,7 @@ In contrast to the two style guides mentioned before we decided to use
 `lowerCamelCase` for most identifiers. Underscores and dots are not allowed in
 usual object names. There is one case where you could deviate from this
 convention: By naming GLOBAL_VARIABLES -- they are only used in scripts and only
-defined at the top -- in upper case with underscores: they can be found at a
+defined at the top -- in upper case with underscores, they can be found at a
 glance.
 
 
@@ -57,30 +58,38 @@ from style rules with automated
 checks. The [lintr](https://cran.r-project.org/package=lintr) package contains
 useful functions to run such checks. You can apply these checks to a package or
 a single file. While doing so, you can choose exactly which rules you want to
-test. Our own check are:
+test. Our own checks are:
 
 -	Use <- for assignment, not =
 -	Spaces should be after all commas, but not before
 -	Operators like +, -, =, … should be surrounded by spaces
--	The line length should not exceed a certain number of characters, i.e., 80 or 100
+-	The line length should not exceed a certain number of characters, i.e., 80 or
+  100
 -	Spaces should be used instead of tabs
 -	Object names should not be too long
--	Remove empty blank lines at the end of the code and empty spaces at the end of lines
+- Left parentheses should have a space before, except for function calls
+-	Remove empty blank lines at the end of the file
 
 We also wrote a few of our own checks which can then be easily integrated with
 the package:
 
--	Function arguments without default should be listed before arguments with default
+-	Function arguments without default should be listed before arguments with
+  default
 -	Avoid double spaces (except for indents)
 -	Don’t use `setwd` or `source` in package functions – this can lead to
-unexpected side effects
+  unexpected side effects
+- Remove blank spaces at the end of lines
+- We want to force ourselves not to use internal functions from one of our own
+  packages (via `pkg:::foo`). This would be a hint that we should
+  rather write a documentation for that function and export it. This
+  applies only to scripts, not to package functions.
 
 If you want to get started, we recommend you to install the packages `lintr` and
 read the help for `lintr::lint`.
 
 In the beginning it may be hard to follow these style rules, especially if they
-have been chosen by someone else and are not in line to your personal
-preferences.  But eventually it will help you to write cleaner code. In addition
+have been chosen by someone else and are not in line with your personal
+preferences. But eventually it will help you to write cleaner code. In addition
 you may adapt a consistent coding style in your team, which makes cooperation a
 bit more comfortable.
 
@@ -104,8 +113,9 @@ will not be available anymore at a later point.
 ### Cleaning up the search path
 
 The search path contains all packages that are attached, that is, whose
-functions you can access directly.  Some packages may be attached and you are
-not aware of them anymore. A useful function for this task is `rmPkgs` from the
+functions you can access directly. Some packages may be attached and you are
+not aware of them anymore. If you want to keep control, it's better to know what
+is on your search path. A useful function for this task is `rmPkgs` from the
 `INWTUtils` package. It will put your search path back into the state of a fresh
 `R` session. Afterwards you can attach the packages you need for the analysis
 via `library` and execute `source` statements.
@@ -119,6 +129,7 @@ structure, you can divide your code into numbered sections (e.g. “loading data
 “data preparation”, “model estimation”, etc.). This may seem quite trivial, but
 it helps to get an overview very quickly. Also modern editors may provide the
 possibility to collapse regions of code. This can further help to browse a file.
+
 
 ```{r eval = FALSE}
 ################################################################################
@@ -158,4 +169,3 @@ exampleVector <- 1:3 # lowerCamelCase for ordinary object names
 
 # 02 ... -----------------------------------------------------------------------
 ```
-
