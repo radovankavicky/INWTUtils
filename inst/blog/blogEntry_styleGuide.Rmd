@@ -26,7 +26,7 @@ left off. Well, not quite, but we can get there.
 
 When you decide to stick to any style guidelines, be aware that it is not that
 important which one you pick. What is important is that you and your team can
-agree on sticking to it. There are two popular style guides for `R`. One
+agree on sticking to it. There are two popular style guides for R. One
 is [the style guide from Google](https://google.github.io/styleguide/Rguide.xml)
 and the other one can be found
 in [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/Style.html). 
@@ -62,7 +62,7 @@ test. Our own checks are:
 -	Use `<-` for assignment, not `=`
 -	Spaces should be after all commas, but not before
 -	Operators like `+, -, =, …` should be surrounded by spaces
--	The line length should not exceed a certain number of characters, i.e., 80 or
+-	The line length should not exceed a certain number of characters, e.g., 80 or
   100
 -	Spaces should be used instead of tabs
 -	Object names should not be too long
@@ -77,10 +77,10 @@ the package:
 -	Avoid double spaces (except for indents)
 -	Don’t use `setwd` or `source` in package functions – this can lead to
   unexpected side effects
-- Remove blank spaces at the end of lines
+- Remove whitespaces at the end of lines
 - We want to force ourselves not to use internal functions from one of our own
   packages (via `pkg:::foo`). This would be a hint that we should
-  rather write a documentation for that function and export it. This
+  rather write a documentation for that function and export it. This rule
   applies only to scripts, not to package functions.
 
 If you want to get started, we recommend you to install the packages `lintr` and
@@ -116,7 +116,7 @@ functions you can access directly. Some packages may be attached and you are
 not aware of them anymore. If you want to keep control, it's better to know what
 is on your search path. A useful function for this task is `rmPkgs` from the
 `INWTUtils` package. It will put your search path back into the state of a fresh
-`R` session. Afterwards you can attach the packages you need for the analysis
+R session. Afterwards you can attach the packages you need for the analysis
 via `library` and execute `source` statements.
 
 ### Contents
