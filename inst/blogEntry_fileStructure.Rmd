@@ -1,0 +1,112 @@
+---
+title: "A meaningful file structure for the work with R and R packages"
+output: html_document
+---
+
+Have you ever tried to find yourself around in the file structure of an already
+existing project? To separate relevant from obsolete files in a “historically
+grown” directory? To find out in which order existing scripts should be
+conducted?
+
+To make all this a bit easier, it helps to have a consistent file and folder
+structure over all projects. This article addresses R users who have already
+some experience with RStudio, R projects and R packages. The contents are of
+special interest for those you work with R in a team, but can also be helpful
+if you are the only one working on a project.
+
+Here we present the structure we are using at INWT Statistics. Although it
+refers to our work with R and RStudio, it can partially be transferred to other
+situations.
+
+
+## A useful file structure
+
+There is of course not the one and only best file structure. The following
+figure shows our solution:
+
+![Fig. 1 -- A useful file structure](fileStructure.png)
+
+The most important file is maybe the *.Rproj* file. You should always work in a
+project when you’re working with R. This has the big advantage that all file
+paths can be set relative to the project root directory. You can move the whole
+project folder to another location and all paths in your code will still be
+working! In addition, the *.Rproj* file contains useful preferences, e.g., if
+the workspace should be saved when quitting RStudio or not.
+
+The first folder is called *RScripts*. It contains all scripts written in R.
+It is recommended to number the scripts in the order they need to be executed
+(or are typically executed).
+
+All kind of data (original or edited data) lives in *data*. This includes
+different file types (.Rdata, .xlsx, .cvs). If you want so save something you
+computed, you also put into this folder, maybe in a subfolder *results*. For
+example, you may store the results from time-consuming model computations to use
+them later in a model comparison report.
+
+The *reports* folder contains the reports we create with
+[R Markdown](http://rmarkdown.rstudio.com/).
+Here again it can be useful to number the reports in a meaningful way.
+
+
+## Where does the package live?
+
+Virtually all of our projects include an R package. R packages have their own
+specific file and folder structure, but where should these files be located?
+There are two options: Either all package files are stored in an own folder
+(called for example *package* as in fig. 1), or they are stored in the project’s
+root directory (as in fig. 2).
+Which way should be preferred depends a bit on the nature of the project.
+In an analysis project (e.g., forecasting sales figures or computing a
+[customer lifetime value](https://www.inwt-statistics.com/business-cases/customer-lifetime-value.html)),
+the package files obtain their own package folder.
+In projects where package development is the main task, the package lives in the
+project root. This is the case for our
+[INWTUtils package](https://github.com/INWT/INWTUtils) package.
+(Putting the package files into the project root directory also provides the
+advantage that the package can be installed directly from GitHub.)
+
+
+![Fig. 2 -- A file structure including a package](fileStructureWithPkg.png)
+
+
+## Work in a sandbox
+
+In general, we install all R packages (our own packages and those from other
+authors) on a network drive. Thus, everyone has access to the same versions of
+the same packages. But if someone is working on one of our packages, it is not
+desirable that every little change appears immediately on the network drive: It
+could contain bugs and disrupt the colleagues’ work.
+
+To solve this problem, we always work in a sandbox when making changes on a
+package. More precisely, every time we build a new version of the package, it is
+not written to the network drive, but into a particular folder you can see in
+figure 1: *libLinux* resp. *libWin* (depending on the operating system). This
+means that everything we try out remains in a self-contained environment without
+causing any change outside.
+
+How does RStudio know where to install the package when we build it? The
+*.Rprofile* file is responsible for this task. It is always sourced when you
+pen R. Our *.Rprofile* changes the default installation directory in your R
+project to *libLinux* resp. *libWin*. An example file can be seen [here](https://github.com/INWT/INWTUtils/blob/master/.Rprofile).
+
+As soon as you are sure that your new package version is working well, you can
+install it to the network drive and make it accessible to everyone.
+
+In addition, the folders *libLinux* and *libWin* are a good place to install
+packages you just want to try out  without filling the network drive with
+garbage.
+
+Even if you don't share an package directory on a network drive with you
+colleagues, working in a sandbox can have advantages. You can for example work
+on your own package without affecting the stable version in your user library.
+
+  
+## Just get started!
+
+It’s still hard enough to orient yourself in a project where many people left
+their mark on. But it becomes easier if the file structure is consistent and
+well thought through. And this also forces you to work in such a way that the
+colleagues after you don’t get lost in your files and folders.
+
+If you don’t want to create and rename a lot of folders by hand, our [INWTUtils package](https://github.com/INWT/INWTUtils) can help you with that via the
+function `createProjectSkeleton`.
