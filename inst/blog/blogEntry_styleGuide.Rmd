@@ -3,6 +3,9 @@ title: "INWTs guidelines for R code"
 output: html_document
 ---
 
+> It turns out that style matters in programming for the same reason that it 
+> matters in writing. It makes for better reading -- [Douglas Crockford](http://shop.oreilly.com/product/9780596517748.do)
+
 Why do we need yet another style guide? 
 
 > The reason to care about a style guide is just one thing: We want that our
