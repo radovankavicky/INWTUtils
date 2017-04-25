@@ -119,7 +119,7 @@ test_that("createPackage creates correct files - pkg on top level", {
   expect_true(file.exists(paste0(tmpdir, "/tmp9/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp9/.Rbuildignore")),
                c("^.+\\.Rproj$", "^\\.Rproj\\.user$", "^libWin$", "^libLinux$",
-                 "^RScripts$"))
+                 "^RScripts$", "^reports$"))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/DESCRIPTION")))
   expect_equal(readLines(paste0(tmpdir, "/tmp9/DESCRIPTION"))[1],
                "Package: testPackage")
@@ -139,7 +139,7 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp0/package/.Rbuildignore")),
                c("^.+\\.Rproj$", "^\\.Rproj\\.user$", "^libWin$", "^libLinux$",
-                 "^RScripts$"))
+                 "^RScripts$", "^reports$"))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/DESCRIPTION")))
   expect_equal(readLines(paste0(tmpdir, "/tmp0/package/DESCRIPTION"))[1],
                "Package: testPackage")

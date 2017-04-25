@@ -46,4 +46,4 @@ text <- c("# INWTUtils",
 
 writeLines(text, "README.md")
 
-unlink(paste0("inst/", themas, ".md"))
+unlink(c(paste0("inst/", themas, ".md"), "inst/doc"), recursive = TRUE)
