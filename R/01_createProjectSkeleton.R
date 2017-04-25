@@ -129,7 +129,7 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
                       rstudio = FALSE,
                       ... = ...))
 
-  use_testthat(pkg = packageDir)
+  use_testthat(pkg = rmBackslash(packageDir))
 
   copyFile(dir, "testForCodeStyle.R",
            paste0(ifelse(pkgOnToplevel, "", pkgFolder),
