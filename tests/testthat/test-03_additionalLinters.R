@@ -143,11 +143,14 @@ test_that("trailing_whitespaces_linter", {
   inputWrong <- list(filename = "An example object",
                      file_lines = c("x <- 1  ",
                                     "x <- 1 ",
+                                    "dat %>%  ",
+                                    "#'  ",
                                     "x <- 5 %>%  "))
   # nolint end
   inputCorrect <- list(filename = "An example object",
                        file_lines = c("x <- 1",
-                                      "x <- 5 %>% "))
+                                      "x <- 5 %>% ",
+                                      "#' "))
   expect_true(lapply(trailing_whitespaces_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
   expect_equal(trailing_whitespaces_linter(inputWrong) %>% length,

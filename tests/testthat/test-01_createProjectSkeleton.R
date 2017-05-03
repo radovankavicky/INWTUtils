@@ -155,7 +155,7 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp10/"),
                                                  pkgName = "aTestPackage",
                                                  rProject = FALSE)))
-  res10 <- check(pkg = paste0(tmpdir, "/tmp10/"),
+  res10 <- check(pkg = paste0(tmpdir, "/tmp10"),
                  document = FALSE,
                  quiet = TRUE)
   expect_length(res10$errors, 0)
@@ -176,7 +176,7 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp12"),
                                                  pkgName = "aTestPackage",
                                                  rProject = TRUE)))
-  res12 <- check(pkg = paste0(tmpdir, "/tmp12/"),
+  res12 <- check(pkg = paste0(tmpdir, "/tmp12"),
                  document = FALSE,
                  quiet = TRUE)
   expect_length(res12$errors, 0)
