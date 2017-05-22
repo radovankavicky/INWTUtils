@@ -84,7 +84,9 @@ for `createProjectSkeleton:`
   live in this folder, otherwise directly in the project root.
   The former may lead to a better overview in
   your project root and is appropriate for projects whose main scope is not
-  package development, e.g., a forecasting project. However if your project's
+  package development, e.g., a forecasting project. This also avoids conflicts
+  between the *data* folder containing your data to analyse and the *data*
+  folder which is part of the package. However if your project's
   purpose is package development, the package should not be moved to a separate
   folder.
   The package infrastructure is created with `create` resp. `setup` from the

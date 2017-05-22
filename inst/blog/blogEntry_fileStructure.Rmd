@@ -59,7 +59,10 @@ root directory (as in fig. 2).
 Which way should be preferred depends a bit on the nature of the project.
 In an analysis project (e.g., forecasting sales figures or computing a
 [customer lifetime value](https://www.inwt-statistics.com/business-cases/customer-lifetime-value.html)),
-the package files obtain their own package folder.
+the package files obtain their own package folder. This also avoids a conflict:
+In general, you will have a data folder in an analysis project. Packages also
+include a folder named data, so R would try to include your data folder when
+building the package.
 In projects where package development is the main task, the package lives in the
 project root. This is the case for our
 [INWTUtils package](https://github.com/INWT/INWTUtils).
