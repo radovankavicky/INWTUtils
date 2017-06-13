@@ -1,5 +1,11 @@
 context("Package code style")
 
+if (interactive()) {
+  library(testthat)
+  library(lintr)
+  library(devtools)
+}
+
 test_that("Code is lint-free", {
 
   # Files to exclude from linter check
