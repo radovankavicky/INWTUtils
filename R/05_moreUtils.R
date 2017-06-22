@@ -17,19 +17,14 @@
 #' @export
 read_csv <- function(file, col_names = TRUE, skip = 0, n_max = Inf, ...) {
 
-  col_names <- if (!exists("col_names")) TRUE else col_names
-  skip <- if (!exists("skip")) 0 else skip
-  n_max <- if (!exists("n_max")) Inf else n_max
-
   df <- readr::read_csv(file = file,
                         col_names = col_names,
                         skip = skip,
                         n_max = n_max,
                         ...)
 
-  nRowsInFile <- system(paste0("wc -l ", file), intern = TRUE) %>%
-    strsplit(split = " ") %>% unlist %>% `[[`(1) %>% as.integer
-  target <- min(n_max, nRowsInFile - (col_names != FALSE) - skip)
+  nRowsInFile <- as.integer(system(paste0("wc -l <", file), intern = TRUE))
+  target <- min(n_max, nRowsInFile - col_names - skip)
   actual <- nrow(df)
 
   if (target != actual) {
@@ -39,8 +34,9 @@ read_csv <- function(file, col_names = TRUE, skip = 0, n_max = Inf, ...) {
                    "Please use fread from the data.table package instead."))
   } else {
     message("Correct number of lines has been imported (", actual, ").")
-    return(df)
   }
+
+  df
 }
 
 # Ausweitung auf read_csv2, ...
