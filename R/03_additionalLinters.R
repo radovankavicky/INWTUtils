@@ -102,25 +102,26 @@ double_space_linter <- function(source_file) {
 }
 
 
-#' @describeIn INWTLinters Instead of using internal functions from an INWT
-#' package in scripts with \code{:::}, they should be exported and documented.
-#' (only for scripts)
+#' @describeIn INWTLinters Internal functions should not be used since there is
+#' in general a reason why they have not been exported by the package author.
+#' They may not have been tested outside the context of the function they are
+#' used in.
 #' @export
-internal_INWT_function_linter <- function(source_file) {
+internal_function_linter <- function(source_file) {
 
-  ids <- grep("INWT\\w*:::", source_file$file_lines)
-  # String INWT
-  # Arbitrary number of word characters completing the package name
-  # "..." to call internal function
+  # nolint start
+  ids <- grep(":::", source_file$file_lines)
+  # nolint end
 
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,
          line_number = id,
          column_number = NULL,
          type = "style",
-         message = "If internal functions are used, they should rather be
-         documented and exported.",
-         linter = "internal_INWT_function_linter")
+         # nolint start
+         message = "Internal functions (addressed via :::) should not be used.",
+         # nolint end
+         linter = "internal_function_linter")
   })
 }
 

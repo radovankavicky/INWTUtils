@@ -4,7 +4,7 @@
 \alias{INWTLinters}
 \alias{args_without_default_first_linter}
 \alias{double_space_linter}
-\alias{internal_INWT_function_linter}
+\alias{internal_function_linter}
 \alias{setwd_linter}
 \alias{source_linter}
 \alias{trailing_whitespaces_linter}
@@ -14,7 +14,7 @@ args_without_default_first_linter(source_file)
 
 double_space_linter(source_file)
 
-internal_INWT_function_linter(source_file)
+internal_function_linter(source_file)
 
 setwd_linter(source_file)
 
@@ -36,9 +36,10 @@ arguments with default values.
 
 \item \code{double_space_linter}: Are there double whitespaces?
 
-\item \code{internal_INWT_function_linter}: Instead of using internal functions from an INWT
-package in scripts with \code{:::}, they should be exported and documented.
-(only for scripts)
+\item \code{internal_function_linter}: Internal functions should not be used since there is
+in general a reason why they have not been exported by the package author.
+They may not have been tested outside the context of the function they are
+used in.
 
 \item \code{setwd_linter}: Changing the working directory in package functions
 can have unexpected side effects. (only for package functions)

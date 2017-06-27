@@ -293,6 +293,8 @@ The following linters are used by default:
 
 - infix_spaces_linter
 
+- internal_function_linter
+
 - line_length_linter
 
 - no_tab_linter
@@ -305,9 +307,9 @@ The following linters are used by default:
 
 - trailing_whitespaces_linter
 
-If `type = "script"`, the following linters are added:
+If `type = "script"`, no linters are added at the moment.
 
-- internal_INWT_function_linter
+
 
 If `type = "pkgFuns"`, the following linters are added:
 
@@ -322,15 +324,15 @@ are listed before arguments with default value in function definitions.
 
 `double_space_linter` checks for double empty spaces.
 
-`internal_INWT_function_linter` checks for the use of internal functions from
-packages whose name starts with INWT. Outside of the INWT company, this
-linter will barely go into action. [^a]
+`internal_function_linter` checks for the use of internal functions via `:::`. 
+There is usually a reason why an internal function has not been exported. It
+has probably not been tested properly outside the context it is used in.
 
 `setwd_linter` and `source_linter` check for `setwd` or `source` statements
 because they can cause side effects when used in functions.
 
 `trailing_whitespaces_linter` looks for superfluous whitespaces at the end of
-a line. [^b]
+a line. [^a]
 
 The remaining linters are taken from the `lintr` package.
 Details can be found via
@@ -355,13 +357,8 @@ y <- c(3, 4) # This line won't be excluded anymore.
 
 
 
-[^a]: There is usually a reason why an internal function has not been exported.
-Either it should not be used in a context outside its package, or the author did
-not feel like writing a documentation. To avoid the latter, we want to be
-notified about the usage of an internal INWT function so we can add a
-documentation to the function and export it.
 
-[^b]: This linter is very similar to `trailing_whitespace_linter` from the
+[^a]: This linter is very similar to `trailing_whitespace_linter` from the
 `lintr` package, but it takes a special case into account: If you insert the
 pipe operator `%>%` from the [dplyr package](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
 using the shortcut `Ctrl` + `Shift` + `m`, a whitespace is inserted behind it

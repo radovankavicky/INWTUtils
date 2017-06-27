@@ -30,7 +30,9 @@ test_that("Code is lint-free", {
                'exclude_end: "# nolint end"'),
              ".lintr")
 
+  # nolint start
   lintr:::read_settings(".lintr")
+  # nolint end
 
   expect_lint_free(linters = selectLinters())
 

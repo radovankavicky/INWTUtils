@@ -69,6 +69,7 @@ checkStyle <- function(files,
 #'   \item\code{\link[lintr]{commas_linter}},
 #'   \item\code{\link[INWTUtils]{double_space_linter}},
 #'   \item\code{\link[lintr]{infix_spaces_linter}},
+#'   \item\code{\link[INWTUtils]{internal_function_linter}},
 #'   \item\code{\link[lintr]{line_length_linter}},
 #'   \item\code{\link[lintr]{no_tab_linter}},
 #'   \item\code{\link[lintr]{object_length_linter}},
@@ -85,7 +86,7 @@ checkStyle <- function(files,
 #'
 #' The following linters are only included if \code{type = "script"}:
 #' \itemize{
-#'   \item\code{\link{internal_INWT_function_linter}}
+#'   \item (currently empty)
 #' }
 #'
 #' @param type character: Type of the file (\code{"script"}, \code{"pkgFuns"},
@@ -119,8 +120,8 @@ checkStyle <- function(files,
 #' @export
 #'
 selectLinters <- function(type = NULL,
-                        excludeLinters = list(),
-                        addLinters = list()) {
+                          excludeLinters = list(),
+                          addLinters = list()) {
 
   if (is.null(type)) type <- ""
 
@@ -145,6 +146,7 @@ generalLinters <- function() {
        commas_linter = commas_linter,
        double_space_linter = double_space_linter,
        infix_spaces_linter = infix_spaces_linter,
+       internal_function_linter = internal_function_linter,
        line_length_linter = line_length_linter(100),
        no_tab_linter = no_tab_linter,
        object_length_linter = object_length_linter(30L),
@@ -166,5 +168,5 @@ pkgFunLinters <- function() {
 #' Script linters
 #' @description Linters for files of type script
 scriptLinters <- function() {
-  list(internal_INWT_function_linter = internal_INWT_function_linter)
+  list()
 }

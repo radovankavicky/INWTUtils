@@ -75,22 +75,24 @@ test_that("double_space_linter", {
 })
 
 
-test_that("internal_INWT_function_linter", {
+test_that("internal_function_linter", {
   inputWrong <- list(filename = "An example object",
+                     # nolint start
                      file_lines = c("INWTpackage:::foo",
                                     "anINWTpkg:::foo",
                                     "some code anINWTpkg:::foo",
-                                    "INWTpkg:::foo("))
+                                    "INWTpkg:::foo(",
+                                    "INWT some test dplyr:::foo"))
+  # nolint end
   inputCorrect <- list(filename = "An example object",
-                       file_lines = c("INWTpkg::foo",
-                                      "INWT some test dplyr:::foo"))
-  expect_true(lapply(internal_INWT_function_linter(inputWrong),
+                       file_lines = c("INWTpkg::foo"))
+  expect_true(lapply(internal_function_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
-  expect_equal(internal_INWT_function_linter(inputWrong) %>% length,
+  expect_equal(internal_function_linter(inputWrong) %>% length,
                inputWrong$file_lines %>% length)
-  expect_true(lapply(internal_INWT_function_linter(inputCorrect),
+  expect_true(lapply(internal_function_linter(inputCorrect),
                      function(x) class(x) == "lint") %>% unlist %>% all)
-  expect_equal(internal_INWT_function_linter(inputCorrect) %>% length, 0)
+  expect_equal(internal_function_linter(inputCorrect) %>% length, 0)
 })
 
 
