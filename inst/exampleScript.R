@@ -5,7 +5,7 @@
 # of the author.                                                               #
 #                                                                              #
 # Author: Mira Céline Klein                                                    #
-# E-mail: mira-klein@inwt-statistic.de                                         #
+# E-mail: mira.klein@inwt-statistic.de                                         #
 ################################################################################
 
 
