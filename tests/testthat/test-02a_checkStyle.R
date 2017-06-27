@@ -28,7 +28,9 @@ test_that("checkStyle returns correct content", {
   expect_true(erg[[8]]$message == paste("Variable and function names should",
                                         "not be longer than 30 characters."))
   expect_true(erg[[9]]$message == paste("Internal functions (addressed via",
+                                        # nolint start
                                         ":::) should not be used."))
+  # nolint end
   expect_true(erg[[10]]$message == paste("Place a space before left",
                                          "parenthesis, except in a function",
                                          "call."))
