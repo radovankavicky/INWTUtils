@@ -66,7 +66,7 @@ writeLines(con = "lintExample.txt",
                     "  2 * x + 1  ",
                     "}",
                     "",
-                    "# This  line containts  double spaces",
+                    "# This  line contains  double spaces",
                     "",
                     "print(INWTUtils:::scriptLinters())"))
 # nolint end

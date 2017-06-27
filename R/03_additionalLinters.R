@@ -18,7 +18,7 @@
 #'                     "  2 * x + 1  ",
 #'                     "}",
 #'                     "",
-#'                     "# This  line containts  double spaces",
+#'                     "# This  line contains  double spaces",
 #'                     "",
 #'                     "print(INWTUtils:::scriptLinters())"))
 #' # nolint end
@@ -176,7 +176,7 @@ source_linter <- function(source_file) {
 #' @export
 trailing_whitespaces_linter <- function(source_file) {
 
-  ids <- grep("([^(%>%)(#')] +$)|(%>% {2,})|(#' {2,})$", source_file$file_lines)
+  ids <- grep("([^(%>%)(#') ] +$)|(%>% {2,})|(#' {2,})$", source_file$file_lines)
   # Space at the end of string
   # Or: two spaces after pipe operator (at the end of the string)
 
