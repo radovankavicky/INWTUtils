@@ -149,11 +149,12 @@ where the .Rproject file is created (argument `dir`).
 ## 4 Working in a sandbox
 
 As mentioned above, `createProjectSkeleton` makes working in a sandbox possible.
+You can also add only the sandbox infrastructure via `useSandbox()`.
 
 ### What does that mean?
 
-It means that you can play around without affecting the world outside your
-project.
+Working in a sandbox means that you can play around without affecting the world
+outside your project.
 For example, you may want to add features to a package installed in your user
 library.
 At the same time you still need a working version of the  package which you can

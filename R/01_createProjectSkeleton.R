@@ -46,16 +46,11 @@ createProjectSkeleton <- function(dir = ".",
 
   dir <- addBackslash(dir)
 
-  folders <- c("data", "libLinux", "libWin", "reports", "RScripts")
+  folders <- c("data", "reports", "RScripts")
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
   lapply(paste0(dir, folders), dir.create)
 
-  message("Writing .gitignore")
-  copyFile(dir, "gitignore", "libLinux/.gitignore")
-  copyFile(dir, "gitignore", "libWin/.gitignore")
-
-  message("Writing .Rprofile")
-  copyFile(dir, "Rprofile", ".Rprofile")
+  useSandbox(dir)
 
   message("Writing script for style checking")
   copyFile(dir, "00_checkCodeStyle.R", "RScripts")
@@ -74,6 +69,38 @@ createProjectSkeleton <- function(dir = ".",
     createProject(!is.null(pkgName), pkgFolder, dir)
   }
 
+}
+
+
+#' Create a sandbox environment for package installation
+#'
+#' @description The following steps are taken:
+#' \itemize{
+#'   \item Create folders libWin, libLinux
+#'   \item Write .gitignore into these folders so they can be commited without
+#'   any real content
+#'   \item Write .RProfile telling R to install and look for packages in libWin
+#'   resp. libLinux by default
+#'  }
+#'
+#' @param dir Project directory
+#'
+#' @export
+#'
+useSandbox <- function(dir) {
+
+  dir <- addBackslash(dir)
+  folders <- c("libWin", "libLinux")
+
+  message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
+  lapply(paste0(dir, folders), dir.create)
+
+  message("Writing .gitignore")
+  copyFile(dir, "gitignore", "libLinux/.gitignore")
+  copyFile(dir, "gitignore", "libWin/.gitignore")
+
+  message("Writing .Rprofile")
+  copyFile(dir, "Rprofile", ".Rprofile")
 }
 
 
