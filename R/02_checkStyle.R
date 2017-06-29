@@ -73,6 +73,7 @@ checkStyle <- function(files,
 #'   \item\code{\link[lintr]{line_length_linter}},
 #'   \item\code{\link[lintr]{no_tab_linter}},
 #'   \item\code{\link[lintr]{object_length_linter}},
+#'   \item\code{\link[INWTUtils]{options_linter}},
 #'   \item\code{\link[lintr]{spaces_left_parentheses_linter}},
 #'   \item\code{\link[lintr]{trailing_blank_lines_linter}},
 #'   \item\code{\link[INWTUtils]{trailing_whitespaces_linter}},
@@ -161,7 +162,8 @@ generalLinters <- function() {
 #' @description Linters for files containing (package) functions
 pkgFunLinters <- function() {
   list(setwd_linter = setwd_linter,
-       source_linter = source_linter)
+       source_linter = source_linter,
+       options_linter = options_linter)
 }
 
 

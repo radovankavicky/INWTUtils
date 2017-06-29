@@ -7,6 +7,7 @@
 \alias{internal_function_linter}
 \alias{setwd_linter}
 \alias{source_linter}
+\alias{options_linter}
 \alias{trailing_whitespaces_linter}
 \title{INWT's own linters}
 \usage{
@@ -19,6 +20,8 @@ internal_function_linter(source_file)
 setwd_linter(source_file)
 
 source_linter(source_file)
+
+options_linter(source_file)
 
 trailing_whitespaces_linter(source_file)
 }
@@ -46,6 +49,10 @@ can have unexpected side effects. (only for package functions)
 
 \item \code{source_linter}: Sourcing files in package functions can have
 unexpected side effects. (only for package functions)
+
+\item \code{options_linter}: Changing options in package functions can have
+unexpected side effects and is not visible from the outside. (only for
+package functions)
 
 \item \code{trailing_whitespaces_linter}: Trailing whitespaces are superfluos. In contrast to
 \code{\link[lintr]{trailing_whitespace_linter}}, this function detects

@@ -168,6 +168,28 @@ source_linter <- function(source_file) {
 }
 
 
+#' @describeIn INWTLinters Changing options in package functions can have
+#' unexpected side effects and is not visible from the outside. (only for
+#' package functions)
+#' @export
+options_linter <- function(source_file) {
+
+  ids <- grep("^[^#\'\"]*options\\(", source_file$file_lines)
+  # Starting with arbitrary number of characters which are NOT # or quotes (to
+  # exclude comments and quoted text)
+  # String "options("
+
+  lapply(ids, function(id) {
+    Lint(filename = source_file$filename,
+         line_number = id,
+         column_number = NULL,
+         type = "style",
+         message = "Don't use options() in package functions.",
+         linter = "options_linter")
+  })
+}
+
+
 #' @describeIn INWTLinters Trailing whitespaces are superfluos. In contrast to
 #' \code{\link[lintr]{trailing_whitespace_linter}}, this function detects
 #' whitespaces after \code{\link[dplyr]{\%>\%}} only if there are at least two

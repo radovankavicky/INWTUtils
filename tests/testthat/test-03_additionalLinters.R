@@ -140,6 +140,27 @@ test_that("source_linter", {
 })
 
 
+test_that("options_linter", {
+  # nolint start
+  inputWrong <- list(filename = "An example object",
+                     file_lines = c("options(scipen = 999)",
+                                    'options(editor = "nedit")',
+                                    "  options(warn = FALSE)"))
+  # nolint end
+  inputCorrect <- list(filename = "An example object",
+                       file_lines = c("# Comment with the word options",
+                                      "#' Roxygen comment containing options",
+                                      "some code 123 # comment with options("))
+  expect_true(lapply(options_linter(inputWrong),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(options_linter(inputWrong) %>% length,
+               inputWrong$file_lines %>% length)
+  expect_true(lapply(options_linter(inputCorrect),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(options_linter(inputCorrect) %>% length, 0)
+})
+
+
 test_that("trailing_whitespaces_linter", {
   # nolint start
   inputWrong <- list(filename = "An example object",

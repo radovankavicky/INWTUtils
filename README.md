@@ -317,6 +317,8 @@ If `type = "pkgFuns"`, the following linters are added:
 
 - source_linter
 
+- options_linter
+
 The following linters stem from the `INWTUtils` package:
 
 `args_without_default_first_linter` checks if arguments without default value
@@ -328,8 +330,9 @@ are listed before arguments with default value in function definitions.
 There is usually a reason why an internal function has not been exported. It
 has probably not been tested properly outside the context it is used in.
 
-`setwd_linter` and `source_linter` check for `setwd` or `source` statements
-because they can cause side effects when used in functions.
+`setwd_linter`, `source_linter`, and `options_linter` check for `setwd`,
+`source` resp. `options` statements because they can cause side effects when
+used in functions.
 
 `trailing_whitespaces_linter` looks for superfluous whitespaces at the end of
 a line. [^a]
