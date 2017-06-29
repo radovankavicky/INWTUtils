@@ -122,15 +122,29 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
 
   pkgFolder <- addBackslash(pkgFolder)
   pkgOnToplevel <- (pkgFolder %in% c("./", "/"))
+  if (!pkgOnToplevel) dir.create(paste0(dir, pkgFolder))
 
   packageDir <- if (pkgOnToplevel) dir else paste0(dir, pkgFolder)
 
-  do.call(if (pkgOnToplevel) setup else create,
-          args = list(path = packageDir,
-                      description = list(Package = pkgName,
-                                         Imports = "lintr, INWTUtils"),
-                      rstudio = FALSE,
-                      ... = ...))
+  message("Create package in temporary folder")
+  # This is required since setup cannot create a package in a folder whose name
+  # is not suited as a package name, even if the package gets another name
+  tmpDir <- tempdir()
+  dir.create(path = paste0(tmpDir, "/packageFolder"))
+  tmpDir <- paste0(tmpDir, "/packageFolder")
+
+  setup(path = tmpDir,
+         description = list(Package = pkgName,
+                            Imports = "lintr, INWTUtils"),
+         rstudio = FALSE,
+         ... = ...)
+
+  message("Copy files from temporary folder to package destination")
+  file.copy(from = list.files(tmpDir, full.names = TRUE),
+            to = packageDir,
+            recursive = TRUE)
+
+  unlink(tmpDir, recursive = TRUE)
 
   use_testthat(pkg = rmBackslash(packageDir))
 
