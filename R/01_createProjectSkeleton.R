@@ -57,6 +57,9 @@ createProjectSkeleton <- function(dir = ".",
   message("Writing .Rprofile")
   copyFile(dir, "Rprofile", ".Rprofile")
 
+  message("Writing script for style checking")
+  copyFile(dir, "00_checkCodeStyle.R", "RScripts")
+
   if (exampleScript) {
     message("Writing example script")
     copyFile(dir, "exampleScript.R", "RScripts")

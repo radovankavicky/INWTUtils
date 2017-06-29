@@ -53,6 +53,7 @@ test_that("createProjectSkeleton creates correct files (absolute path)", {
   expect_true(file.exists(paste0(absPath, "/libWin/.gitignore")))
   expect_true(file.exists(paste0(absPath, "/.Rprofile")))
   expect_true(file.exists(paste0(absPath, "/RScripts/exampleScript.R")))
+  expect_true(file.exists(paste0(absPath, "/RScripts/00_checkCodeStyle.R")))
   expect_true(file.exists(paste0(absPath, "/package")))
   expect_true(file.exists(paste0(absPath, "/package/.Rbuildignore")))
 })
@@ -73,6 +74,7 @@ test_that("createProjectSkeleton creates correct files", {
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libWin/.gitignore")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/.Rprofile")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts/exampleScript.R")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts/00_checkCodeStyle.R")))
   # Package files
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/DESCRIPTION")))
