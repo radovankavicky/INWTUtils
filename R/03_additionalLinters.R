@@ -190,6 +190,29 @@ options_linter <- function(source_file) {
 }
 
 
+#' @describeIn INWTLinters The automatic simplification performed by
+#' \code{\link[base]{sapply}} introduces uncertainty. If the input changes, the
+#' output can change unexpectedly and the code crashes. Replace it with
+#' \code{\link[base]{sapply}}. If you use \code{sapply} with
+#' \code{simplify = FALSE}, it is equivalent to \code{lapply} anyway.
+#' @export
+sapply_linter <- function(source_file) {
+
+  ids <- grep("^[^#\'\"]*sapply", source_file$file_lines)
+
+  lapply(ids, function(id) {
+    Lint(filename = source_file$filename,
+         line_number = id,
+         column_number = NULL,
+         type = "style",
+         message = paste("Don't use sapply. It can simplify the output in an",
+                         "unexpected way. Choose lapply."),
+         linter = "sapply_linter")
+  })
+}
+
+
+
 #' @describeIn INWTLinters Trailing whitespaces are superfluos. In contrast to
 #' \code{\link[lintr]{trailing_whitespace_linter}}, this function detects
 #' whitespaces after \code{\link[dplyr]{\%>\%}} only if there are at least two

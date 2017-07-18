@@ -151,6 +151,7 @@ generalLinters <- function() {
        line_length_linter = line_length_linter(100),
        no_tab_linter = no_tab_linter,
        object_length_linter = object_length_linter(30L),
+       sapply_linter = sapply_linter,
        spaces_left_parentheses_linter =
          spaces_left_parentheses_linter,
        trailing_blank_lines_linter = trailing_blank_lines_linter,
