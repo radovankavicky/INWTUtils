@@ -1,6 +1,6 @@
 Package: INWTUtils
 Title: Utility functions used by INWT
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(person("Mira Celine", "Klein",
     email = "mira.klein@inwt-statistics.de", role = "cre"))
 Maintainer: 'Mira Celine Klein' <mira.klein@inwt-statistics.de>

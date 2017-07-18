@@ -136,6 +136,10 @@ are listed before arguments with default value in function definitions.
 There is usually a reason why an internal function has not been exported. It
 has probably not been tested properly outside the context it is used in.
 
+`sapply_linter` checks for use of the sapply function. Since `sapply_linter`
+does automatic simplification, you do not have full control over the output
+format. If the input changes, this can have unexpected effects.
+
 `setwd_linter`, `source_linter`, and `options_linter` check for `setwd`,
 `source` resp. `options` statements because they can cause side effects when
 used in functions.

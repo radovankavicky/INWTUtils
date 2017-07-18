@@ -161,6 +161,27 @@ test_that("options_linter", {
 })
 
 
+test_that("sapply_linter", {
+  inputWrong <- list(filename = "An example object",
+                     file_lines = c("sapply(1:5, function(x)",
+                                    " %>% sapply"))
+  inputCorrect <- list(filename = "An example object",
+                       file_lines = c("# sapply",
+                                      "#' sapply",
+                                      "'sapply'",
+                                      '"sapply',
+                                      "some code # sapply"))
+  expect_true(lapply(sapply_linter(inputWrong),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(sapply_linter(inputWrong) %>% length,
+               inputWrong$file_lines %>% length)
+  expect_true(lapply(sapply_linter(inputCorrect),
+                     function(x) class(x) == "lint") %>% unlist %>% all)
+  expect_equal(sapply_linter(inputCorrect) %>% length, 0)
+
+})
+
+
 test_that("trailing_whitespaces_linter", {
   # nolint start
   inputWrong <- list(filename = "An example object",

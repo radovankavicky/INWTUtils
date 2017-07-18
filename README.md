@@ -302,6 +302,8 @@ The following linters are used by default:
 
 - object_length_linter
 
+- sapply_linter
+
 - spaces_left_parentheses_linter
 
 - trailing_blank_lines_linter
