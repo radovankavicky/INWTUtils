@@ -198,7 +198,7 @@ options_linter <- function(source_file) {
 #' @export
 sapply_linter <- function(source_file) {
 
-  ids <- grep("^[^#\'\"]*sapply", source_file$file_lines)
+  ids <- grep("^[^#\'\"]*sapply\\(", source_file$file_lines)
 
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,

@@ -164,13 +164,13 @@ test_that("options_linter", {
 test_that("sapply_linter", {
   inputWrong <- list(filename = "An example object",
                      file_lines = c("sapply(1:5, function(x)",
-                                    " %>% sapply"))
+                                    " %>% sapply(FUN = "))
   inputCorrect <- list(filename = "An example object",
-                       file_lines = c("# sapply",
-                                      "#' sapply",
-                                      "'sapply'",
-                                      '"sapply',
-                                      "some code # sapply"))
+                       file_lines = c("# sapply(",
+                                      "#' sapply(",
+                                      "'sapply('",
+                                      '"sapply(',
+                                      "some code # sapply("))
   expect_true(lapply(sapply_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
   expect_equal(sapply_linter(inputWrong) %>% length,
