@@ -1,6 +1,8 @@
 #' Read csv file checking for correct row number
 #'
-#' @description Sometimes \code{\link[readr]{read_csv}} stops reading in a csv
+#' @description \strong{NOTE: This function is currently not exported since some cases
+#' cannot be tested.}
+#' Sometimes \code{\link[readr]{read_csv}} stops reading in a csv
 #' file after several lines without any message. This function is a wrapper
 #' around \code{\link[readr]{read_csv}} that counts the number of rows in the
 #' original file and compares it with the resulting data.frame. If the numbers
@@ -38,6 +40,3 @@ read_csv <- function(file, col_names = TRUE, skip = 0, n_max = Inf, ...) {
 
   df
 }
-
-# Ausweitung auf read_csv2, ...
-# Was ist mit Win?

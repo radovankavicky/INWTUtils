@@ -41,6 +41,8 @@ will generate a warning and be made unique with a numeric prefix.}
 \item{...}{arguments passed to \code{\link[readr]{read_csv}}}
 }
 \description{
+\strong{NOTE: This function is currently not exported since some cases
+cannot be tested.}
 Sometimes \code{\link[readr]{read_csv}} stops reading in a csv
 file after several lines without any message. This function is a wrapper
 around \code{\link[readr]{read_csv}} that counts the number of rows in the

@@ -162,7 +162,7 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
 
   setup(path = tmpDir,
          description = list(Package = pkgName,
-                            Imports = "lintr, INWTUtils"),
+                            Suggests = "INWTUtils, lintr"),
          rstudio = FALSE,
          ... = ...)
 
