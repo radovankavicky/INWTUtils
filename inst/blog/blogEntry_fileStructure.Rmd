@@ -1,5 +1,5 @@
 ---
-title: "A meaningful file structure for R rpojects"
+title: "A meaningful file structure for R pojects"
 output: html_document
 ---
 
