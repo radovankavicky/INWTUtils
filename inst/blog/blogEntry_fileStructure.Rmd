@@ -1,5 +1,5 @@
 ---
-title: "A meaningful file structure for R pojects"
+title: "A meaningful file structure for R projects"
 output: html_document
 ---
 
@@ -11,9 +11,10 @@ executed?
 To make all this easier, it helps to have a consistent file and folder structure
 across your projects. You should have some experience with R, RStudio and maybe
 package development to find this useful. We also believe our structure is of
-special interest for those who work with R in a team. Similar to coding style
-guidelines it is more important that you can agree on *one* than picking the
-*best* one.
+special interest for those who work with R in a team.
+
+Similar to coding style guidelines, it is more important that you can agree on
+*one* than picking the *best* one.
 
 
 ## A useful file structure
@@ -23,7 +24,7 @@ figure shows our solution for a project's file structure:
 
 ![Fig. 1 -- A useful file structure](fileStructure.png)
 
-When you are working with RStudio you will recognize the *.Rproj* file. This file
+When you are working with RStudio, you will recognize the *.Rproj* file. This file
 determines the project root and also the working directory for R sessions. This
 has the advantage that all file paths can be set relative to the project's root
 directory. You can move the whole project folder and all paths in your code will
@@ -32,30 +33,30 @@ still be working!
 The first folder is called *RScripts*. It contains all scripts written in R.
 Typical examples are scripts for data preparation and data analysis. We
 recommend to number the scripts in the order they need to be executed. See
-also [our other article](??) for guidelines for script files. Scripts may
-produce outputs. Outputs can be *data*, as in spreadsheet like tabular form, or
+also [our other article](??) for guidelines for script files.
+
+Scripts may
+produce outputs. Outputs can be *data*, as in spreadsheet-like tabular form, or
 any other form like graphics, tables as *.tex* files, etc. These outputs are
-then stored either in the *data* or *results* folders. The distinction between
-the two folders is sometimes fuzzy but in general the *data* folder stores
+then stored either in a *data* or a *results* folders. The distinction between
+the two folders is sometimes fuzzy, but in general the *data* folder stores
 everything the data analysis is based on. The *results* folder is used to store
-the final outputs of an analysis and not some intermediate steps.
+the final outputs of an analysis and not some intermediate steps. This folder
+may live inside the *data* folder or also in the root. 
+
+Files in this folder are often used to cache results which are later needed in an
+R Markdown report. Although `knitr` provides its own caching mechanism, in many
+projects it is better to decouple single computations so editing of reports is
+simpler.
 
 All data (raw and processed) live in the folder *data*. This includes different
-file formats such as *.Rdata*, *.xlsx* or *.cvs*. These data are kept separate
-from any R packages to enable fast deployment cycles; e.g. when they are large
+file formats such as *.Rdata*, *.xlsx* or *.csv*. These data are kept separate
+from any R package to enable fast deployment cycles; e.g., when they are large,
 this can be an issue. Also they are not checked in into version control. In most
-scenarios these data files are the output of some R script doing time consuming
+scenarios these data files are the output of some R script doing time-consuming
 data transformations or extracting data from external resources (think of
-databases or crawler). Hence these files can always be reconstructed; this folder
+databases or crawlers). Hence these files can always be reconstructed; this folder
 is never used as a persistent file storage.
-
-The *results* folder may live inside the *data* folder or also in the root. If
-you want to save something you computed, you also put it into this folder, maybe
-in a sub-folder *results*. For example, you may store the results from
-time-consuming model computations to use them later in a report. Often files in
-this folder are used to cache results which are later needed in a markdown
-report. Although `knitr` provides it's own caching mechanism in many projects it
-is better to decouple single computations so editing of reports is simpler.
 
 The *reports* folder contains the reports we create
 with [R Markdown](http://rmarkdown.rstudio.com/). For these reports we have our
@@ -72,11 +73,11 @@ root directory (as in fig. 2).
 
 Which way should be preferred depends on the nature of the project. A data
 analysis is always backed up by a package. Even if the functions are never used
-in any other project we still need documentation and unit tests for R code.
+in any other project, we still need documentation and unit tests for R code.
 Furthermore dependencies need to be installed and maintained across the team and
-machines. So in an analysis, e.g. forecasting sales or computing
-a [customer lifetime value](https://www.inwt-statistics.com/business-cases/customer-lifetime-value.html)),
-the package lives in it's own folder. This also avoids a conflict: In general,
+machines. So in an analysis, e.g., forecasting sales or computing
+a [customer lifetime value](https://www.inwt-statistics.com/business-cases/customer-lifetime-value.html),
+the package lives in its own folder. This also avoids a conflict: In general,
 you will have a *data* folder in an analysis project. Packages also include a
 folder named *data*, so R would try to include your data folder when building
 the package. This may not be what you want.
@@ -103,7 +104,7 @@ not deployed to the network drive, but into a particular folder you can see in
 figure 1: *libLinux* and *libWin* (depending on the operating system). This
 means that everything we try out remains in a self-contained environment without
 causing any change outside. We need the distinction for OSs because users may
-work on user specific network drives but from different machines (8 threads and 16
+work on user-specific network drives but from different machines (8 threads and 16
 GB RAM on Windows is not enough? How does 32 threads and 250 GB RAM sound?). This is
 however just a small boost for developer productivity.
 
@@ -125,6 +126,6 @@ their mark on. But it becomes easier if the file structure is consistent and
 well thought through. And this also forces you to work in such a way that your
 colleagues don’t get lost in your files and folders.
 
-To get started we use the [INWTUtils package](https://github.com/INWT/INWTUtils)
+To get started, we use the [INWTUtils package](https://github.com/INWT/INWTUtils)
 which can instantiate folders and package structures complying to these
 standards. This is a good way to get everyone on the team into using it.
