@@ -47,10 +47,12 @@ test_that("createProjectSkeleton creates correct files (absolute path)", {
   expect_true(file.exists(paste0(absPath, "/data")))
   expect_true(file.exists(paste0(absPath, "/libLinux")))
   expect_true(file.exists(paste0(absPath, "/libWin")))
+  expect_true(file.exists(paste0(absPath, "/libMac")))
   expect_true(file.exists(paste0(absPath, "/reports")))
   expect_true(file.exists(paste0(absPath, "/RScripts")))
   expect_true(file.exists(paste0(absPath, "/libLinux/.gitignore")))
   expect_true(file.exists(paste0(absPath, "/libWin/.gitignore")))
+  expect_true(file.exists(paste0(absPath, "/libMac/.gitignore")))
   expect_true(file.exists(paste0(absPath, "/.Rprofile")))
   expect_true(file.exists(paste0(absPath, "/RScripts/exampleScript.R")))
   expect_true(file.exists(paste0(absPath, "/RScripts/00_checkCodeStyle.R")))
@@ -68,10 +70,12 @@ test_that("createProjectSkeleton creates correct files", {
   expect_true(file.exists(paste0(tmpdir, "/tmp7/data")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libLinux")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libWin")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/libMac")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/reports")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libLinux/.gitignore")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/libWin/.gitignore")))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7/libMac/.gitignore")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/.Rprofile")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts/exampleScript.R")))
   expect_true(file.exists(paste0(tmpdir, "/tmp7/RScripts/00_checkCodeStyle.R")))
@@ -121,7 +125,7 @@ test_that("createPackage creates correct files - pkg on top level", {
   expect_true(file.exists(paste0(tmpdir, "/tmp9/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp9/.Rbuildignore")),
                c("^.+\\.Rproj$", "^\\.Rproj\\.user$", "^libWin$", "^libLinux$",
-                 "^RScripts$", "^reports$"))
+                 "^libMac$", "^RScripts$", "^reports$"))
   expect_true(file.exists(paste0(tmpdir, "/tmp9/DESCRIPTION")))
   expect_equal(readLines(paste0(tmpdir, "/tmp9/DESCRIPTION"))[1],
                "Package: testPackage")
@@ -141,7 +145,7 @@ test_that("createPackage creates correct files - pkg in own folder", {
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/.Rbuildignore")))
   expect_equal(readLines(paste0(tmpdir, "/tmp0/package/.Rbuildignore")),
                c("^.+\\.Rproj$", "^\\.Rproj\\.user$", "^libWin$", "^libLinux$",
-                 "^RScripts$", "^reports$"))
+                 "^libMac$", "^RScripts$", "^reports$"))
   expect_true(file.exists(paste0(tmpdir, "/tmp0/package/DESCRIPTION")))
   expect_equal(readLines(paste0(tmpdir, "/tmp0/package/DESCRIPTION"))[1],
                "Package: testPackage")

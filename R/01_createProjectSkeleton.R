@@ -76,7 +76,7 @@ createProjectSkeleton <- function(dir = ".",
 #'
 #' @description The following steps are taken:
 #' \itemize{
-#'   \item Create folders libWin, libLinux
+#'   \item Create folders libWin, libLinux, libMac
 #'   \item Write .gitignore into these folders so they can be commited without
 #'   any real content
 #'   \item Write .RProfile telling R to install and look for packages in libWin
@@ -90,14 +90,14 @@ createProjectSkeleton <- function(dir = ".",
 useSandbox <- function(dir) {
 
   dir <- addBackslash(dir)
-  folders <- c("libWin", "libLinux")
+  folders <- c("libWin", "libLinux", "libMac")
 
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
   lapply(paste0(dir, folders), dir.create)
 
   message("Writing .gitignore")
-  copyFile(dir, "gitignore", "libLinux/.gitignore")
-  copyFile(dir, "gitignore", "libWin/.gitignore")
+  lapply(paste0(folders, "/.gitignore"),
+         function(x) copyFile(dir, "gitignore", x))
 
   message("Writing .Rprofile")
   copyFile(dir, "Rprofile", ".Rprofile")
@@ -161,10 +161,10 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
   tmpDir <- paste0(tmpDir, "/packageFolder")
 
   setup(path = tmpDir,
-         description = list(Package = pkgName,
-                            Suggests = "INWTUtils, lintr"),
-         rstudio = FALSE,
-         ... = ...)
+        description = list(Package = pkgName,
+                           Suggests = "INWTUtils, lintr"),
+        rstudio = FALSE,
+        ... = ...)
 
   message("Copy files from temporary folder to package destination")
   file.copy(from = list.files(tmpDir, full.names = TRUE),

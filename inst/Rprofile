@@ -5,11 +5,13 @@
 
 .First <- function() {
   # Check operating system
-  if (grepl("Windows", Sys.getenv("OS"))) {
+  if (Sys.info()["sysname"] == "Windows") {
     # Add libWin with the full path to libPaths
     .libPaths(new = c(paste(getwd(), "libWin", sep = "/"), .libPaths()))
-  } else {
+  } else if (Sys.info()["sysname"] == "Windows") {
     .libPaths(new = c(paste(getwd(), "libLinux", sep = "/"), .libPaths()))
+  } else if (Sys.info()["sysname"] == "Darwin") {
+    .libPaths(new = c(paste(getwd(), "libMac", sep = "/"), .libPaths()))
   }
 }
 

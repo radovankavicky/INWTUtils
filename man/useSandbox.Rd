@@ -12,7 +12,7 @@ useSandbox(dir)
 \description{
 The following steps are taken:
 \itemize{
-  \item Create folders libWin, libLinux
+  \item Create folders libWin, libLinux, libMac
   \item Write .gitignore into these folders so they can be commited without
   any real content
   \item Write .RProfile telling R to install and look for packages in libWin
