@@ -41,7 +41,7 @@ test_that("createProjectSkeleton creates correct files (absolute path)", {
   absPath <- normalizePath(paste0(tmpdir, "/tmpAbs"))
   invisible(capture.output(createProjectSkeleton(absPath,
                                                  pkgName = "aTestPackage",
-                                                 pkgFolder = "package",
+                                                 pkgFolder = ".",
                                                  rProject = FALSE)))
   expect_true(file.exists(paste0(absPath)))
   expect_true(file.exists(paste0(absPath, "/data")))
@@ -56,9 +56,12 @@ test_that("createProjectSkeleton creates correct files (absolute path)", {
   expect_true(file.exists(paste0(absPath, "/.Rprofile")))
   expect_true(file.exists(paste0(absPath, "/RScripts/exampleScript.R")))
   expect_true(file.exists(paste0(absPath, "/RScripts/00_checkCodeStyle.R")))
-  expect_true(file.exists(paste0(absPath, "/package")))
-  expect_true(file.exists(paste0(absPath, "/package/.Rbuildignore")))
+  expect_true(file.exists(paste0(absPath, "/.Rbuildignore")))
+
+  expect_equal(readLines(paste0(absPath, "/RScripts/00_checkCodeStyle.R"))[22],
+               'PKG_DIR <- "./"')
 })
+
 
 test_that("createProjectSkeleton creates correct files", {
 
@@ -88,6 +91,22 @@ test_that("createProjectSkeleton creates correct files", {
   expect_true(file.exists(paste0(tmpdir, "/tmp7/package/.Rbuildignore")))
   # rProject
   expect_true(file.exists(paste0(tmpdir, "/tmp7/tmp7.Rproj")))
+
+  expect_equal(readLines(paste0(tmpdir,
+                                "/tmp7/RScripts/00_checkCodeStyle.R"))[22],
+               'PKG_DIR <- "package/"')
+})
+
+
+test_that("Style checking script if there is no package", {
+  invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp7a"),
+                                                 rProject = FALSE)))
+  expect_true(file.exists(paste0(tmpdir, "/tmp7a")))
+  checkingScript <- readLines(paste0(tmpdir,
+                                     "/tmp7a/RScripts/00_checkCodeStyle.R"))
+  expect_length(checkingScript, 71)
+  expect_equal(checkingScript[22],
+               'PATH_PURL_FILES <- "purlFiles/"')
 })
 
 

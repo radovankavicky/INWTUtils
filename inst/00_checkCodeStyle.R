@@ -48,8 +48,8 @@ lapply(rmdFiles,
 # 02 List all R files to check -------------------------------------------------
 
 # You can insert additional directories here:
-scriptFiles <- lapply(list(pkgTests = paste0(PKG_DIR, "tests"),
-                           scripts = SCRIPT_DIR,
+scriptFiles <- lapply(list(scripts = SCRIPT_DIR,
+                           pkgTests = paste0(PKG_DIR, "tests"),
                            Rmd = PATH_PURL_FILES),
                       list.files,
                       pattern = "*.R$",

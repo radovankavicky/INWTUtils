@@ -52,22 +52,31 @@ createProjectSkeleton <- function(dir = ".",
 
   useSandbox(dir)
 
-  message("Writing script for style checking")
-  copyFile(dir, "00_checkCodeStyle.R", "RScripts")
-
   if (exampleScript) {
     message("Writing example script")
     copyFile(dir, "exampleScript.R", "RScripts")
   }
 
+  checkingScript <- readLines(system.file("00_checkCodeStyle.R",
+                                          package = "INWTUtils"))
+
   if (!is.null(pkgName)) {
     createPackage(dir, pkgName, pkgFolder, ...)
+    checkingScript[22] <- gsub("\\./",
+                               addBackslash(pkgFolder),
+                               checkingScript[22])
+  } else {
+    checkingScript <- checkingScript[-c(22, 52, 60:63, 67:68)]
   }
 
   if (rProject) {
     message("Creating R Project")
     createProject(!is.null(pkgName), pkgFolder, dir)
   }
+
+  message("Writing script for style checking")
+  writeLines(text = checkingScript,
+             con = paste0(dir, "RScripts/00_checkCodeStyle.R"))
 
 }
 
